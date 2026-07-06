@@ -21,7 +21,7 @@ body{font-family:var(--font);background:var(--surf);color:var(--ink);min-height:
 button{font-family:var(--font);cursor:pointer;border:none;outline:none;}
 input,select,textarea{font-family:var(--font);outline:none;box-sizing:border-box;}
 select{cursor:pointer;}
-.hidden{display:none!important;} 
+.hidden{display:none!important;}
 
 /* ── LOGIN ── */
 #phase-login{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:1000;overflow-y:auto;padding:14px;}
@@ -30,6 +30,11 @@ select{cursor:pointer;}
 .login-card{position:relative;z-index:2;background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:22px 26px 20px;width:min(720px,96vw);box-shadow:0 20px 60px rgba(0,0,0,.12);margin:0 auto;max-height:calc(100vh - 20px);overflow-y:auto;}
 .login-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:540px){.login-row{grid-template-columns:1fr;gap:0;}}
+/* Row with Day / OR / Batch — a slim OR chip splits the two selects */
+.day-batch-row{display:grid;grid-template-columns:1fr 44px 1fr;gap:10px;align-items:end;}
+.day-batch-or{display:flex;align-items:center;justify-content:center;padding-bottom:10px;}
+.day-batch-or span{background:linear-gradient(135deg,#f1f3f9,#e6ebf4);color:#5a6a85;font-size:9.5px;font-weight:800;padding:5px 10px;border-radius:14px;letter-spacing:2px;border:1px solid #d5dbe8;}
+@media(max-width:540px){.day-batch-row{grid-template-columns:1fr;gap:6px;}.day-batch-or{padding:6px 0;}}
 .login-logo{text-align:center;margin-bottom:4px;}
 .login-logo .tool-name{font-size:24px;font-weight:900;background:linear-gradient(135deg,#00AF87,#7B2D8B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.5px;}
 .login-logo .tool-sub{font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
@@ -120,6 +125,21 @@ select{cursor:pointer;}
 .admin-batches-actions{display:flex;gap:8px;flex-wrap:wrap;}
 .admin-upload-day6-btn{background:linear-gradient(135deg,#E8781A 0%,#c25e0a 100%);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:11.5px;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:all var(--tr);box-shadow:0 3px 10px rgba(232,120,26,.25);}
 .admin-upload-day6-btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(232,120,26,.4);}
+/* Update Day sub-menu popover */
+.update-day-menu{position:absolute;background:#fff;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.16);border:1px solid #e8ebf3;padding:6px;min-width:340px;z-index:1500;display:flex;flex-direction:column;gap:2px;}
+.update-day-choice{display:flex;gap:12px;align-items:center;padding:12px 14px;border:none;background:transparent;border-radius:8px;cursor:pointer;text-align:left;color:var(--ink);transition:background var(--tr);font-family:inherit;}
+.update-day-choice:hover{background:#fff3e8;}
+.update-day-icon{font-size:24px;flex-shrink:0;line-height:1;}
+.update-day-label{font-size:11.5px;line-height:1.5;color:var(--ink);}
+.update-day-label strong{color:#c25e0a;font-size:12.5px;}
+.update-day-label small{color:var(--gray);font-size:10px;}
+/* Edit-Day mode choices */
+.edit-day-mode-choices{display:flex;flex-direction:column;gap:6px;}
+.mode-choice{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1.5px solid var(--bdr);border-radius:8px;cursor:pointer;font-size:11.5px;transition:all var(--tr);}
+.mode-choice:hover{border-color:#E8781A;background:#fff8f0;}
+.mode-choice input[type="radio"]{margin-top:3px;accent-color:#E8781A;}
+.mode-choice span{line-height:1.5;color:var(--ink);}
+.mode-choice span small{color:var(--gray);font-size:10px;}
 .admin-create-wave-btn{background:linear-gradient(135deg,#7B2D8B 0%,#5b1e6b 100%);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:11.5px;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:all var(--tr);box-shadow:0 3px 10px rgba(123,45,139,.25);}
 .admin-create-wave-btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(123,45,139,.4);}
 .admin-tmpl-btn{background:#fff;color:#324a6e;border:1.5px solid #c7d0e5;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--tr);white-space:nowrap;}
@@ -567,7 +587,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
         <option value="">— Select a wave (optional) —</option>
       </select>
     </div>
-    <div class="login-row">
+    <div class="day-batch-row">
       <div class="login-field">
         <label>Select Training Day</label>
         <select id="login-day" onchange="onDayChange()">
@@ -577,14 +597,14 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
           <option value="3">Day 3 — Harmful Content & Language</option>
           <option value="4">Day 4 — Fraud, Duplication & Misconduct</option>
           <option value="5">Day 5 — Advanced Moderation Decisions</option>
-          <option value="6">Day 6 — Serious Issues (Cloud)</option>
         </select>
         <div class="login-err" id="day-err">Please select a training day</div>
       </div>
+      <div class="day-batch-or"><span>OR</span></div>
       <div class="login-field">
-        <label>Trainer Batch</label>
+        <label>Trainer Session</label>
         <select id="login-batch" onchange="onBatchChange()">
-          <option value="">— Select a batch —</option>
+          <option value="">— Select a session —</option>
         </select>
       </div>
     </div>
@@ -601,14 +621,107 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
   </div>
 </div>
 
+<!-- ═══ UPDATE DAY SUB-MENU POPOVER ═══ -->
+<div id="update-day-menu" class="update-day-menu hidden" onclick="event.stopPropagation();">
+  <button class="update-day-choice" onclick="hideUpdateDayMenu();showAddDayModal();">
+    <span class="update-day-icon">➕</span>
+    <span class="update-day-label"><strong>Add Day</strong><br><small>Create a brand-new custom day (Day 6, 7, 8…)</small></span>
+  </button>
+  <button class="update-day-choice" onclick="hideUpdateDayMenu();showEditDayModal();">
+    <span class="update-day-icon">✏️</span>
+    <span class="update-day-label"><strong>Edit Day</strong><br><small>Replace all, multiple, or a single question in an existing day</small></span>
+  </button>
+</div>
+
+<!-- ═══ ADD DAY MODAL ═══ -->
+<div class="admin-modal-overlay hidden" id="add-day-modal">
+  <div class="admin-modal-card" style="max-width:520px;width:min(520px,96vw);">
+    <div style="font-size:28px;margin-bottom:8px;text-align:center;">➕</div>
+    <h3 style="color:#E8781A;">Add New Day</h3>
+    <p class="admin-modal-sub">Create a new training day. It will appear in the Select Training Day dropdown at login.</p>
+    <div class="admin-field">
+      <label>Day Number <span style="color:var(--red)">*</span></label>
+      <input type="number" id="add-day-number" min="6" step="1" value="6" oninput="validateAddDayForm()">
+      <div style="font-size:10px;color:var(--gray);margin-top:4px;">Next available: <strong id="add-day-next-hint">6</strong></div>
+    </div>
+    <div class="admin-field">
+      <label>Day Name <span style="color:var(--red)">*</span></label>
+      <input type="text" id="add-day-name" placeholder="e.g. Serious Issues" autocomplete="off" oninput="validateAddDayForm()">
+    </div>
+    <div class="admin-field">
+      <label>Questions CSV <span style="color:var(--red)">*</span></label>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="file" id="add-day-csv" accept=".csv,text/csv" style="padding:8px 10px;font-size:12px;flex:1;min-width:200px;" oninput="validateAddDayForm()">
+        <button type="button" class="admin-tmpl-btn" onclick="downloadCSVTemplate()">📄 Download Template</button>
+      </div>
+    </div>
+    <div id="add-day-status" style="font-size:11px;margin-top:8px;padding:8px 11px;border-radius:6px;display:none;line-height:1.5;"></div>
+    <button class="admin-login-btn" id="btn-add-day" onclick="processAddDay()" disabled style="background:#E8781A;margin-top:14px;">Create Day →</button>
+    <button class="admin-cancel-btn" onclick="closeAddDayModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ═══ EDIT DAY MODAL ═══ -->
+<div class="admin-modal-overlay hidden" id="edit-day-modal">
+  <div class="admin-modal-card" style="max-width:560px;width:min(560px,96vw);">
+    <div style="font-size:28px;margin-bottom:8px;text-align:center;">✏️</div>
+    <h3 style="color:#E8781A;">Edit Day</h3>
+    <p class="admin-modal-sub">Modify questions in an existing custom day.</p>
+    <div class="admin-field">
+      <label>Select Day <span style="color:var(--red)">*</span></label>
+      <select id="edit-day-select" onchange="onEditDaySelect()">
+        <option value="">— Choose a day —</option>
+      </select>
+      <div style="font-size:10px;color:var(--gray);margin-top:4px;" id="edit-day-hint">Only custom days (Day 6+) can be edited.</div>
+    </div>
+    <div class="admin-field" id="edit-day-mode-wrap" style="display:none;">
+      <label>What do you want to replace? <span style="color:var(--red)">*</span></label>
+      <div class="edit-day-mode-choices">
+        <label class="mode-choice">
+          <input type="radio" name="edit-mode" value="all" onchange="onEditDayModeChange()">
+          <span><strong>All questions</strong><br><small>Replace every question in the day with the uploaded CSV</small></span>
+        </label>
+        <label class="mode-choice">
+          <input type="radio" name="edit-mode" value="multi" onchange="onEditDayModeChange()">
+          <span><strong>Multiple questions</strong><br><small>Replace specific question numbers (e.g. 1, 3, 5)</small></span>
+        </label>
+        <label class="mode-choice">
+          <input type="radio" name="edit-mode" value="one" onchange="onEditDayModeChange()">
+          <span><strong>One question</strong><br><small>Replace a single question (by number)</small></span>
+        </label>
+      </div>
+    </div>
+    <div class="admin-field" id="edit-day-multi-wrap" style="display:none;">
+      <label>Question numbers to replace <span style="color:var(--red)">*</span></label>
+      <input type="text" id="edit-day-numbers" placeholder="e.g. 1, 3, 5" oninput="validateEditDayForm()">
+      <div style="font-size:10px;color:var(--gray);margin-top:4px;">Comma-separated. The uploaded CSV must contain the same number of rows in the same order.</div>
+    </div>
+    <div class="admin-field" id="edit-day-one-wrap" style="display:none;">
+      <label>Question number to replace <span style="color:var(--red)">*</span></label>
+      <input type="number" id="edit-day-onenum" min="1" step="1" oninput="validateEditDayForm()">
+      <div style="font-size:10px;color:var(--gray);margin-top:4px;">The uploaded CSV should contain exactly one row.</div>
+    </div>
+    <div class="admin-field" id="edit-day-file-wrap" style="display:none;">
+      <label>Questions CSV <span style="color:var(--red)">*</span></label>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="file" id="edit-day-csv" accept=".csv,text/csv" style="padding:8px 10px;font-size:12px;flex:1;min-width:200px;" oninput="validateEditDayForm()">
+        <button type="button" class="admin-tmpl-btn" onclick="downloadCSVTemplate()">📄 Download Template</button>
+      </div>
+    </div>
+    <div id="edit-day-status" style="font-size:11px;margin-top:8px;padding:8px 11px;border-radius:6px;display:none;line-height:1.5;"></div>
+    <button class="admin-login-btn" id="btn-edit-day" onclick="processEditDay()" disabled style="background:#E8781A;margin-top:14px;">Apply Changes →</button>
+    <button class="admin-cancel-btn" onclick="closeEditDayModal()">Cancel</button>
+  </div>
+</div>
+
 <!-- ═══ CREATE BATCH MODAL ═══ -->
 <div class="admin-modal-overlay hidden" id="batch-modal">
   <div class="admin-modal-card" style="max-width:600px;width:min(600px,96vw);">
     <div style="font-size:28px;margin-bottom:8px;text-align:center;">✨</div>
-    <h3 style="color:#00AF87;">Create New Batch</h3>
-    <p class="admin-modal-sub">Set up a new training batch with a custom CSV. Candidates can select this batch from the login screen.</p>
+    <h3 style="color:#00AF87;">Create new session</h3>
+    <p class="admin-modal-sub">Set up a new training session with a custom CSV. Candidates can select this session from the login screen.</p>
     <div class="admin-field">
-      <label>Batch Name <span style="color:var(--red)">*</span></label>
+      <label>Session Name <span style="color:var(--red)">*</span></label>
       <input type="text" id="batch-name" placeholder="e.g. June 2026 Cohort A" autocomplete="off" oninput="validateBatchForm()">
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -648,7 +761,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <div style="font-size:10.5px;color:var(--gray);margin-top:5px;line-height:1.5;">Use the template as a starting point. Time (HH:MM:SS) applies to every question in this batch.</div>
     </div>
     <div id="batch-status" style="font-size:11px;margin-top:8px;padding:8px 11px;border-radius:6px;display:none;line-height:1.5;"></div>
-    <button class="admin-login-btn" id="btn-create-batch" onclick="processBatchCreate()" disabled style="background:#00AF87;margin-top:14px;">Create Batch →</button>
+    <button class="admin-login-btn" id="btn-create-batch" onclick="processBatchCreate()" disabled style="background:#00AF87;margin-top:14px;">Create session →</button>
     <button class="admin-cancel-btn" onclick="closeBatchModal()">Cancel</button>
   </div>
 </div>
@@ -776,9 +889,9 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <div class="admin-batches-header">
         <h3>🛠 Trainer Tools & Active Batches</h3>
         <div class="admin-batches-actions">
-          <button class="admin-upload-day6-btn" onclick="showUploadModal()">📤 Upload Day 6 CSV</button>
+          <button class="admin-upload-day6-btn" onclick="showUpdateDayMenu(event)">🔄 Update Day ▾</button>
           <button class="admin-create-wave-btn" onclick="showWaveModal()">🌊 Create Wave</button>
-          <button class="admin-create-batch-btn" onclick="showBatchModal()">✨ Create New Batch</button>
+          <button class="admin-create-batch-btn" onclick="showBatchModal()">✨ Create new session</button>
         </div>
       </div>
       <div id="admin-batches-list" class="admin-batches-list">
@@ -837,6 +950,17 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
           <input type="date" class="admin-filter-select" id="admin-from-date" onchange="renderAdminTable()" style="display:none;" title="From date">
           <input type="date" class="admin-filter-select" id="admin-to-date" onchange="renderAdminTable()" style="display:none;" title="To date">
           <input type="month" class="admin-filter-select" id="admin-month-filter" onchange="renderAdminTable()" title="Filter by month">
+          <select class="admin-filter-select" id="admin-sort-filter" onchange="renderAdminTable()" title="Sort order">
+            <option value="date_desc">Sort: Latest first</option>
+            <option value="date_asc">Sort: Oldest first</option>
+            <option value="name_asc">Sort: Name (A→Z)</option>
+            <option value="name_desc">Sort: Name (Z→A)</option>
+            <option value="score_desc">Sort: Score (high→low)</option>
+            <option value="score_asc">Sort: Score (low→high)</option>
+            <option value="batch_asc">Sort: Session / Day (A→Z)</option>
+            <option value="attempt_asc">Sort: Attempt # (low→high)</option>
+            <option value="attempt_desc">Sort: Attempt # (high→low)</option>
+          </select>
         </div>
       </div>
       <div class="admin-table-wrap">
@@ -1113,7 +1237,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
 const CONFIG = {
   // Paste your Google Apps Script Web App URL here (the one ending in /exec)
   // Example: 'https://script.google.com/macros/s/AKfycb.../exec'
-  GOOGLE_SHEET_URL: 'https://script.google.com/macros/s/AKfycby_O5ajq_c49FuVwRIWRTtj2mllnCjhYYd0aawYLnHxNIIl21pXjsDSBqsyCDmTX8ff/exec',
+  GOOGLE_SHEET_URL: '',
 };
 
 /* ════════════════════════════════════════════════
@@ -2515,6 +2639,246 @@ async function processBatchCreate(){
   }
 }
 
+let _availableDays=[];
+
+async function fetchDays(){
+  if(!CONFIG.GOOGLE_SHEET_URL)return [];
+  try{
+    const url=CONFIG.GOOGLE_SHEET_URL+(CONFIG.GOOGLE_SHEET_URL.includes('?')?'&':'?')+'action=list_days';
+    const res=await fetch(url,{method:'GET'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    return Array.isArray(data)?data:[];
+  }catch(e){console.warn('Days fetch failed:',e);return null;}
+}
+
+async function fetchDayQuestions(dayNumber){
+  if(!CONFIG.GOOGLE_SHEET_URL||!dayNumber)return [];
+  try{
+    const url=CONFIG.GOOGLE_SHEET_URL+(CONFIG.GOOGLE_SHEET_URL.includes('?')?'&':'?')+'action=get_day&num='+encodeURIComponent(dayNumber);
+    const res=await fetch(url,{method:'GET'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    return Array.isArray(data)?data:[];
+  }catch(e){console.warn('Day fetch failed:',e);return null;}
+}
+
+// Populate the Select Training Day dropdown with hardcoded 1-5 + custom 6+
+async function populateDayDropdown(){
+  const sel=document.getElementById('login-day');
+  if(!sel)return;
+  const cur=sel.value;
+  // Preserve hardcoded 1-5 (already in HTML)
+  // Remove any previously added custom day options
+  Array.from(sel.querySelectorAll('option[data-custom="true"]')).forEach(o=>o.remove());
+  // Fetch custom days from sheet
+  const days=await fetchDays();
+  if(!days){return;}
+  _availableDays=days;
+  days.sort((a,b)=>Number(a.dayNumber)-Number(b.dayNumber));
+  days.forEach(d=>{
+    const opt=document.createElement('option');
+    opt.value=String(d.dayNumber);
+    opt.dataset.custom='true';
+    opt.textContent='Day '+d.dayNumber+' — '+(d.dayName||'Custom');
+    sel.appendChild(opt);
+  });
+  if(cur)sel.value=cur;
+}
+
+/* ═══ UPDATE DAY MENU + MODALS ═══ */
+function showUpdateDayMenu(evt){
+  const menu=document.getElementById('update-day-menu');
+  const btn=evt.currentTarget;
+  const rect=btn.getBoundingClientRect();
+  menu.style.top=(rect.bottom+window.scrollY+6)+'px';
+  menu.style.left=Math.max(8,(rect.left+window.scrollX-40))+'px';
+  menu.classList.remove('hidden');
+  // Close on outside click
+  setTimeout(()=>{document.addEventListener('click',hideUpdateDayMenu,{once:true});},0);
+  evt.stopPropagation();
+}
+function hideUpdateDayMenu(){document.getElementById('update-day-menu').classList.add('hidden');}
+
+/* Add Day */
+async function showAddDayModal(){
+  document.getElementById('add-day-modal').classList.remove('hidden');
+  document.getElementById('add-day-name').value='';
+  document.getElementById('add-day-csv').value='';
+  document.getElementById('add-day-status').style.display='none';
+  document.getElementById('btn-add-day').disabled=true;
+  document.getElementById('btn-add-day').textContent='Create Day →';
+  // Suggest next available day number
+  if(_availableDays.length===0)await fetchDays().then(d=>{if(d)_availableDays=d;});
+  const maxNum=_availableDays.reduce((m,d)=>Math.max(m,Number(d.dayNumber)||0),5);
+  const next=maxNum+1;
+  document.getElementById('add-day-number').value=next;
+  document.getElementById('add-day-next-hint').textContent=next;
+}
+function closeAddDayModal(){document.getElementById('add-day-modal').classList.add('hidden');}
+function validateAddDayForm(){
+  const num=parseInt(document.getElementById('add-day-number').value)||0;
+  const name=document.getElementById('add-day-name').value.trim();
+  const file=document.getElementById('add-day-csv').files[0];
+  document.getElementById('btn-add-day').disabled=!(num>=6&&name.length>=2&&file);
+}
+async function processAddDay(){
+  const status=document.getElementById('add-day-status');
+  const btn=document.getElementById('btn-add-day');
+  const dayNumber=parseInt(document.getElementById('add-day-number').value)||0;
+  const dayName=document.getElementById('add-day-name').value.trim();
+  const file=document.getElementById('add-day-csv').files[0];
+  if(!dayNumber||!dayName||!file){
+    _statusErr(status,'✗ Please fill in all required fields.');
+    return;
+  }
+  if(!CONFIG.GOOGLE_SHEET_URL){
+    _statusErr(status,'✗ Google Sheets not configured.');
+    return;
+  }
+  btn.disabled=true;
+  _statusInfo(status,'Parsing CSV…');
+  let parsed;
+  try{parsed=parseCSVToQuestions(await file.text());}
+  catch(e){_statusErr(status,'✗ Parse error:<br>'+String(e.message||e).replace(/\n/g,'<br>'));btn.disabled=false;return;}
+  _statusInfo(status,'Creating Day '+dayNumber+' with '+parsed.questions.length+' questions…');
+  try{
+    const res=await fetch(CONFIG.GOOGLE_SHEET_URL,{
+      method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({type:'create_day',dayNumber,dayName,questions:parsed.questions,fileName:file.name,createdBy:'Admin'})
+    });
+    let result={ok:true};try{result=await res.json();}catch(e){}
+    if(result.ok===false){_statusErr(status,'✗ Server error: '+(result.error||'unknown'));btn.disabled=false;return;}
+    _statusOk(status,'✓ Day <strong>'+dayNumber+' — '+dayName+'</strong> created with '+parsed.questions.length+' questions. Candidates can now select it at login.');
+    btn.textContent='Create Another →';btn.disabled=false;
+    await populateDayDropdown();
+  }catch(e){_statusErr(status,'✗ Create day failed: '+String(e.message||e));btn.disabled=false;}
+}
+
+/* Edit Day */
+let _editDayCurrentQuestions=[];
+async function showEditDayModal(){
+  document.getElementById('edit-day-modal').classList.remove('hidden');
+  const sel=document.getElementById('edit-day-select');
+  sel.innerHTML='<option value="">— Choose a day —</option>';
+  if(_availableDays.length===0)await fetchDays().then(d=>{if(d)_availableDays=d;});
+  _availableDays.sort((a,b)=>Number(a.dayNumber)-Number(b.dayNumber)).forEach(d=>{
+    const opt=document.createElement('option');
+    opt.value=String(d.dayNumber);
+    opt.textContent='Day '+d.dayNumber+' — '+(d.dayName||'Custom')+' ('+d.questionCount+' Qs)';
+    sel.appendChild(opt);
+  });
+  document.getElementById('edit-day-mode-wrap').style.display='none';
+  document.getElementById('edit-day-multi-wrap').style.display='none';
+  document.getElementById('edit-day-one-wrap').style.display='none';
+  document.getElementById('edit-day-file-wrap').style.display='none';
+  document.getElementById('edit-day-status').style.display='none';
+  document.getElementById('btn-edit-day').disabled=true;
+  document.getElementById('btn-edit-day').textContent='Apply Changes →';
+  document.querySelectorAll('input[name="edit-mode"]').forEach(r=>r.checked=false);
+  document.getElementById('edit-day-numbers').value='';
+  document.getElementById('edit-day-onenum').value='';
+  document.getElementById('edit-day-csv').value='';
+  _editDayCurrentQuestions=[];
+}
+function closeEditDayModal(){document.getElementById('edit-day-modal').classList.add('hidden');}
+async function onEditDaySelect(){
+  const num=parseInt(document.getElementById('edit-day-select').value)||0;
+  if(!num){document.getElementById('edit-day-mode-wrap').style.display='none';return;}
+  document.getElementById('edit-day-mode-wrap').style.display='block';
+  // Pre-fetch current questions so we can merge later
+  const status=document.getElementById('edit-day-status');
+  _statusInfo(status,'Loading current questions for Day '+num+'…');
+  const qs=await fetchDayQuestions(num);
+  if(qs===null){_statusErr(status,'✗ Failed to load current day questions.');return;}
+  _editDayCurrentQuestions=qs;
+  document.getElementById('edit-day-hint').innerHTML='Day '+num+' currently has <strong>'+qs.length+' questions</strong>.';
+  status.style.display='none';
+  validateEditDayForm();
+}
+function onEditDayModeChange(){
+  const mode=document.querySelector('input[name="edit-mode"]:checked');
+  if(!mode)return;
+  document.getElementById('edit-day-multi-wrap').style.display=mode.value==='multi'?'block':'none';
+  document.getElementById('edit-day-one-wrap').style.display=mode.value==='one'?'block':'none';
+  document.getElementById('edit-day-file-wrap').style.display='block';
+  validateEditDayForm();
+}
+function validateEditDayForm(){
+  const num=parseInt(document.getElementById('edit-day-select').value)||0;
+  const mode=(document.querySelector('input[name="edit-mode"]:checked')||{}).value;
+  const file=document.getElementById('edit-day-csv').files[0];
+  let ok=num>0&&mode&&file;
+  if(mode==='multi'){
+    const nums=document.getElementById('edit-day-numbers').value.trim();
+    ok=ok&&/^\d+(\s*,\s*\d+)*$/.test(nums);
+  } else if(mode==='one'){
+    const one=parseInt(document.getElementById('edit-day-onenum').value)||0;
+    ok=ok&&one>=1;
+  }
+  document.getElementById('btn-edit-day').disabled=!ok;
+}
+async function processEditDay(){
+  const status=document.getElementById('edit-day-status');
+  const btn=document.getElementById('btn-edit-day');
+  const dayNumber=parseInt(document.getElementById('edit-day-select').value)||0;
+  const mode=(document.querySelector('input[name="edit-mode"]:checked')||{}).value;
+  const file=document.getElementById('edit-day-csv').files[0];
+  const dayMeta=_availableDays.find(d=>Number(d.dayNumber)===dayNumber);
+  const dayName=dayMeta?dayMeta.dayName:'Custom';
+
+  btn.disabled=true;
+  _statusInfo(status,'Parsing uploaded CSV…');
+  let parsed;
+  try{parsed=parseCSVToQuestions(await file.text());}
+  catch(e){_statusErr(status,'✗ Parse error:<br>'+String(e.message||e).replace(/\n/g,'<br>'));btn.disabled=false;return;}
+  const uploaded=parsed.questions;
+
+  // Build the final merged question set
+  let merged;
+  if(mode==='all'){
+    merged=uploaded;
+  } else if(mode==='multi'){
+    const positions=document.getElementById('edit-day-numbers').value.split(',').map(s=>parseInt(s.trim())).filter(n=>n>=1);
+    if(positions.length!==uploaded.length){
+      _statusErr(status,'✗ You specified '+positions.length+' question number(s) but the CSV has '+uploaded.length+' row(s). They must match.');
+      btn.disabled=false;return;
+    }
+    merged=_editDayCurrentQuestions.slice();
+    positions.forEach((pos,idx)=>{
+      // pos is 1-indexed
+      if(pos-1<merged.length)merged[pos-1]=uploaded[idx];
+      else merged.push(uploaded[idx]);
+    });
+  } else if(mode==='one'){
+    const pos=parseInt(document.getElementById('edit-day-onenum').value)||0;
+    if(uploaded.length!==1){
+      _statusErr(status,'✗ CSV must contain exactly one question row when replacing a single question. Found '+uploaded.length+'.');
+      btn.disabled=false;return;
+    }
+    merged=_editDayCurrentQuestions.slice();
+    if(pos-1<merged.length)merged[pos-1]=uploaded[0];
+    else merged.push(uploaded[0]);
+  }
+
+  _statusInfo(status,'Applying changes to Day '+dayNumber+'…');
+  try{
+    const res=await fetch(CONFIG.GOOGLE_SHEET_URL,{
+      method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({type:'edit_day',dayNumber,dayName,questions:merged,fileName:file.name,createdBy:'Admin'})
+    });
+    let result={ok:true};try{result=await res.json();}catch(e){}
+    if(result.ok===false){_statusErr(status,'✗ Server error: '+(result.error||'unknown'));btn.disabled=false;return;}
+    _statusOk(status,'✓ Day '+dayNumber+' updated. Now has <strong>'+merged.length+' questions</strong>.');
+    btn.textContent='Edit Another →';btn.disabled=false;
+    await populateDayDropdown();
+  }catch(e){_statusErr(status,'✗ Edit day failed: '+String(e.message||e));btn.disabled=false;}
+}
+
+function _statusOk(el,html){el.style.display='block';el.style.background='#e8f5e9';el.style.color='#15803d';el.style.border='1px solid #bbf7d0';el.innerHTML=html;}
+function _statusErr(el,html){el.style.display='block';el.style.background='#fef2f2';el.style.color='#c0392b';el.style.border='1px solid #fecaca';el.innerHTML=html;}
+function _statusInfo(el,html){el.style.display='block';el.style.background='#fff3e0';el.style.color='#c5650e';el.style.border='1px solid #ffd4b8';el.innerHTML=html;}
+
 /* ═══ CREATE WAVE ═══ */
 function showWaveModal(){
   document.getElementById('wave-modal').classList.remove('hidden');
@@ -2606,6 +2970,7 @@ function resetAdminFilters(){
   setVal('admin-from-date','');
   setVal('admin-to-date','');
   setVal('admin-month-filter','');
+  setVal('admin-sort-filter','date_desc');
   // Hide the custom date pickers (they only show when Period = Custom)
   const fromEl=document.getElementById('admin-from-date');
   const toEl=document.getElementById('admin-to-date');
@@ -3361,6 +3726,26 @@ function applyMonthFilter(records){
   });
 }
 
+function applySort(records,mode){
+  const arr=records.slice();
+  const dateNum=r=>{const d=parseRecordDate(r.datetime);return d?d.getTime():0;};
+  const dayBatch=r=>r.batch||(DAYS[r.day]?.name)||('Day '+r.day)||'';
+  switch(mode){
+    case 'date_asc':   arr.sort((a,b)=>dateNum(a)-dateNum(b));break;
+    case 'date_desc':  arr.sort((a,b)=>dateNum(b)-dateNum(a));break;
+    case 'name_asc':   arr.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));break;
+    case 'name_desc':  arr.sort((a,b)=>String(b.name||'').localeCompare(String(a.name||'')));break;
+    case 'score_desc': arr.sort((a,b)=>(b.pct||0)-(a.pct||0));break;
+    case 'score_asc':  arr.sort((a,b)=>(a.pct||0)-(b.pct||0));break;
+    case 'batch_asc':  arr.sort((a,b)=>String(dayBatch(a)).localeCompare(String(dayBatch(b))));break;
+    case 'attempt_asc': arr.sort((a,b)=>(a.attemptNumber||1)-(b.attemptNumber||1));break;
+    case 'attemptesc':
+    case 'attempt_desc':arr.sort((a,b)=>(b.attemptNumber||1)-(a.attemptNumber||1));break;
+    default:           arr.sort((a,b)=>dateNum(b)-dateNum(a));
+  }
+  return arr;
+}
+
 // Helper — get filtered records honoring every filter (used by table + exports)
 function getFilteredRecords(){
   let records=_adminRecordsCache;
@@ -3391,7 +3776,9 @@ function getFilteredRecords(){
 }
 
 function renderAdminTable(){
-  const filtered=getFilteredRecords().slice().reverse();
+  const filteredRaw=getFilteredRecords();
+  const sortMode=(document.getElementById('admin-sort-filter')||{}).value||'date_desc';
+  const filtered=applySort(filteredRaw,sortMode);
   const tbody=document.getElementById('admin-tbody');
   const empty=document.getElementById('admin-empty');
   if(filtered.length===0){
@@ -3516,18 +3903,22 @@ function _quoteCSV(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"';}
  * still get one row so no data is lost. Attempts with N answered questions
  * produce N rows — the summary columns are repeated on each so pivoting
  * or grouping works well in Excel / Sheets.
+ *
+ * NOTE: "Score" column is PER-QUESTION (10 for correct, 0 for wrong).
+ * Sum the column across rows to get the total for an attempt.
+ * "Total" and "Percentage" columns were removed by request.
  */
 function _recordsToWideCSV(records){
   const headers=[
     // Summary block (one attempt worth of info)
-    'Employee ID','Name','Country','Trainer','Wave','Batch','Day','Day Name',
-    'Attempt #','Score','Percentage','Correct','Total',
+    'Employee ID','Name','Country','Trainer','Wave','Session','Day','Day Name',
+    'Attempt #','Correct',
     'HTQ (HH:MM:SS)','Total Time (HH:MM:SS)','Overall Result','Status',
     'Started At','Completed At','Date/Time',
     // Per-question block (repeated per row of the same attempt)
     'Q #','Policy','Review Title','Review Content',
     'Selected Answer','Selected Reason','Correct Answer','Correct Reason',
-    'Question Time (HH:MM:SS)','Question Result'
+    'Score','Question Time (HH:MM:SS)','Question Result'
   ];
   const actionLabels={
     publish:'Publish',
@@ -3545,7 +3936,7 @@ function _recordsToWideCSV(records){
     const summary=[
       r.empId||'',r.name||'',r.country||'',r.trainer||'',r.wave||'',
       r.batch||'',r.day||'',r.batch||(DAYS[r.day]?.name)||'',
-      r.attemptNumber||1,r.score||0,(r.pct||0)+'%',r.correct||0,r.total||0,
+      r.attemptNumber||1,r.correct||0,
       formatSeconds(Number(r.htqSeconds)||0),
       formatSeconds(Number(r.totalSeconds)||0),
       overallResult,r.status||'completed',
@@ -3554,7 +3945,7 @@ function _recordsToWideCSV(records){
     const decisions=r.decisions||[];
     if(decisions.length===0){
       // In-progress or no answers yet: single row, empty per-Q fields
-      const row=summary.concat(['','','','','','','','','','']);
+      const row=summary.concat(['','','','','','','','','','','']);
       lines.push(row.map(_quoteCSV).join(','));
     } else {
       decisions.forEach((d,j)=>{
@@ -3564,13 +3955,15 @@ function _recordsToWideCSV(records){
         const corReason=d.correctReason||(d.correctAnswer==='publish'?'(publish — no reason)':'');
         const t=formatSeconds(Number(d.timeSeconds)||0);
         const qResult=d.correct?'Correct':(d.decision==='timeout'?'Timeout':'Incorrect');
+        // Per-question score: 10 for correct, 0 for wrong/timeout
+        const qScore=d.correct?10:0;
         const perQ=[
           'Q'+(d.q||j+1),
           d.policy||'',
           d.reviewTitle||'',
           d.reviewBody||'',
           sel,selReason,cor,corReason,
-          t,qResult
+          qScore,t,qResult
         ];
         lines.push(summary.concat(perQ).map(_quoteCSV).join(','));
       });
@@ -3678,25 +4071,30 @@ async function onDayChange(){
   const box=document.getElementById('day-info-box');
   const v=sel.value;
   if(v){
-    // Clear batch — day overrides batch
     document.getElementById('login-batch').value='';
     document.getElementById('batch-info-box').style.display='none';
   }
-  if(v&&DAYS[v]){
+  const dayNum=parseInt(v)||0;
+  if(v&&DAYS[dayNum]){
+    // Hardcoded Day 1-5
     box.style.display='block';
-    box.innerHTML=`<strong>${DAYS[v].name}</strong><br>${DAY_DESCRIPTIONS[v]}`;
-    if(v==='6'){
-      box.innerHTML+=`<br><br><span id="d6-status" style="color:var(--gray);">⏳ Checking cloud for uploaded questions…</span>`;
-      if(!CONFIG.GOOGLE_SHEET_URL){
-        document.getElementById('d6-status').innerHTML='<span style="color:var(--red);">⚠ Google Sheets not configured — Day 6 requires a connected sheet. Ask your trainer.</span>';
-      } else {
-        const status=await fetchDay6Status();
-        const el=document.getElementById('d6-status');
-        if(!el)return;
-        if(!status){el.innerHTML='<span style="color:var(--red);">⚠ Cannot reach Google Sheet — check your connection.</span>';}
-        else if(!status.active||status.count===0){el.innerHTML='<span style="color:var(--orange);">⚠ No Day 6 questions uploaded yet. Ask your trainer to upload a CSV.</span>';}
-        else {el.innerHTML='<span style="color:var(--green-d);font-weight:700;">☁ '+status.count+' questions available (most recent upload)</span>';}
-      }
+    box.innerHTML=`<strong>${DAYS[dayNum].name}</strong><br>${DAY_DESCRIPTIONS[dayNum]||''}`;
+  } else if(v&&dayNum>=6){
+    // Custom day — look up meta
+    box.style.display='block';
+    const meta=_availableDays.find(d=>Number(d.dayNumber)===dayNum);
+    const label=meta?(meta.dayName||'Custom'):'Custom';
+    box.innerHTML=`<strong>Day ${dayNum} — ${label}</strong><br>Trainer-uploaded questions. Content varies with the latest edit.`;
+    box.innerHTML+=`<br><br><span id="d6-status" style="color:var(--gray);">⏳ Checking cloud for questions…</span>`;
+    if(!CONFIG.GOOGLE_SHEET_URL){
+      document.getElementById('d6-status').innerHTML='<span style="color:var(--red);">⚠ Google Sheets not configured — ask your trainer.</span>';
+    } else {
+      const qs=await fetchDayQuestions(dayNum);
+      const el=document.getElementById('d6-status');
+      if(!el)return;
+      if(!qs){el.innerHTML='<span style="color:var(--red);">⚠ Cannot reach Google Sheet — check your connection.</span>';}
+      else if(qs.length===0){el.innerHTML='<span style="color:var(--orange);">⚠ No questions available for Day '+dayNum+' yet.</span>';}
+      else {el.innerHTML='<span style="color:var(--green-d);font-weight:700;">☁ '+qs.length+' questions available</span>';}
     }
   } else {
     box.style.display='none';
@@ -3728,9 +4126,18 @@ function goOnboarding(){
     selectedDay=parseInt(document.getElementById('login-day').value);
     selectedBatch='';selectedBatchName='';
     const day=DAYS[selectedDay];
-    document.getElementById('onboard-day-tag').textContent='Day '+selectedDay;
-    document.getElementById('onboard-day-title').textContent=day.name;
-    document.getElementById('onboard-desc').textContent='15 randomly selected questions from the Day '+selectedDay+' policy bank ('+day.name+'). Each question has 5 minutes to answer.';
+    if(day){
+      document.getElementById('onboard-day-tag').textContent='Day '+selectedDay;
+      document.getElementById('onboard-day-title').textContent=day.name;
+      document.getElementById('onboard-desc').textContent='15 randomly selected questions from the Day '+selectedDay+' policy bank ('+day.name+'). Each question has 5 minutes to answer.';
+    } else {
+      // Custom day (6+)
+      const meta=_availableDays.find(d=>Number(d.dayNumber)===selectedDay);
+      const label=meta?(meta.dayName||'Custom'):'Custom';
+      document.getElementById('onboard-day-tag').textContent='Day '+selectedDay;
+      document.getElementById('onboard-day-title').textContent=label;
+      document.getElementById('onboard-desc').textContent='Questions from Day '+selectedDay+' — '+label+'. Each question has 5 minutes to answer.';
+    }
   }
   document.getElementById('phase-login').style.display='none';
   document.getElementById('phase-onboarding').style.display='flex';
@@ -3742,15 +4149,18 @@ async function goWorkspace(){
   document.getElementById('sub-reviewer-id').textContent='Reviewer: '+maskId(empId);
   document.getElementById('classifier-val').textContent=empName;
   if(selectedBatch){
-    document.getElementById('day-mode-badge').textContent='Batch — '+selectedBatchName;
+    document.getElementById('day-mode-badge').textContent='Session — '+selectedBatchName;
     document.getElementById('day-mode-badge').style.cssText='background:#e8f5e9;color:#15803d;border:1px solid #bbf7d0;padding:2px 8px;border-radius:16px;font-size:9px;font-weight:700;';
-  } else {
+  } else if(DAYS[selectedDay]){
     document.getElementById('day-mode-badge').textContent='Day '+selectedDay+' — '+DAYS[selectedDay].name;
+  } else {
+    const meta=_availableDays.find(d=>Number(d.dayNumber)===selectedDay);
+    document.getElementById('day-mode-badge').textContent='Day '+selectedDay+' — '+(meta?meta.dayName||'Custom':'Custom');
   }
   // Loading state for cloud-loaded sets
-  if(selectedDay===6||selectedBatch){
+  if(selectedDay>=6||selectedBatch){
     document.getElementById('review-title-text').textContent='Loading questions from cloud…';
-    document.getElementById('review-body-text').textContent=(selectedBatch?'Fetching the '+selectedBatchName+' batch':'Fetching the latest Day 6 set')+' from your Google Sheet.';
+    document.getElementById('review-body-text').textContent=(selectedBatch?'Fetching the '+selectedBatchName+' session':'Fetching Day '+selectedDay)+' from your Google Sheet.';
     setActionsEnabled(false);
   }
   const result=await buildDayBank();
@@ -3793,19 +4203,28 @@ async function buildDayBank(){
       return {error:'No questions found for the selected batch.'};
     }
     pool=raw.map((q,i)=>convertDay6Question(q,i));
-  } else if(selectedDay===6){
+  } else if(selectedDay>=6){
+    // Custom day (Day 6, 7, 8…) — try the new Days API first,
+    // fall back to legacy Day6 upload if nothing is set up yet.
     if(!CONFIG.GOOGLE_SHEET_URL){
       activeQBank=[];
-      return {error:'Google Sheets not configured. Day 6 requires a connected sheet.'};
+      return {error:'Google Sheets not configured. Custom days require a connected sheet.'};
     }
-    const raw=await fetchDay6Questions();
+    let raw=await fetchDayQuestions(selectedDay);
+    if(raw===null||raw.length===0){
+      // Legacy fallback for Day 6 only
+      if(selectedDay===6){
+        const legacy=await fetchDay6Questions();
+        if(legacy&&legacy.length>0)raw=legacy;
+      }
+    }
     if(raw===null){
       activeQBank=[];
       return {error:'Cannot reach Google Sheet. Check your connection or the configured URL.'};
     }
     if(raw.length===0){
       activeQBank=[];
-      return {error:'No Day 6 questions have been uploaded yet. Ask your trainer to upload a CSV.'};
+      return {error:'No questions have been added for Day '+selectedDay+' yet. Ask your trainer to add or edit this day.'};
     }
     pool=raw.map((q,i)=>convertDay6Question(q,i));
   } else {
@@ -3836,7 +4255,7 @@ function sendInProgressPing(){
     batch:selectedBatchName||'',
     batchId:selectedBatch||'',
     day:selectedDay||0,
-    dayName:selectedBatch?selectedBatchName:(DAYS[selectedDay]?.name||''),
+    dayName:selectedBatch?selectedBatchName:(DAYS[selectedDay]?.name||(_availableDays.find(d=>Number(d.dayNumber)===selectedDay)?.dayName)||('Day '+selectedDay)),
     score:0,pct:0,correct:0,total:activeQBank.length,
     datetime:new Date().toLocaleString('en-IN'),
     decisions:[]
@@ -4240,7 +4659,7 @@ function endAssessment(){
     batch:selectedBatchName||'',
     batchId:selectedBatch||'',
     day:selectedDay||0,
-    dayName:selectedBatch?selectedBatchName:(DAYS[selectedDay]?.name||''),
+    dayName:selectedBatch?selectedBatchName:(DAYS[selectedDay]?.name||(_availableDays.find(d=>Number(d.dayNumber)===selectedDay)?.dayName)||('Day '+selectedDay)),
     score,pct,
     correct:correctCount,total:totalQ,
     htqSeconds,totalSeconds,
@@ -4343,6 +4762,7 @@ window.addEventListener('load',()=>{
   populateBatchDropdown();
   populateTrainerDropdown();
   populateWaveDropdown();
+  populateDayDropdown();
 });
 </script>
 </body>
