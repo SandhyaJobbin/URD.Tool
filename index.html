@@ -727,7 +727,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       <div class="admin-field" style="margin-bottom:0;">
         <label>Trainer Name <span style="color:var(--red)">*</span></label>
-        <input type="text" id="batch-trainer" placeholder="e.g. Anoop Krishnan" autocomplete="off" oninput="validateBatchForm()">
+        <input type="text" id="batch-trainer" placeholder="e.g. Rabi Behera" autocomplete="off" oninput="validateBatchForm()">
       </div>
       <div class="admin-field" style="margin-bottom:0;">
         <label>Attach to Wave (optional)</label>
@@ -782,7 +782,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     </div>
     <div class="admin-field">
       <label>Trainer Name <span style="color:var(--red)">*</span></label>
-      <input type="text" id="wave-trainer" placeholder="e.g. Anoop Krishnan" autocomplete="off" oninput="validateWaveForm()">
+      <input type="text" id="wave-trainer" placeholder="e.g. Rabi Behera" autocomplete="off" oninput="validateWaveForm()">
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       <div class="admin-field" style="margin-bottom:0;">
@@ -2497,7 +2497,7 @@ function showBatchModal(){
   document.getElementById('batch-csv').value='';
   document.getElementById('batch-status').style.display='none';
   document.getElementById('btn-create-batch').disabled=true;
-  document.getElementById('btn-create-batch').textContent='Create Batch →';
+  document.getElementById('btn-create-batch').textContent='Create Session →';
   // Populate wave dropdown from cached waves with richer labels
   const waveSel=document.getElementById('batch-wave');
   waveSel.innerHTML='<option value="">— None (no wave) —</option>';
