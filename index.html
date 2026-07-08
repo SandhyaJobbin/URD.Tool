@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -44,6 +44,8 @@ select{cursor:pointer;}
 .login-field{margin-bottom:10px;}
 .login-field label{display:block;font-size:9.5px;font-weight:700;color:var(--ink);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
 .login-field input,.login-field select{width:100%;padding:9px 12px;border:1.5px solid var(--bdr);border-radius:var(--r);font-size:12.5px;color:var(--ink);transition:border-color var(--tr),box-shadow var(--tr);background:#fff;}
+.login-field.field-disabled{opacity:.55;pointer-events:none;}
+.login-field.field-disabled label::after{content:' (locked)';color:var(--gray);font-size:9px;font-weight:600;letter-spacing:.5px;}
 .login-field input:focus,.login-field select:focus{border-color:var(--green-d);box-shadow:0 0 0 3px rgba(0,175,135,.1);}
 .login-field input.invalid{border-color:var(--red);}
 .login-err{font-size:10px;color:var(--red);margin-top:3px;display:none;}
@@ -73,7 +75,14 @@ select{cursor:pointer;}
 
 /* Admin Login Modal */
 .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;display:flex;align-items:center;justify-content:center;padding:16px;}
-.admin-modal-card{background:#fff;border-radius:14px;padding:32px 36px;width:min(400px,96vw);box-shadow:0 20px 60px rgba(0,0,0,.25);}
+.admin-modal-card{background:#fff;border-radius:14px;padding:26px 30px;width:min(400px,96vw);box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:calc(100vh - 30px);overflow-y:auto;}
+.admin-modal-card::-webkit-scrollbar{width:8px;}
+.admin-modal-card::-webkit-scrollbar-track{background:#f4f6fb;border-radius:4px;}
+.admin-modal-card::-webkit-scrollbar-thumb{background:#c7d0e5;border-radius:4px;}
+.admin-modal-card::-webkit-scrollbar-thumb:hover{background:#8b95ad;}
+.admin-field select{width:100%;padding:9px 12px;border:1.5px solid var(--bdr);border-radius:var(--r);font-size:12.5px;color:var(--ink);background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="%235a6a85" d="M0 0l5 6 5-6z"/></svg>') no-repeat right 12px center;-webkit-appearance:none;-moz-appearance:none;appearance:none;padding-right:32px;cursor:pointer;transition:border-color var(--tr);}
+.admin-field select:hover{border-color:#8b95ad;}
+.admin-field select:focus{outline:none;border-color:var(--admin);box-shadow:0 0 0 3px rgba(26,35,126,.1);}
 .admin-modal-card h3{font-size:16px;font-weight:800;color:var(--admin);margin-bottom:4px;}
 .admin-modal-sub{font-size:11px;color:var(--gray);margin-bottom:20px;}
 .admin-field{margin-bottom:14px;}
@@ -134,12 +143,13 @@ select{cursor:pointer;}
 .update-day-label strong{color:#c25e0a;font-size:12.5px;}
 .update-day-label small{color:var(--gray);font-size:10px;}
 /* Edit-Day mode choices */
-.edit-day-mode-choices{display:flex;flex-direction:column;gap:6px;}
-.mode-choice{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1.5px solid var(--bdr);border-radius:8px;cursor:pointer;font-size:11.5px;transition:all var(--tr);}
+.edit-day-mode-choices{display:flex;flex-direction:column;gap:5px;}
+.mode-choice{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border:1.5px solid var(--bdr);border-radius:8px;cursor:pointer;font-size:11px;transition:all var(--tr);}
 .mode-choice:hover{border-color:#E8781A;background:#fff8f0;}
-.mode-choice input[type="radio"]{margin-top:3px;accent-color:#E8781A;}
-.mode-choice span{line-height:1.5;color:var(--ink);}
-.mode-choice span small{color:var(--gray);font-size:10px;}
+.mode-choice input[type="radio"]{margin-top:2px;accent-color:#E8781A;}
+.mode-choice span{line-height:1.4;color:var(--ink);}
+.mode-choice span strong{font-size:11.5px;}
+.mode-choice span small{color:var(--gray);font-size:9.5px;display:block;margin-top:1px;}
 .admin-create-wave-btn{background:linear-gradient(135deg,#7B2D8B 0%,#5b1e6b 100%);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:11.5px;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:all var(--tr);box-shadow:0 3px 10px rgba(123,45,139,.25);}
 .admin-create-wave-btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(123,45,139,.4);}
 .admin-tmpl-btn{background:#fff;color:#324a6e;border:1.5px solid #c7d0e5;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--tr);white-space:nowrap;}
@@ -528,6 +538,8 @@ table.admin-table tr.row-fail:hover td{background:#fff0f0;}
 .btn-download-cert{width:100%;padding:8px;background:var(--ink);color:#fff;border-radius:var(--r);font-size:10px;font-weight:700;}
 .btn-download-cert:disabled{opacity:.45;cursor:not-allowed;}
 .btn-retake{width:100%;padding:6px;border-radius:var(--r);font-size:10px;font-weight:600;border:1.5px solid var(--bdr);color:var(--gray);background:#fff;margin-top:4px;}
+.btn-back-home{width:100%;padding:6px;border-radius:var(--r);font-size:10px;font-weight:700;border:1.5px solid var(--green-d);color:var(--green-d);background:#fff;margin-top:4px;cursor:pointer;transition:all var(--tr);}
+.btn-back-home:hover{background:var(--green-d);color:#fff;transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,175,135,.3);}
 /* Dark mode */
 body.dark{background:#111;color:#f2f2f7;}
 body.dark .ws-sidenav,body.dark .qright,body.dark .qleft-col1,body.dark .qleft-col2,body.dark .content-subnav{background:#1c1c1e;}
@@ -583,7 +595,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     </div>
     <div class="login-field">
       <label>Wave Code</label>
-      <select id="login-wave" onchange="validateLogin()">
+      <select id="login-wave" onchange="onWaveChange()">
         <option value="">— Select a wave (optional) —</option>
       </select>
     </div>
@@ -727,7 +739,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       <div class="admin-field" style="margin-bottom:0;">
         <label>Trainer Name <span style="color:var(--red)">*</span></label>
-        <input type="text" id="batch-trainer" placeholder="e.g. Rabi Behera" autocomplete="off" oninput="validateBatchForm()">
+        <input type="text" id="batch-trainer" placeholder="e.g. Anoop Krishnan" autocomplete="off" oninput="validateBatchForm()">
       </div>
       <div class="admin-field" style="margin-bottom:0;">
         <label>Attach to Wave (optional)</label>
@@ -782,7 +794,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     </div>
     <div class="admin-field">
       <label>Trainer Name <span style="color:var(--red)">*</span></label>
-      <input type="text" id="wave-trainer" placeholder="e.g. Rabi Behera" autocomplete="off" oninput="validateWaveForm()">
+      <input type="text" id="wave-trainer" placeholder="e.g. Anoop Krishnan" autocomplete="off" oninput="validateWaveForm()">
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       <div class="admin-field" style="margin-bottom:0;">
@@ -913,11 +925,11 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
         <div class="admin-filter-grid">
           <input type="text" class="admin-search-input" id="admin-search" placeholder="🔍 Search by name / ID…" oninput="renderAdminTable()">
           <select class="admin-filter-select" id="admin-day-filter" onchange="renderAdminTable()">
-            <option value="">All Days/Batches</option>
+            <option value="">All Days/Sessions</option>
             <option value="1">Day 1</option><option value="2">Day 2</option>
             <option value="3">Day 3</option><option value="4">Day 4</option>
-            <option value="5">Day 5</option><option value="6">Day 6</option>
-            <option value="__batch">Batches only</option>
+            <option value="5">Day 5</option>
+            <option value="__batch">Sessions only</option>
           </select>
           <select class="admin-filter-select" id="admin-pass-filter" onchange="renderAdminTable()">
             <option value="">All Results</option>
@@ -926,7 +938,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
             <option value="in_progress">In Progress</option>
           </select>
           <select class="admin-filter-select" id="admin-batch-filter" onchange="renderAdminTable()">
-            <option value="">All Batches</option>
+            <option value="">All Sessions</option>
           </select>
           <select class="admin-filter-select" id="admin-country-filter" onchange="renderAdminTable()">
             <option value="">All Countries</option>
@@ -973,7 +985,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
               <th>Country</th>
               <th>Trainer</th>
               <th>Wave</th>
-              <th>Day / Batch</th>
+              <th>Day / Session</th>
               <th>Attempt #</th>
               <th>Score</th>
               <th>Correct</th>
@@ -1218,6 +1230,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
         </div>
         <button class="btn-download-cert" id="btn-dl-cert" onclick="downloadCert()">Download Certificate (PDF)</button>
         <button class="btn-retake" onclick="retake()">Retake Assessment</button>
+        <button class="btn-back-home" onclick="backToHome()">← Back to Home</button>
       </div>
     </div>
   </div>
@@ -2208,6 +2221,7 @@ let selectedBatchName='';    // human-readable
 let selectedCountry='';
 let selectedTrainer='';
 let selectedWave='';
+let selectedTrainingType=''; // 'wave' or 'session'
 let currentAttemptId='';
 let attemptStartedAt='';
 let perQuestionSeconds=300;  // default 5 minutes, overridden per batch
@@ -2308,10 +2322,10 @@ async function populateTrainerDropdown(){
 }
 
 async function populateWaveDropdown(){
-  const sel=document.getElementById('login-wave');
+  const sel=document.getElementById('login-wave'); 
   if(!sel)return;
   const cur=sel.value;
-  sel.innerHTML='<option value="">— Select a wave (optional) —</option>';
+  sel.innerHTML='<option value="">— Select a wave —</option>';
   if(!CONFIG.GOOGLE_SHEET_URL)return;
   const waves=await fetchWaves();
   if(!waves)return;
@@ -2497,7 +2511,7 @@ function showBatchModal(){
   document.getElementById('batch-csv').value='';
   document.getElementById('batch-status').style.display='none';
   document.getElementById('btn-create-batch').disabled=true;
-  document.getElementById('btn-create-batch').textContent='Create Session →';
+  document.getElementById('btn-create-batch').textContent='Create Batch →';
   // Populate wave dropdown from cached waves with richer labels
   const waveSel=document.getElementById('batch-wave');
   waveSel.innerHTML='<option value="">— None (no wave) —</option>';
@@ -3540,6 +3554,8 @@ async function renderAdminDashboard(){
     if(batches)_availableBatches=batches;
     const waves=await fetchWaves();
     if(waves)_availableWaves=waves;
+    const days=await fetchDays();
+    if(days)_availableDays=days;
   }
   updateCloudStatus('done');
   const records=_adminRecordsCache;
@@ -3583,11 +3599,38 @@ function renderAdminBatches(){
 }
 
 function populateAdminFilterDropdowns(){
-  // Batch filter
+  // Day filter — inject custom days (6+) between Day 5 and "Sessions only"
+  const daySel=document.getElementById('admin-day-filter');
+  if(daySel){
+    const cur=daySel.value;
+    // Remove previously added custom day options
+    Array.from(daySel.querySelectorAll('option[data-custom="true"]')).forEach(o=>o.remove());
+    // Also include days seen in records that aren't in _availableDays (legacy)
+    const dayNums=new Set();
+    _availableDays.forEach(d=>{if(Number(d.dayNumber)>=6)dayNums.add(Number(d.dayNumber));});
+    _adminRecordsCache.forEach(r=>{
+      const n=Number(r.day);
+      if(n>=6&&!(r.batch||r.batchId))dayNums.add(n);
+    });
+    const sortedNums=Array.from(dayNums).sort((a,b)=>a-b);
+    // Find the "__batch" option to insert before it
+    const batchOnlyOpt=daySel.querySelector('option[value="__batch"]');
+    sortedNums.forEach(n=>{
+      const meta=_availableDays.find(d=>Number(d.dayNumber)===n);
+      const opt=document.createElement('option');
+      opt.value=String(n);
+      opt.dataset.custom='true';
+      opt.textContent='Day '+n+(meta&&meta.dayName?' — '+meta.dayName:'');
+      if(batchOnlyOpt)daySel.insertBefore(opt,batchOnlyOpt);
+      else daySel.appendChild(opt);
+    });
+    if(cur)daySel.value=cur;
+  }
+  // Session filter (was Batch filter — same ID kept for compat)
   const batchSel=document.getElementById('admin-batch-filter');
   if(batchSel){
     const cur=batchSel.value;
-    batchSel.innerHTML='<option value="">All Batches</option>';
+    batchSel.innerHTML='<option value="">All Sessions</option>';
     const seen=new Set();
     _availableBatches.forEach(b=>{
       if(b.batchName&&!seen.has(b.batchName)){
@@ -3912,7 +3955,7 @@ function _recordsToWideCSV(records){
   const headers=[
     // Summary block (one attempt worth of info)
     'Employee ID','Name','Country','Trainer','Wave','Session','Day','Day Name',
-    'Attempt #','Correct',
+    'Training Type','Attempt #','Correct',
     'HTQ (HH:MM:SS)','Total Time (HH:MM:SS)','Overall Result','Status',
     'Started At','Completed At','Date/Time',
     // Per-question block (repeated per row of the same attempt)
@@ -3936,6 +3979,7 @@ function _recordsToWideCSV(records){
     const summary=[
       r.empId||'',r.name||'',r.country||'',r.trainer||'',r.wave||'',
       r.batch||'',r.day||'',r.batch||(DAYS[r.day]?.name)||'',
+      r.trainingType||(r.batch?'session':(r.wave?'wave':'')),
       r.attemptNumber||1,r.correct||0,
       formatSeconds(Number(r.htqSeconds)||0),
       formatSeconds(Number(r.totalSeconds)||0),
@@ -4026,13 +4070,38 @@ function exportCSV(){return exportAllCSV();}
 const elEmpId=()=>document.getElementById('login-empid');
 const elName=()=>document.getElementById('login-name');
 
+function onWaveChange(){
+  const wave=document.getElementById('login-wave').value;
+  const daySel=document.getElementById('login-day');
+  const batchSel=document.getElementById('login-batch');
+  const dayField=daySel.closest('.login-field');
+  const batchField=batchSel.closest('.login-field');
+  if(wave){
+    // Wave locks the flow to Training Day only — disable Session
+    batchSel.value='';
+    batchSel.disabled=true;
+    if(batchField)batchField.classList.add('field-disabled');
+    daySel.disabled=false;
+    if(dayField)dayField.classList.remove('field-disabled');
+    document.getElementById('batch-info-box').style.display='none';
+  } else {
+    // No wave — Session-only flow. Day dropdown will be disabled UNLESS the user
+    // has already selected a day (we don't wipe it aggressively).
+    batchSel.disabled=false;
+    if(batchField)batchField.classList.remove('field-disabled');
+    daySel.value='';
+    daySel.disabled=true;
+    if(dayField)dayField.classList.add('field-disabled');
+    document.getElementById('day-info-box').style.display='none';
+  }
+  validateLogin();
+}
+
 function validateLogin(){
   const idInput=elEmpId(),nameInput=elName();
-  // Strip non-digits from Emp ID
   const rawId=idInput.value;
   const cleanId=rawId.replace(/[^0-9]/g,'');
   if(rawId!==cleanId)idInput.value=cleanId;
-  // Strip non-alpha from Name (keep letters + spaces)
   const rawName=nameInput.value;
   const cleanName=rawName.replace(/[^A-Za-z ]/g,'');
   if(rawName!==cleanName)nameInput.value=cleanName;
@@ -4040,17 +4109,25 @@ function validateLogin(){
   const id=cleanId.trim(),name=cleanName.trim();
   const day=document.getElementById('login-day').value;
   const batch=document.getElementById('login-batch').value;
+  const wave=(document.getElementById('login-wave')||{}).value||'';
   const country=(document.getElementById('login-country')||{}).value||'';
   const trainer=(document.getElementById('login-trainer')||{}).value||'';
   const idOk=/^[0-9]{3,20}$/.test(id);
   const nameOk=/^[A-Za-z]+( [A-Za-z]+)*$/.test(name)&&name.length>=2;
-  const dayOrBatchOk=!!day||!!batch;
   const countryOk=!!country;
   const trainerOk=!!trainer;
+
+  // New training-flow rule:
+  //   Wave selected → Day is required (Session is disabled)
+  //   No wave      → Session is required (Day is disabled)
+  let flowOk=false;
+  if(wave){flowOk=!!day;}
+  else{flowOk=!!batch;}
+
   document.getElementById('empid-err').style.display=idOk||!id?'none':'block';
   elEmpId().classList.toggle('invalid',!idOk&&!!id);
   document.getElementById('name-err').style.display=nameOk||!name?'none':'block';
-  document.getElementById('btn-launch').disabled=!(idOk&&nameOk&&dayOrBatchOk&&countryOk&&trainerOk);
+  document.getElementById('btn-launch').disabled=!(idOk&&nameOk&&flowOk&&countryOk&&trainerOk);
   const tipEl=document.getElementById('login-tip');
   if(tipEl) tipEl.innerHTML='💡 <strong>Tip:</strong> '+FUN_TIPS[Math.floor(Math.random()*FUN_TIPS.length)].slice(2);
 }
@@ -4108,6 +4185,8 @@ function goOnboarding(){
   selectedCountry=document.getElementById('login-country').value;
   selectedTrainer=document.getElementById('login-trainer').value;
   selectedWave=document.getElementById('login-wave').value;
+  // Training type: 'wave' if a wave was picked (Day-based flow), else 'session'
+  selectedTrainingType=selectedWave?'wave':'session';
   // Generate unique attempt ID for this session
   currentAttemptId='ATT-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
   attemptStartedAt=new Date().toLocaleString('en-IN');
@@ -4251,6 +4330,7 @@ function sendInProgressPing(){
     empId,name:empName,
     country:selectedCountry||'',
     trainer:selectedTrainer||'',
+    trainingType:selectedTrainingType||'',
     wave:selectedWave||'',
     batch:selectedBatchName||'',
     batchId:selectedBatch||'',
@@ -4655,6 +4735,7 @@ function endAssessment(){
     empId,name:empName,
     country:selectedCountry||'',
     trainer:selectedTrainer||'',
+    trainingType:selectedTrainingType||'',
     wave:selectedWave||'',
     batch:selectedBatchName||'',
     batchId:selectedBatch||'',
@@ -4749,9 +4830,38 @@ function downloadCert(){
 async function retake(){
   document.getElementById('phase-results').style.display='none';
   document.getElementById('phase-workspace').style.display='flex';
+  // Fresh attempt ID for the retake
+  currentAttemptId='ATT-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
+  attemptStartedAt=new Date().toLocaleString('en-IN');
   const result=await buildDayBank();
   if(result&&result.error){showLoadError(result.error);return;}
   loadQuestion();startTimer();
+}
+
+function backToHome(){
+  // Return to login screen and reset state
+  document.getElementById('phase-results').style.display='none';
+  document.getElementById('phase-workspace').style.display='none';
+  document.getElementById('phase-onboarding').style.display='none';
+  document.getElementById('phase-login').style.display='flex';
+  // Reset session state
+  currentAttemptId='';attemptStartedAt='';
+  activeQBank=[];sessionLog=[];questionTimings={};
+  score=0;currentQIdx=0;
+  // Reset form fields
+  const empIdEl=document.getElementById('login-empid');
+  const nameEl=document.getElementById('login-name');
+  if(empIdEl)empIdEl.value='';
+  if(nameEl)nameEl.value='';
+  ['login-country','login-trainer','login-wave','login-day','login-batch'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('day-info-box').style.display='none';
+  document.getElementById('batch-info-box').style.display='none';
+  document.getElementById('btn-launch').disabled=true;
+  // Re-fetch dropdowns in case a trainer added new items during the session
+  populateBatchDropdown();
+  populateDayDropdown();
 }
 
 // Rotate tips on page load + populate login dropdowns
@@ -4763,6 +4873,8 @@ window.addEventListener('load',()=>{
   populateTrainerDropdown();
   populateWaveDropdown();
   populateDayDropdown();
+  // Default flow: no wave → session mode → lock Day
+  onWaveChange();
 });
 </script>
 </body>
