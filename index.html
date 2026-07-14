@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -159,13 +160,33 @@ select{cursor:pointer;}
 .admin-stat-card.teal{border-left-color:#00a89e;}
 .admin-stat-card.teal .admin-stat-val{color:#00a89e;}
 .admin-export-group{display:flex;gap:6px;flex-wrap:wrap;}
-.admin-batches-list{padding:14px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;max-height:240px;overflow-y:auto;}
-.admin-batch-card{background:linear-gradient(135deg,#fafbff,#f0f5ff);border:1px solid #d8e1f2;border-left:4px solid #00AF87;border-radius:8px;padding:11px 13px;font-size:10.5px;line-height:1.6;}
-.admin-batch-card .bn{font-weight:800;color:#002b5c;font-size:12px;display:block;margin-bottom:3px;}
+.admin-batches-list{padding:14px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;max-height:280px;overflow-y:auto;}
+.admin-batches-list::-webkit-scrollbar{width:8px;}
+.admin-batches-list::-webkit-scrollbar-track{background:#f4f6fb;border-radius:4px;}
+.admin-batches-list::-webkit-scrollbar-thumb{background:#c7d0e5;border-radius:4px;}
+.admin-batch-card{border-radius:8px;padding:11px 13px;font-size:10.5px;line-height:1.6;position:relative;transition:transform var(--tr),box-shadow var(--tr);}
+.admin-batch-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.10);}
+.admin-batch-card .bn{font-weight:800;font-size:12px;display:block;margin-bottom:3px;padding-right:52px;}
 .admin-batch-card .bd{color:#5a6a85;font-size:10px;}
-.admin-batch-card .bm{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:6px;border-top:1px dashed #d8e1f2;}
-.admin-batch-card .bc{background:#00AF87;color:#fff;font-weight:700;font-size:9px;padding:2px 8px;border-radius:10px;}
+.admin-batch-card .bm{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(0,0,0,.10);}
+.admin-batch-card .bc{color:#fff;font-weight:700;font-size:9px;padding:2px 8px;border-radius:10px;}
 .admin-batch-card .bid{font-family:monospace;font-size:8.5px;color:#9aa4ba;}
+.admin-batch-card .btype{position:absolute;top:9px;right:10px;font-size:8px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;padding:2px 7px;border-radius:9px;color:#fff;}
+
+/* SESSION — matches "✨ Create new session" button (green #00AF87) */
+.admin-batch-card.type-session{background:linear-gradient(135deg,#f0fbf7,#e2f6ee);border:1px solid #b8e6d5;border-left:4px solid #00AF87;}
+.admin-batch-card.type-session .bn{color:#006b53;}
+.admin-batch-card.type-session .bc,.admin-batch-card.type-session .btype{background:#00AF87;}
+
+/* WAVE — matches "🌊 Create Wave" button (purple #7B2D8B) */
+.admin-batch-card.type-wave{background:linear-gradient(135deg,#faf3fc,#f2e5f6);border:1px solid #ddc0e6;border-left:4px solid #7B2D8B;}
+.admin-batch-card.type-wave .bn{color:#5b1e6b;}
+.admin-batch-card.type-wave .bc,.admin-batch-card.type-wave .btype{background:#7B2D8B;}
+
+/* DAY — matches "🔄 Update Day" button (orange #E8781A) */
+.admin-batch-card.type-day{background:linear-gradient(135deg,#fff8f1,#feeedd);border:1px solid #f7d5b4;border-left:4px solid #E8781A;}
+.admin-batch-card.type-day .bn{color:#a34f08;}
+.admin-batch-card.type-day .bc,.admin-batch-card.type-day .btype{background:#E8781A;}
 /* Expanded filter grid */
 .admin-filters{padding:14px 18px;border-bottom:1px solid var(--bdr);background:#fafbff;}
 .admin-filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;}
@@ -899,7 +920,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <!-- BATCHES SECTION -->
     <div class="admin-batches-card">
       <div class="admin-batches-header">
-        <h3>🛠 Trainer Tools & Active Batches</h3>
+        <h3>🛠 Trainer Tools — Days, Waves &amp; Sessions</h3>
         <div class="admin-batches-actions">
           <button class="admin-upload-day6-btn" onclick="showUpdateDayMenu(event)">🔄 Update Day ▾</button>
           <button class="admin-create-wave-btn" onclick="showWaveModal()">🌊 Create Wave</button>
@@ -2322,10 +2343,10 @@ async function populateTrainerDropdown(){
 }
 
 async function populateWaveDropdown(){
-  const sel=document.getElementById('login-wave'); 
+  const sel=document.getElementById('login-wave');
   if(!sel)return;
   const cur=sel.value;
-  sel.innerHTML='<option value="">— Select a wave —</option>';
+  sel.innerHTML='<option value="">— Select a wave (optional) —</option>';
   if(!CONFIG.GOOGLE_SHEET_URL)return;
   const waves=await fetchWaves();
   if(!waves)return;
@@ -3581,21 +3602,95 @@ async function renderAdminDashboard(){
 function renderAdminBatches(){
   const list=document.getElementById('admin-batches-list');
   if(!list)return;
-  if(!_availableBatches.length){
-    list.innerHTML='<div class="admin-empty" style="padding:20px 12px;font-size:11px;">No batches created yet. Click <strong>Create New Batch</strong> to add one.</div>';
+
+  // Build a unified list of Sessions, Waves and Days so trainers see
+  // everything they created in one place, colour-coded to match the
+  // button that created it.
+  const cards=[];
+
+  // Sessions (green — matches "✨ Create new session")
+  _availableBatches.forEach(b=>{
+    const attempts=_adminRecordsCache.filter(r=>r.batch===b.batchName||r.batchId===b.batchId).length;
+    cards.push({
+      type:'session',
+      typeLabel:'Session',
+      name:b.batchName||'(unnamed)',
+      dates:(b.startDate||'—')+' → '+(b.endDate||'—'),
+      meta:(b.questionCount||0)+' Qs · '+attempts+' attempt'+(attempts===1?'':'s'),
+      id:b.batchId||'',
+      sortKey:_cardSortKey(b.createdAt,b.startDate,b.batchId)
+    });
+  });
+
+  // Waves (purple — matches "🌊 Create Wave")
+  _availableWaves.forEach(w=>{
+    const attempts=_adminRecordsCache.filter(r=>r.wave===w.waveCode).length;
+    cards.push({
+      type:'wave',
+      typeLabel:'Wave',
+      name:w.waveCode+(w.waveName?' · '+w.waveName:''),
+      dates:(w.startDate||'—')+' → '+(w.endDate||'—'),
+      meta:(w.trainerName?w.trainerName+' · ':'')+attempts+' attempt'+(attempts===1?'':'s'),
+      id:w.waveId||'',
+      sortKey:_cardSortKey(w.createdAt,w.startDate,w.waveId)
+    });
+  });
+
+  // Days (orange — matches "🔄 Update Day")
+  _availableDays.forEach(d=>{
+    const attempts=_adminRecordsCache.filter(r=>Number(r.day)===Number(d.dayNumber)&&!(r.batch||r.batchId)).length;
+    cards.push({
+      type:'day',
+      typeLabel:'Day',
+      name:'Day '+d.dayNumber+' — '+(d.dayName||'Custom'),
+      dates:'Created: '+(d.createdAt||'—'),
+      meta:(d.questionCount||0)+' Qs · '+attempts+' attempt'+(attempts===1?'':'s'),
+      id:d.dayId||'',
+      sortKey:_cardSortKey(d.createdAt,'',d.dayId)
+    });
+  });
+
+  if(cards.length===0){
+    list.innerHTML='<div class="admin-empty" style="padding:20px 12px;font-size:11px;">Nothing created yet. Use <strong>🔄 Update Day</strong>, <strong>🌊 Create Wave</strong>, or <strong>✨ Create new session</strong> to get started.</div>';
     return;
   }
-  list.innerHTML=_availableBatches.map(b=>{
-    const attempts=_adminRecordsCache.filter(r=>r.batch===b.batchName||r.batchId===b.batchId).length;
-    return`<div class="admin-batch-card">
-      <span class="bn">${b.batchName||'(unnamed)'}</span>
-      <span class="bd">📅 ${b.startDate||'—'} → ${b.endDate||'—'}</span>
+
+  // Latest first
+  cards.sort((a,b)=>b.sortKey-a.sortKey);
+
+  list.innerHTML=cards.map(c=>`<div class="admin-batch-card type-${c.type}">
+      <span class="btype">${c.typeLabel}</span>
+      <span class="bn">${c.name}</span>
+      <span class="bd">📅 ${c.dates}</span>
       <div class="bm">
-        <span class="bc">${b.questionCount||0} Qs · ${attempts} attempt${attempts===1?'':'s'}</span>
-        <span class="bid">${b.batchId||''}</span>
+        <span class="bc">${c.meta}</span>
+        <span class="bid">${c.id}</span>
       </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
+}
+
+// Build a numeric sort key so newest items float to the top.
+// Falls back through createdAt → startDate → embedded timestamp in the ID.
+function _cardSortKey(createdAt,startDate,id){
+  // 1. Try createdAt (locale string like "01/07/2026, 10:03:00")
+  const d1=parseRecordDate(createdAt);
+  if(d1)return d1.getTime();
+  // 2. Try startDate (ISO "2026-07-01")
+  if(startDate){
+    const d2=new Date(startDate);
+    if(!isNaN(d2.getTime()))return d2.getTime();
+  }
+  // 3. IDs embed a timestamp: BATCH-20260701-100300 / WAVE-… / DAY-…
+  const m=String(id||'').match(/(\d{8})[-_]?(\d{6})?/);
+  if(m){
+    const ymd=m[1];
+    const hms=m[2]||'000000';
+    const iso=ymd.slice(0,4)+'-'+ymd.slice(4,6)+'-'+ymd.slice(6,8)+'T'+
+              hms.slice(0,2)+':'+hms.slice(2,4)+':'+hms.slice(4,6);
+    const d3=new Date(iso);
+    if(!isNaN(d3.getTime()))return d3.getTime();
+  }
+  return 0;
 }
 
 function populateAdminFilterDropdowns(){
@@ -4876,6 +4971,44 @@ window.addEventListener('load',()=>{
   // Default flow: no wave → session mode → lock Day
   onWaveChange();
 });
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
 </script>
 </body>
 </html>
