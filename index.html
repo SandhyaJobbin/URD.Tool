@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,6 +84,7 @@ select{cursor:pointer;}
 .admin-field select:hover{border-color:#8b95ad;}
 .admin-field select:focus{outline:none;border-color:var(--admin);box-shadow:0 0 0 3px rgba(26,35,126,.1);}
 .admin-modal-card h3{font-size:16px;font-weight:800;color:var(--admin);margin-bottom:4px;}
+.masked-input{-webkit-text-security:disc;text-security:disc;-moz-text-security:disc;}
 .admin-modal-sub{font-size:11px;color:var(--gray);margin-bottom:20px;}
 .admin-field{margin-bottom:14px;}
 .admin-field label{display:block;font-size:10px;font-weight:700;color:var(--ink);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
@@ -587,17 +587,17 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     </div>
     <div class="login-divider"></div>
     <h2 class="login-title">Content Moderation Assessment</h2>
-    <p class="login-sub">Enter your details to access your personalised training session.</p>
+    <p class="login-sub">Enter your training ID and display name to start a practice assessment. This is an internal training simulator — no passwords or personal account details are collected.</p>
     <div class="login-row">
       <div class="login-field">
-        <label>Employee ID <span style="color:var(--red)">*</span></label>
+        <label>Training ID <span style="color:var(--red)">*</span></label>
         <input type="text" id="login-empid" placeholder="e.g. 233223" maxlength="20" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
         <div class="login-err" id="empid-err">Required — numbers only (3–20 digits)</div>
       </div>
       <div class="login-field">
-        <label>Full Name <span style="color:var(--red)">*</span></label>
-        <input type="text" id="login-name" placeholder="Your full name (letters only)" maxlength="60" autocomplete="off">
-        <div class="login-err" id="name-err">Please enter your full name (letters and spaces only)</div>
+        <label>Display Name <span style="color:var(--red)">*</span></label>
+        <input type="text" id="login-name" placeholder="Your name (letters only)" maxlength="60" autocomplete="off">
+        <div class="login-err" id="name-err">Please enter your name (letters and spaces only)</div>
       </div>
     </div>
     <div class="login-row">
@@ -841,7 +841,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <p class="admin-modal-sub">Upload a CSV file with serious-issue review scenarios. Each upload creates a new tab in your Google Sheet and becomes the active Day 6 question set for all users.</p>
     <div class="admin-field">
       <label>Trainer Password <span style="color:var(--red)">*</span></label>
-      <input type="password" id="upload-pass-input" placeholder="Enter password" autocomplete="off" oninput="onUploadPassInput()">
+      <input type="text" id="upload-pass-input" class="masked-input" placeholder="Enter access code" autocomplete="off" inputmode="text" oninput="onUploadPassInput()">
     </div>
     <div class="admin-field">
       <label>CSV File <span style="color:var(--red)">*</span></label>
@@ -868,8 +868,8 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <input type="text" id="admin-empid-input" placeholder="e.g. Trainer Lead" autocomplete="off">
     </div>
     <div class="admin-field">
-      <label>Admin Password <span style="color:var(--red)">*</span></label>
-      <input type="password" id="admin-pass-input" placeholder="Enter password" autocomplete="off" onkeydown="if(event.key==='Enter')tryAdminLogin()">
+      <label>Admin Access Code <span style="color:var(--red)">*</span></label>
+      <input type="text" id="admin-pass-input" class="masked-input" placeholder="Enter access code" autocomplete="off" inputmode="text" onkeydown="if(event.key==='Enter')tryAdminLogin()">
     </div>
     <div class="admin-err" id="admin-err">Incorrect password. Please try again.</div>
     <button class="admin-login-btn" onclick="tryAdminLogin()">Submit →</button>
@@ -4971,44 +4971,6 @@ window.addEventListener('load',()=>{
   // Default flow: no wave → session mode → lock Day
   onWaveChange();
 });
-</script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
 </script>
 </body>
 </html>
