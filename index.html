@@ -38,23 +38,65 @@ select{cursor:pointer;}
 #phase-login{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:1000;overflow-y:auto;padding:14px;}
 .login-bg{position:absolute;inset:0;background:linear-gradient(135deg,#f0fff8 0%,#e8f4fd 50%,#f8f0ff 100%);z-index:0;}
 .login-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%, rgba(52,224,161,.08) 0%, transparent 50%),radial-gradient(circle at 80% 20%, rgba(123,45,139,.06) 0%, transparent 40%);z-index:1;}
-.login-card{position:relative;z-index:2;background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:22px 26px 20px;width:min(720px,96vw);box-shadow:0 20px 60px rgba(0,0,0,.12);margin:0 auto;max-height:calc(100vh - 20px);overflow-y:auto;}
-.login-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.login-card{position:relative;z-index:2;background:#fff;border:1px solid var(--bdr);border-radius:16px;padding:30px 44px 26px;width:min(880px,95vw);box-shadow:0 20px 60px rgba(0,0,0,.12);margin:0 auto;max-height:calc(100vh - 16px);overflow:visible;}
+.login-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
 @media(max-width:540px){.login-row{grid-template-columns:1fr;gap:0;}}
 /* Row with Day / OR / Batch — a slim OR chip splits the two selects */
-.day-batch-row{display:grid;grid-template-columns:1fr 44px 1fr;gap:10px;align-items:end;}
-.day-batch-or{display:flex;align-items:center;justify-content:center;padding-bottom:10px;}
-.day-batch-or span{background:linear-gradient(135deg,#f1f3f9,#e6ebf4);color:#5a6a85;font-size:9.5px;font-weight:800;padding:5px 10px;border-radius:14px;letter-spacing:2px;border:1px solid #d5dbe8;}
+.day-batch-row{display:grid;grid-template-columns:1fr 52px 1fr;gap:16px;align-items:end;}
+.day-batch-or{display:flex;align-items:center;justify-content:center;padding-bottom:11px;}
+.day-batch-or span{background:linear-gradient(135deg,#f1f3f9,#e6ebf4);color:#5a6a85;font-size:10px;font-weight:800;padding:6px 11px;border-radius:14px;letter-spacing:2px;border:1px solid #d5dbe8;}
 @media(max-width:540px){.day-batch-row{grid-template-columns:1fr;gap:6px;}.day-batch-or{padding:6px 0;}}
-.login-logo{text-align:center;margin-bottom:4px;}
+.login-logo{text-align:center;margin-bottom:5px;}
 .login-logo .tool-name{font-size:24px;font-weight:900;background:linear-gradient(135deg,#00AF87,#7B2D8B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.5px;}
-.login-logo .tool-sub{font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
-.login-divider{width:36px;height:3px;background:linear-gradient(90deg,var(--green-d),var(--purple));border-radius:2px;margin:8px auto 10px;}
-.login-title{font-size:15px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:3px;}
-.login-sub{font-size:11px;color:var(--gray);text-align:center;margin-bottom:14px;}
-.login-field{margin-bottom:10px;}
-.login-field label{display:block;font-size:9.5px;font-weight:700;color:var(--ink);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
-.login-field input,.login-field select{width:100%;padding:9px 12px;border:1.5px solid var(--bdr);border-radius:var(--r);font-size:12.5px;color:var(--ink);transition:border-color var(--tr),box-shadow var(--tr);background:#fff;}
+.login-logo .tool-sub{font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+.login-divider{width:44px;height:3px;background:linear-gradient(90deg,var(--green-d),var(--purple));border-radius:2px;margin:11px auto 13px;}
+.login-title{font-size:18px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:8px;letter-spacing:-.2px;}
+.login-sub{font-size:13.5px;line-height:1.7;color:#5a6a85;text-align:center;margin-bottom:24px;max-width:660px;margin-left:auto;margin-right:auto;}
+.login-field{margin-bottom:18px;}
+.login-field label{display:block;font-size:11px;font-weight:700;color:var(--ink);margin-bottom:7px;text-transform:uppercase;letter-spacing:.6px;}
+/* Short-viewport safety: progressively tighten so the card never needs scrolling */
+@media(max-height:820px){
+  .login-card{padding:24px 40px 22px;}
+  .login-divider{margin:9px auto 11px;}
+  .login-sub{font-size:13px;line-height:1.6;margin-bottom:20px;}
+  .login-field{margin-bottom:15px;}
+  .login-row{gap:20px;}
+  .admin-separator{margin:16px 0 12px;}
+  .trainer-btn-row{margin-bottom:13px;}
+}
+@media(max-height:790px){
+  .login-card{padding:20px 36px 18px;}
+  .login-logo .tool-name{font-size:21px;}
+  .login-divider{margin:8px auto 10px;}
+  .login-title{font-size:17px;margin-bottom:6px;}
+  .login-sub{font-size:12.5px;line-height:1.55;margin-bottom:16px;}
+  .login-field{margin-bottom:12px;}
+  .login-field label{margin-bottom:5px;}
+  .login-row{gap:18px;}
+  .btn-launch{padding:11px;margin-top:5px;}
+  .admin-separator{margin:14px 0 10px;}
+  .trainer-btn-row{margin-bottom:11px;}
+  .btn-admin-portal{padding:10px;}
+  .login-fun-tips{padding:8px 12px;font-size:10px;}
+}
+@media(max-height:700px){
+  .login-card{padding:15px 30px 14px;}
+  .login-logo .tool-name{font-size:19px;}
+  .login-logo .tool-sub{font-size:9px;}
+  .login-divider{margin:6px auto 7px;}
+  .login-title{font-size:15.5px;margin-bottom:4px;}
+  .login-sub{font-size:11.5px;line-height:1.5;margin-bottom:11px;}
+  .login-field{margin-bottom:9px;}
+  .login-field label{font-size:10px;margin-bottom:4px;}
+  .login-field input,.login-field select{padding:8px 11px;font-size:12px;}
+  .login-row{gap:15px;}
+  .btn-launch{padding:10px;font-size:12.5px;margin-top:3px;}
+  .admin-separator{margin:10px 0 8px;}
+  .trainer-btn-row{margin-bottom:0;}
+  .btn-admin-portal{padding:9px;font-size:11.5px;}
+  .login-fun-tips{display:none;}
+}
+.login-field input,.login-field select{width:100%;padding:11px 14px;border:1.5px solid var(--bdr);border-radius:var(--r);font-size:13px;color:var(--ink);transition:border-color var(--tr),box-shadow var(--tr);background:#fff;}
 .login-field.field-disabled{opacity:.55;pointer-events:none;}
 .login-field.field-disabled label::after{content:' (locked)';color:var(--gray);font-size:9px;font-weight:600;letter-spacing:.5px;}
 .login-field input:focus,.login-field select:focus{border-color:var(--green-d);box-shadow:0 0 0 3px rgba(0,175,135,.1);}
@@ -66,17 +108,17 @@ select{cursor:pointer;}
 .batch-divider{display:flex;align-items:center;gap:10px;margin:4px 0;}
 .batch-divider::before,.batch-divider::after{content:'';flex:1;height:1px;background:var(--bdr);}
 .batch-divider span{font-size:9px;color:var(--gray);font-weight:800;letter-spacing:1.5px;}
-.btn-launch{width:100%;padding:11px;background:linear-gradient(135deg,var(--green-d),#00c49a);color:#fff;border-radius:var(--r);font-size:13px;font-weight:800;transition:all var(--tr);margin-top:4px;letter-spacing:.3px;box-shadow:0 4px 15px rgba(0,175,135,.3);}
+.btn-launch{width:100%;padding:13px;background:linear-gradient(135deg,var(--green-d),#00c49a);color:#fff;border-radius:var(--r);font-size:13.5px;font-weight:800;transition:all var(--tr);margin-top:8px;letter-spacing:.3px;box-shadow:0 4px 15px rgba(0,175,135,.3);}
 .btn-launch:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;}
 .btn-launch:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,175,135,.4);}
-.login-fun-tips{background:#fffbf0;border:1px solid #ffd;border-radius:var(--r);padding:7px 11px;margin-top:10px;font-size:9.5px;color:#8b7220;text-align:center;line-height:1.5;}
+.login-fun-tips{background:#fffbf0;border:1px solid #f2e4c0;border-radius:var(--r);padding:10px 14px;margin-top:0;font-size:10.5px;color:#8b7220;text-align:center;line-height:1.6;}
 
 /* Admin separator + button on login */
-.admin-separator{display:flex;align-items:center;gap:10px;margin:10px 0 8px;}
+.admin-separator{display:flex;align-items:center;gap:12px;margin:20px 0 14px;}
 .admin-separator::before,.admin-separator::after{content:'';flex:1;height:1px;background:var(--bdr);}
-.admin-separator span{font-size:9.5px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
-.trainer-btn-row{display:block;}
-.btn-admin-portal{width:100%;padding:10px;background:#fff;color:var(--admin);border:1.5px solid var(--admin);border-radius:var(--r);font-size:12px;font-weight:700;letter-spacing:.2px;transition:all var(--tr);cursor:pointer;}
+.admin-separator span{font-size:10px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:1.2px;}
+.trainer-btn-row{display:block;margin-bottom:16px;}
+.btn-admin-portal{width:100%;padding:11px;background:#fff;color:var(--admin);border:1.5px solid var(--admin);border-radius:var(--r);font-size:12.5px;font-weight:700;letter-spacing:.2px;transition:all var(--tr);cursor:pointer;}
 .btn-admin-portal:hover{background:var(--admin);color:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,35,126,.25);}
 .btn-upload-csv{width:100%;padding:11px 8px;background:#fff;color:var(--orange);border:1.5px solid var(--orange);border-radius:var(--r);font-size:12px;font-weight:700;letter-spacing:.2px;transition:all var(--tr);cursor:pointer;}
 .btn-upload-csv:hover{background:var(--orange);color:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,120,26,.25);}
@@ -96,6 +138,35 @@ select{cursor:pointer;}
 .admin-field select:focus{outline:none;border-color:var(--admin);box-shadow:0 0 0 3px rgba(26,35,126,.1);}
 .admin-modal-card h3{font-size:16px;font-weight:800;color:var(--admin);margin-bottom:4px;}
 .masked-input{-webkit-text-security:disc;text-security:disc;-moz-text-security:disc;}
+
+/* ═══ CELEBRATION PARTICLES (correct answer) ═══ */
+#celebrate-layer{position:fixed;inset:0;pointer-events:none;z-index:100000;overflow:hidden;}
+.cel-piece{position:absolute;top:50%;left:50%;will-change:transform,opacity;opacity:0;}
+/* Confetti rectangles */
+.cel-confetti{width:9px;height:14px;border-radius:2px;animation:celBurst var(--dur,1500ms) cubic-bezier(.15,.65,.35,1) forwards;}
+/* Emoji-style pieces (stars, flowers, sparkles) */
+.cel-emoji{font-size:var(--sz,20px);line-height:1;animation:celBurst var(--dur,1600ms) cubic-bezier(.15,.65,.35,1) forwards;}
+/* Small glowing dots */
+.cel-dot{width:8px;height:8px;border-radius:50%;animation:celBurst var(--dur,1300ms) cubic-bezier(.15,.65,.35,1) forwards;}
+@keyframes celBurst{
+  0%{opacity:1;transform:translate(-50%,-50%) rotate(0deg) scale(.3);}
+  15%{opacity:1;transform:translate(calc(-50% + var(--x1)),calc(-50% + var(--y1))) rotate(var(--r1)) scale(1.15);}
+  100%{opacity:0;transform:translate(calc(-50% + var(--x2)),calc(-50% + var(--y2))) rotate(var(--r2)) scale(.85);}
+}
+/* Ring pulse behind the tick */
+.cel-ring{position:absolute;top:50%;left:50%;width:70px;height:70px;margin:-35px 0 0 -35px;border-radius:50%;border:3px solid var(--green);opacity:0;animation:celRing 900ms ease-out forwards;}
+@keyframes celRing{
+  0%{opacity:.85;transform:scale(.35);}
+  100%{opacity:0;transform:scale(3.4);}
+}
+/* Gentle bounce on the feedback tick icon */
+@keyframes celPop{
+  0%{transform:scale(.4);}55%{transform:scale(1.22);}75%{transform:scale(.94);}100%{transform:scale(1);}
+}
+.fb-icon-pop{animation:celPop 620ms cubic-bezier(.2,.8,.3,1.2);}
+@media (prefers-reduced-motion:reduce){
+  .cel-piece,.cel-ring,.fb-icon-pop{animation:none !important;opacity:0 !important;}
+}
 .admin-modal-sub{font-size:11px;color:var(--gray);margin-bottom:20px;}
 .admin-field{margin-bottom:14px;}
 .admin-field label{display:block;font-size:10px;font-weight:700;color:var(--ink);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
@@ -215,13 +286,17 @@ select{cursor:pointer;}
 .score-pill.inprogress{background:linear-gradient(135deg,#FFC14D,#c9950f);color:#3d2c00;}
 /* View Answers detailed grid */
 .q-detail-title{font-size:11px;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:.2px;}
-.q-detail-header{display:grid;grid-template-columns:60px 130px 140px minmax(180px,2fr) minmax(180px,1.8fr) minmax(180px,1.8fr) 90px;gap:8px;padding:6px 8px;background:#eef1f7;border-radius:6px;font-size:9.5px;font-weight:800;color:#324a6e;letter-spacing:.3px;text-transform:uppercase;margin-bottom:5px;}
-.q-detail-row{display:grid;grid-template-columns:60px 130px 140px minmax(180px,2fr) minmax(180px,1.8fr) minmax(180px,1.8fr) 90px;gap:8px;padding:7px 8px;border-bottom:1px solid #eef1f7;font-size:10px;color:var(--ink);line-height:1.4;}
+.q-detail-header{display:grid;grid-template-columns:58px 78px 120px minmax(150px,1.6fr) minmax(160px,1.6fr) minmax(160px,1.6fr) minmax(140px,1.4fr) 78px;gap:8px;padding:6px 8px;background:#eef1f7;border-radius:6px;font-size:9.5px;font-weight:800;color:#324a6e;letter-spacing:.3px;text-transform:uppercase;margin-bottom:5px;}
+.q-detail-row{display:grid;grid-template-columns:58px 78px 120px minmax(150px,1.6fr) minmax(160px,1.6fr) minmax(160px,1.6fr) minmax(140px,1.4fr) 78px;gap:8px;padding:7px 8px;border-bottom:1px solid #eef1f7;font-size:10px;color:var(--ink);line-height:1.4;}
 .q-detail-row:last-child{border-bottom:none;}
 .q-detail-cell{overflow:hidden;text-overflow:ellipsis;}
 .q-detail-cell.review{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:italic;color:#4a5568;}
 .q-detail-cell.policy{color:#5a3a80;font-weight:600;font-size:9.5px;}
 .q-detail-cell.name{color:#324a6e;font-weight:700;font-size:9.5px;}
+.q-detail-cell.modc{color:#334155;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:italic;}
+.qt-pill{display:inline-block;font-size:8.5px;font-weight:800;padding:2px 7px;border-radius:9px;letter-spacing:.3px;}
+.qt-pill.qt-incoming{background:#e8f5e9;color:#15803d;border:1px solid #bbf7d0;}
+.qt-pill.qt-reported{background:#fef2f2;color:#c0392b;border:1px solid #fecaca;}
 .q-detail-cell.selected{font-weight:700;}
 .q-detail-cell.selected.publish{color:var(--green-d);}
 .q-detail-cell.selected.mod{color:var(--red);}
@@ -231,7 +306,7 @@ select{cursor:pointer;}
 .q-detail-cell.time{color:#324a6e;font-family:'SF Mono',Menlo,monospace;font-size:10.5px;font-weight:700;text-align:right;}
 .q-detail-cell.qnum{font-weight:800;color:var(--ink);}
 @media (max-width:1100px){
-  .q-detail-header,.q-detail-row{grid-template-columns:50px 100px 120px minmax(140px,1.5fr) minmax(140px,1.5fr) minmax(140px,1.5fr) 80px;font-size:9px;}
+  .q-detail-header,.q-detail-row{grid-template-columns:48px 66px 100px minmax(120px,1.3fr) minmax(130px,1.3fr) minmax(130px,1.3fr) minmax(110px,1.2fr) 70px;font-size:9px;}
 }
 .admin-table-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--bdr);}
 .admin-table-header h3{font-size:14px;font-weight:700;color:var(--ink);}
@@ -1168,7 +1243,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
                 <button class="queue-tab" onclick="toggleQueueTabPanel(this,'assign-filter')">Assign</button>
               </div>
               <div class="queue-filter-panel" id="queue-filter"><h6>Select Queue</h6><label class="qf-check"><input type="checkbox"> incoming-svc</label><label class="qf-check"><input type="checkbox"> reported-svc</label><label class="qf-check"><input type="checkbox"> fraud-svc</label><label class="qf-check"><input type="checkbox"> escalations-svc</label><label class="qf-check"><input type="checkbox"> gdpr-svc</label></div>
-              <div class="queue-filter-panel" id="assign-filter"><div class="assign-wrap"><label>Assign To Team</label><select><option>— Select Team —</option><option>Trust &amp; Safety Alpha</option><option>APAC Moderators</option><option>Fraud Detection Unit</option><option>Escalation Desk</option></select></div></div>
+              <div class="queue-filter-panel" id="assign-filter"><div class="assign-wrap"><label>Assign To Team</label><select id="assign-team-select"><option value="">— Select Team —</option><option value="serious_alleg-svc">serious_alleg-svc</option><option value="onshore-cmi-svc">onshore-cmi-svc</option><option value="gdpr-svc">gdpr-svc</option><option value="2nd Ops-CMI">2nd Ops-CMI</option><option value="support staff-cmi">support staff-cmi</option><option value="onshore-vr">onshore-vr</option><option value="reviewbombs">reviewbombs</option><option value="listingrequests">listingrequests</option><option value="shiqueue">shiqueue</option><option value="ts_moderation">ts_moderation</option></select></div></div>
             </div>
           </div>
           <div class="rp-section">
@@ -1210,6 +1285,9 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
 </div>
 
 <!-- ═══ FEEDBACK ═══ -->
+<!-- Celebration particle layer (correct answers) -->
+<div id="celebrate-layer" aria-hidden="true"></div>
+
 <div class="feedback-overlay hidden" id="feedback-overlay">
   <div class="feedback-card" id="feedback-card">
     <div class="fb-icon" id="fb-icon"></div>
@@ -1282,7 +1360,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
 const CONFIG = {
   // Paste your Google Apps Script Web App URL here (the one ending in /exec)
   // Example: 'https://script.google.com/macros/s/AKfycb.../exec'
-  GOOGLE_SHEET_URL: 'https://script.google.com/macros/s/AKfycbyG0zg902O8ToqTkrLNm9raxphxOvLGiXzeaOLdjm3hGbYmmwsw8wpdzbkvkWFVHHFO/exec',
+  GOOGLE_SHEET_URL: 'https://script.google.com/macros/s/AKfycbwHHQFCgHJrw1vZeLnyBN32btez6AmVkUH4HNBdMUaIZxiFGeZJyHCa9ZxulMR2gXoM/exec',
 };
 
 /* ════════════════════════════════════════════════
@@ -3952,13 +4030,17 @@ function renderAdminTable(){
       const timeCell=d.timeSeconds!==undefined?formatSeconds(Number(d.timeSeconds)||0):'—';
       const review=d.reviewTitle||'(untitled)';
       const policy=d.policy||'—';
+      const qType=d.queueType||'Incoming';
+      const qTypeCls=qType==='Reported'?'qt-reported':'qt-incoming';
+      const modC=d.modComment?String(d.modComment):'—';
       return`<div class="q-detail-row">
         <span class="q-detail-cell qnum">${iconMark} Q${d.q||j+1}</span>
-        <span class="q-detail-cell name">${r.name||'—'}</span>
+        <span class="q-detail-cell qtype"><span class="qt-pill ${qTypeCls}">${qType}</span></span>
         <span class="q-detail-cell policy">${policy}</span>
         <span class="q-detail-cell review">${review}</span>
         <span class="q-detail-cell selected ${cl}">${selectedLabel}</span>
         <span class="q-detail-cell correct">${correctLabel}</span>
+        <span class="q-detail-cell modc" title="${modC.replace(/"/g,'&quot;')}">${modC}</span>
         <span class="q-detail-cell time">${timeCell}</span>
       </div>`;
     }).join('');
@@ -3997,12 +4079,13 @@ function renderAdminTable(){
           <div class="q-detail-title">📋 Answer Breakdown — ${r.name||'—'} · Attempt #${r.attemptNumber||1}</div>
           <div class="q-detail-header">
             <span class="q-detail-cell qnum">Q</span>
-            <span class="q-detail-cell name">Name</span>
+            <span class="q-detail-cell qtype">Queue</span>
             <span class="q-detail-cell policy">Policy</span>
             <span class="q-detail-cell review">Review</span>
             <span class="q-detail-cell selected">Selected Answer</span>
             <span class="q-detail-cell correct">Correct Answer</span>
-            <span class="q-detail-cell time">Time (HH:MM:SS)</span>
+            <span class="q-detail-cell modc">Moderator Comment</span>
+            <span class="q-detail-cell time">Time</span>
           </div>
           ${decisionRows||'<span style="color:var(--gray);font-size:9.5px;">No answer detail recorded.</span>'}
         </div>
@@ -4065,8 +4148,9 @@ function _recordsToWideCSV(records){
     'HTQ (HH:MM:SS)','Total Time (HH:MM:SS)','Overall Result','Status',
     'Started At','Completed At','Date/Time',
     // Per-question block (repeated per row of the same attempt)
-    'Q #','Policy','Review Title','Review Content',
+    'Q #','Queue Type','Policy','Review Title','Review Content',
     'Selected Answer','Selected Reason','Correct Answer','Correct Reason',
+    'Moderator Comment','Assigned Team',
     'Score','Question Time (HH:MM:SS)','Question Result'
   ];
   const actionLabels={
@@ -4094,8 +4178,8 @@ function _recordsToWideCSV(records){
     ];
     const decisions=r.decisions||[];
     if(decisions.length===0){
-      // In-progress or no answers yet: single row, empty per-Q fields
-      const row=summary.concat(['','','','','','','','','','','']);
+      // In-progress or no answers yet: single row, empty per-Q fields (14 columns)
+      const row=summary.concat(['','','','','','','','','','','','','','']);
       lines.push(row.map(_quoteCSV).join(','));
     } else {
       decisions.forEach((d,j)=>{
@@ -4109,10 +4193,13 @@ function _recordsToWideCSV(records){
         const qScore=d.correct?10:0;
         const perQ=[
           'Q'+(d.q||j+1),
+          d.queueType||'Incoming',
           d.policy||'',
           d.reviewTitle||'',
           d.reviewBody||'',
           sel,selReason,cor,corReason,
+          d.modComment||'',
+          d.assignTeam||'',
           qScore,t,qResult
         ];
         lines.push(summary.concat(perQ).map(_quoteCSV).join(','));
@@ -4591,6 +4678,8 @@ function loadQuestion(){
   document.getElementById('review-title-text').textContent=q.title;
   document.getElementById('review-body-text').textContent=q.body;
   document.getElementById('mod-comment').value='';
+  const _assignSel=document.getElementById('assign-team-select');
+  if(_assignSel)_assignSel.value='';
   setActionsEnabled(true);
   startTime=Date.now();
   timerVal=300;
@@ -4623,7 +4712,9 @@ function timeOut(){
   const timeMs=Date.now()-questionStartTime;
   questionTimings[q.id]=Math.round(timeMs/1000);
   logT('timeout','',false,timeMs);
-  sessionLog.push({q:currentQIdx+1,qId:q.id,decision:'timeout',correct:false,correctAnswer:q.correct,correctReason,reviewTitle:q.title,policy:q.policy,actionCorrect:false,reasonCorrect:false,timeSeconds:Math.round(timeMs/1000)});
+  const modCommentTO=(document.getElementById('mod-comment')||{}).value||'';
+  const assignTeamTO=(document.getElementById('assign-team-select')||{}).value||'';
+  sessionLog.push({q:currentQIdx+1,qId:q.id,decision:'timeout',correct:false,correctAnswer:q.correct,correctReason,reviewTitle:q.title,policy:q.policy,actionCorrect:false,reasonCorrect:false,timeSeconds:Math.round(timeMs/1000),modComment:modCommentTO.trim(),queueType:currentQueue==='reported'?'Reported':'Incoming',assignTeam:assignTeamTO});
   showFeedback(false,'⏰ Time Expired','No answer submitted.',q.expl,q.correct,correctReason,'');
   shakeScreen();
 }
@@ -4677,7 +4768,9 @@ function processDecision(dec,reason){
   if(isCorrect)score+=10;
   updateScore();
   logT(dec,reason,isCorrect,timeTaken);
-  sessionLog.push({q:currentQIdx+1,qId:q.id,decision:dec,reason,correct:isCorrect,correctAnswer:q.correct,correctReason,reviewTitle:q.title,policy:q.policy,reviewBody:(q.body||'').slice(0,600),timeTaken,timeSeconds:questionTimeSec,actionCorrect,reasonCorrect});
+  const modComment=(document.getElementById('mod-comment')||{}).value||'';
+  const assignTeam=(document.getElementById('assign-team-select')||{}).value||'';
+  sessionLog.push({q:currentQIdx+1,qId:q.id,decision:dec,reason,correct:isCorrect,correctAnswer:q.correct,correctReason,reviewTitle:q.title,policy:q.policy,reviewBody:(q.body||'').slice(0,600),timeTaken,timeSeconds:questionTimeSec,actionCorrect,reasonCorrect,modComment:modComment.trim(),queueType:currentQueue==='reported'?'Reported':'Incoming',assignTeam});
   const decLabel={publish:'Publish',moderation_remove:'Moderation Remove',member_fraud:'Member Fraud Remove',property_fraud:'Property Fraud Remove'}[dec];
   const badge=reason?decLabel+' → '+reason:decLabel;
   if(isCorrect){
@@ -4701,6 +4794,80 @@ function logT(dec,reason,correct,timeMs){
 }
 
 /* ════ FEEDBACK ════ */
+/* ═══ CELEBRATION BURST (correct answers) ═══ */
+const CEL_EMOJIS=['⭐','🌟','✨','🎉','🌸','🏵️','💫','🎊','🌺','⚡'];
+const CEL_COLORS=['#34E0A1','#00AF87','#FFD166','#FF8FA3','#6C9BFF','#C77DFF','#FFA45B','#4ECDC4'];
+
+function celebrateCorrect(){
+  const layer=document.getElementById('celebrate-layer');
+  if(!layer)return;
+  // Respect reduced-motion preference
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  layer.innerHTML='';
+
+  // Burst originates from the centre of the feedback card
+  const card=document.getElementById('feedback-card');
+  let originX=window.innerWidth/2, originY=window.innerHeight/2;
+  if(card){
+    const r=card.getBoundingClientRect();
+    if(r.width>0){originX=r.left+r.width/2;originY=r.top+r.height/2;}
+  }
+  layer.style.setProperty('--ox',originX+'px');
+
+  const mk=(cls,inner,extraStyle)=>{
+    const el=document.createElement('div');
+    el.className='cel-piece '+cls;
+    if(inner)el.textContent=inner;
+    // Random outward trajectory
+    const angle=Math.random()*Math.PI*2;
+    const dist1=40+Math.random()*70;
+    const dist2=170+Math.random()*230;
+    const x1=Math.cos(angle)*dist1;
+    const y1=Math.sin(angle)*dist1;
+    const x2=Math.cos(angle)*dist2;
+    // Gravity pull downward on the outward leg
+    const y2=Math.sin(angle)*dist2+90+Math.random()*120;
+    el.style.left=originX+'px';
+    el.style.top=originY+'px';
+    el.style.setProperty('--x1',x1.toFixed(1)+'px');
+    el.style.setProperty('--y1',y1.toFixed(1)+'px');
+    el.style.setProperty('--x2',x2.toFixed(1)+'px');
+    el.style.setProperty('--y2',y2.toFixed(1)+'px');
+    el.style.setProperty('--r1',(Math.random()*180-90).toFixed(0)+'deg');
+    el.style.setProperty('--r2',(Math.random()*720-360).toFixed(0)+'deg');
+    el.style.setProperty('--dur',(1200+Math.random()*700).toFixed(0)+'ms');
+    el.style.animationDelay=(Math.random()*140).toFixed(0)+'ms';
+    if(extraStyle)Object.assign(el.style,extraStyle);
+    layer.appendChild(el);
+  };
+
+  // Expanding ring behind the tick
+  const ring=document.createElement('div');
+  ring.className='cel-ring';
+  ring.style.left=originX+'px';
+  ring.style.top=originY+'px';
+  layer.appendChild(ring);
+
+  // 18 confetti rectangles
+  for(let i=0;i<18;i++){
+    mk('cel-confetti','',{background:CEL_COLORS[i%CEL_COLORS.length]});
+  }
+  // 12 emoji pieces (stars, flowers, sparkles)
+  for(let i=0;i<12;i++){
+    const e=CEL_EMOJIS[Math.floor(Math.random()*CEL_EMOJIS.length)];
+    mk('cel-emoji',e,{'--sz':(16+Math.random()*12).toFixed(0)+'px'});
+  }
+  // 14 glowing dots
+  for(let i=0;i<14;i++){
+    const c=CEL_COLORS[Math.floor(Math.random()*CEL_COLORS.length)];
+    mk('cel-dot','',{background:c,boxShadow:'0 0 8px '+c});
+  }
+
+  // Clean up after the longest animation finishes
+  clearTimeout(window._celTimer);
+  window._celTimer=setTimeout(()=>{layer.innerHTML='';},2300);
+}
+
 function showFeedback(correct,title,badge,body,correctAnswer,correctReason,userReason){
   const overlay=document.getElementById('feedback-overlay');
   const card=document.getElementById('feedback-card');
@@ -4727,13 +4894,28 @@ function showFeedback(correct,title,badge,body,correctAnswer,correctReason,userR
   const cl={publish:'Publish',moderation_remove:'Moderation Remove',member_fraud:'Member Fraud Remove',property_fraud:'Property Fraud Remove'}[correctAnswer];
   document.getElementById('fb-correct').textContent=correct?'':('Expected: '+cl+(correctReason?' → '+correctReason:''));
   document.querySelector('.fb-next-btn').textContent=currentQIdx>=activeQBank.length-1?'See Results →':'Next Review →';
-  requestAnimationFrame(()=>card.classList.add('show'));
+  requestAnimationFrame(()=>{
+    card.classList.add('show');
+    if(correct){
+      // Pop the tick icon
+      const icon=document.getElementById('fb-icon');
+      if(icon){
+        icon.classList.remove('fb-icon-pop');
+        void icon.offsetWidth; // restart animation
+        icon.classList.add('fb-icon-pop');
+      }
+      // Fire the particle burst once the card is positioned
+      setTimeout(celebrateCorrect,90);
+    }
+  });
 }
 
 function hideFeedback(){
   const card=document.getElementById('feedback-card');
   card.classList.remove('show');
   setTimeout(()=>document.getElementById('feedback-overlay').classList.add('hidden'),200);
+  const _cl=document.getElementById('celebrate-layer');
+  if(_cl)_cl.innerHTML='';
 }
 
 function advanceQuestion(){
