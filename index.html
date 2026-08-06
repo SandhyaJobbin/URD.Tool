@@ -167,6 +167,34 @@ select{cursor:pointer;}
 @media (prefers-reduced-motion:reduce){
   .cel-piece,.cel-ring,.fb-icon-pop{animation:none !important;opacity:0 !important;}
 }
+
+/* ═══ MANDATORY MODERATOR COMMENT PROMPT ═══ */
+#modc-required{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;background:rgba(15,10,25,.5);backdrop-filter:blur(2px);}
+#modc-required.show{display:flex;animation:trFade .22s ease;}
+.modc-card{background:#fff;border-radius:18px;padding:32px 34px 26px;width:min(400px,92vw);text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.35);border:1px solid #e0e8ff;animation:trPop .38s cubic-bezier(.2,.8,.3,1.3);}
+.modc-icon{font-size:44px;margin-bottom:12px;line-height:1;}
+.modc-title{font-size:19px;font-weight:800;color:#1a1a2e;margin-bottom:9px;letter-spacing:-.2px;}
+.modc-sub{font-size:13px;color:#6a6a80;line-height:1.6;margin-bottom:22px;}
+.modc-btn{width:100%;padding:12px;background:linear-gradient(135deg,#324a6e,#4a6ea5);color:#fff;border:none;border-radius:10px;font-size:13.5px;font-weight:800;cursor:pointer;letter-spacing:.3px;box-shadow:0 4px 14px rgba(50,74,110,.3);transition:transform .15s;}
+.modc-btn:hover{transform:translateY(-1px);}
+.comment-box.comment-error{border-color:#e8452c !important;box-shadow:0 0 0 3px rgba(232,69,44,.15) !important;background:#fff8f7;}
+#time-reminder{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99998;display:none;align-items:center;justify-content:center;background:rgba(15,10,25,.45);backdrop-filter:blur(2px);}
+#time-reminder.show{display:flex;animation:trFade .25s ease;}
+@keyframes trFade{from{opacity:0}to{opacity:1}}
+.tr-card{background:#fff;border-radius:18px;padding:30px 34px 26px;width:min(400px,92vw);text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.35);border:1px solid #ffe0e0;position:relative;animation:trPop .4s cubic-bezier(.2,.8,.3,1.3);}
+@keyframes trPop{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+.tr-ring-wrap{position:relative;width:96px;height:96px;margin:0 auto 16px;}
+.tr-ring-wrap svg{transform:rotate(-90deg);}
+.tr-ring-bg{fill:none;stroke:#ffe0e0;stroke-width:8;}
+.tr-ring-fg{fill:none;stroke:#e8452c;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s linear;}
+.tr-count{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:#e8452c;font-variant-numeric:tabular-nums;}
+.tr-title{font-size:19px;font-weight:800;color:#1a1a2e;margin-bottom:7px;letter-spacing:-.2px;}
+.tr-sub{font-size:13px;color:#6a6a80;line-height:1.55;margin-bottom:20px;}
+.tr-sub strong{color:#e8452c;}
+.tr-btn{width:100%;padding:12px;background:linear-gradient(135deg,#e8452c,#ff6b4a);color:#fff;border:none;border-radius:10px;font-size:13.5px;font-weight:800;cursor:pointer;letter-spacing:.3px;box-shadow:0 4px 14px rgba(232,69,44,.35);transition:transform .15s;}
+.tr-btn:hover{transform:translateY(-1px);}
+.tr-pulse{position:absolute;top:14px;right:16px;width:9px;height:9px;border-radius:50%;background:#e8452c;box-shadow:0 0 0 0 rgba(232,69,44,.5);animation:trPulse 1.4s infinite;}
+@keyframes trPulse{0%{box-shadow:0 0 0 0 rgba(232,69,44,.5)}70%{box-shadow:0 0 0 12px rgba(232,69,44,0)}100%{box-shadow:0 0 0 0 rgba(232,69,44,0)}}
 .admin-modal-sub{font-size:11px;color:var(--gray);margin-bottom:20px;}
 .admin-field{margin-bottom:14px;}
 .admin-field label{display:block;font-size:10px;font-weight:700;color:var(--ink);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
@@ -534,13 +562,13 @@ table.admin-table tr.row-fail:hover td{background:#fff0f0;}
 .right-action-btns{display:flex;flex-direction:column;gap:4px;}
 .right-btn{padding:8px 9px;border-radius:5px;font-size:10.5px;font-weight:700;color:#fff;transition:all var(--tr);text-align:center;width:100%;}
 .right-btn:disabled{opacity:.45;cursor:not-allowed;}
-.right-btn.pub{background:#4B7E37;}
+.right-btn.pub{background:var(--pub);}
 .right-btn.pub:hover:not(:disabled){background:#008060;}
-.right-btn.mod{background:#D58615;}
+.right-btn.mod{background:var(--mod);}
 .right-btn.mod:hover:not(:disabled){background:#c5650e;}
-.right-btn.mem{background:#374B7E;}
+.right-btn.mem{background:var(--mem);}
 .right-btn.mem:hover:not(:disabled){background:#9c2b1f;}
-.right-btn.prop{background:#7E374B;}
+.right-btn.prop{background:var(--prop);}
 .right-btn.prop:hover:not(:disabled){background:#622175;}
 .rp-chip-group{display:flex;flex-wrap:wrap;gap:4px;padding:6px 9px;}
 .rp-chip{padding:3px 7px;border-radius:16px;font-size:9.5px;font-weight:600;background:#fff;border:1px solid var(--bdr);color:var(--ink);transition:all var(--tr);}
@@ -1124,7 +1152,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
           <span class="onboard-badge">Moderator Training</span>
           <span class="onboard-day-tag" id="onboard-day-tag">Day 1</span>
           <h1 id="onboard-day-title">Review Quality Policies</h1>
-          <p class="lead" id="onboard-desc">15 randomly selected questions from today's policy bank. Each question has 5 minutes.</p>
+          <p class="lead" id="onboard-desc">15 randomly selected questions from today's policy bank. Each question has 10 minutes.</p>
         </div>
       </div>
       <div class="fun-stats">
@@ -1230,7 +1258,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
               <div class="comment-label" id="owner-review-label" style="display:none;">Voter comment <span id="owner-review-badge" style="font-size:8px;font-weight:600;background:#f3e8ff;color:#7B2D8B;border:1px solid #d8b4fe;border-radius:10px;padding:1px 7px;">Voter submitted</span></div>
               <textarea class="comment-box" id="owner-review" placeholder="Voter comment / report reason…" style="display:none;border-color:#8E44AD;background:#fdf8ff;min-height:58px;font-size:10px;"></textarea>
               <div class="comment-label">Moderator Comment</div>
-              <textarea class="comment-box" id="mod-comment" placeholder="Add your moderation comment here…"></textarea>
+              <textarea class="comment-box" id="mod-comment" placeholder="Add your moderation comment here… (required)" oninput="this.classList.remove('comment-error')"></textarea>
             </div>
           </div>
         </div>
@@ -1287,6 +1315,33 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
 <!-- ═══ FEEDBACK ═══ -->
 <!-- Celebration particle layer (correct answers) -->
 <div id="celebrate-layer" aria-hidden="true"></div>
+
+<!-- Mandatory moderator comment prompt -->
+<div id="modc-required" role="alertdialog" aria-live="assertive">
+  <div class="modc-card">
+    <div class="modc-icon">📝</div>
+    <div class="modc-title">Moderator comment required</div>
+    <div class="modc-sub">Please add your moderator comment for this review before submitting your decision. Documenting your reasoning is a required part of the moderation process.</div>
+    <button class="modc-btn" onclick="dismissModCommentPrompt()">OK — I'll add a comment</button>
+  </div>
+</div>
+
+<!-- 60-second time reminder popup -->
+<div id="time-reminder" role="alertdialog" aria-live="assertive">
+  <div class="tr-card">
+    <div class="tr-pulse"></div>
+    <div class="tr-ring-wrap">
+      <svg width="96" height="96" viewBox="0 0 96 96">
+        <circle class="tr-ring-bg" cx="48" cy="48" r="42"></circle>
+        <circle class="tr-ring-fg" id="tr-ring-fg" cx="48" cy="48" r="42"></circle>
+      </svg>
+      <div class="tr-count" id="tr-count">60</div>
+    </div>
+    <div class="tr-title">⏰ Time is running out!</div>
+    <div class="tr-sub">You have <strong>less than 60 seconds</strong> left for this review. Please finalise your decision and moderator comment.</div>
+    <button class="tr-btn" onclick="dismissTimeReminder()">Got it — keep going</button>
+  </div>
+</div>
 
 <div class="feedback-overlay hidden" id="feedback-overlay">
   <div class="feedback-card" id="feedback-card">
@@ -1360,7 +1415,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
 const CONFIG = {
   // Paste your Google Apps Script Web App URL here (the one ending in /exec)
   // Example: 'https://script.google.com/macros/s/AKfycb.../exec'
-  GOOGLE_SHEET_URL: 'https://script.google.com/macros/s/AKfycbwHHQFCgHJrw1vZeLnyBN32btez6AmVkUH4HNBdMUaIZxiFGeZJyHCa9ZxulMR2gXoM/exec',
+  GOOGLE_SHEET_URL: 'https://script.google.com/macros/s/AKfycbyG0zg902O8ToqTkrLNm9raxphxOvLGiXzeaOLdjm3hGbYmmwsw8wpdzbkvkWFVHHFO/exec',
 };
 
 /* ════════════════════════════════════════════════
@@ -2334,7 +2389,7 @@ let selectedWave='';
 let selectedTrainingType=''; // 'wave' or 'session'
 let currentAttemptId='';
 let attemptStartedAt='';
-let perQuestionSeconds=300;  // default 5 minutes, overridden per batch
+let perQuestionSeconds=600;  // default 10 minutes, overridden per session
 let questionStartTime=0;     // Date.now() when current question loaded
 let questionTimings={};      // qId -> seconds spent
 
@@ -3571,6 +3626,9 @@ function showAdminModal(){
   document.getElementById('admin-empid-input').value='';
   document.getElementById('admin-pass-input').value='';
   document.getElementById('admin-err').style.display='none';
+  // Start (or refresh) the background prefetch so data is ready by the
+  // time they finish typing the password.
+  prefetchAdminData(false);
 }
 function closeAdminModal(){document.getElementById('admin-modal').classList.add('hidden');}
 
@@ -3651,6 +3709,23 @@ async function getAllRecords(){
 let _adminRecordsCache=[];
 
 async function renderAdminDashboard(){
+  // If a background prefetch already loaded the data, paint instantly from
+  // the cache. Otherwise show the loading dots and wait for the fetch.
+  const haveCache=_prefetchCache.ready && _prefetchCache.records!==null;
+
+  if(haveCache){
+    _applyAdminData(_prefetchCache);
+    // Silently refresh in the background so numbers stay current, without
+    // blanking the UI with loading dots.
+    updateCloudStatus('loading');
+    prefetchAdminData(true).then(()=>{
+      _applyAdminData(_prefetchCache);
+      updateCloudStatus('done');
+    });
+    return;
+  }
+
+  // No cache yet — show loading state and fetch now.
   document.getElementById('stat-total').textContent='…';
   document.getElementById('stat-passed').textContent='…';
   document.getElementById('stat-failed').textContent='…';
@@ -3658,16 +3733,17 @@ async function renderAdminDashboard(){
   const ipEl=document.getElementById('stat-inprogress'); if(ipEl)ipEl.textContent='…';
   const htqEl=document.getElementById('stat-htq'); if(htqEl)htqEl.textContent='…';
   updateCloudStatus('loading');
-  _adminRecordsCache=await getAllRecords();
-  if(CONFIG.GOOGLE_SHEET_URL){
-    const batches=await fetchBatches();
-    if(batches)_availableBatches=batches;
-    const waves=await fetchWaves();
-    if(waves)_availableWaves=waves;
-    const days=await fetchDays();
-    if(days)_availableDays=days;
-  }
+  await prefetchAdminData(true);
+  _applyAdminData(_prefetchCache);
   updateCloudStatus('done');
+}
+
+// Apply a prefetch result set to the dashboard (stats, lists, filters, table)
+function _applyAdminData(cache){
+  _adminRecordsCache=cache.records||[];
+  if(cache.batches)_availableBatches=cache.batches;
+  if(cache.waves)_availableWaves=cache.waves;
+  if(cache.days)_availableDays=cache.days;
   const records=_adminRecordsCache;
   const completed=records.filter(r=>String(r.status||'').toLowerCase()!=='in_progress');
   const inProgress=records.filter(r=>String(r.status||'').toLowerCase()==='in_progress').length;
@@ -3677,6 +3753,8 @@ async function renderAdminDashboard(){
   const avg=completed.length>0?Math.round(completed.reduce((a,b)=>a+(b.pct||0),0)/completed.length):0;
   const htqTimes=completed.map(r=>Number(r.htqSeconds)||0).filter(t=>t>0);
   const avgHtq=htqTimes.length>0?Math.round(htqTimes.reduce((a,b)=>a+b,0)/htqTimes.length):0;
+  const ipEl=document.getElementById('stat-inprogress');
+  const htqEl=document.getElementById('stat-htq');
   document.getElementById('stat-total').textContent=total;
   document.getElementById('stat-passed').textContent=passed;
   document.getElementById('stat-failed').textContent=failed;
@@ -3898,7 +3976,11 @@ function populateAdminFilterDropdowns(){
 }
 
 async function refreshAdminData(){
-  await renderAdminDashboard();
+  // Force a fresh fetch (bypass the 30s cache) then repaint instantly.
+  updateCloudStatus('loading');
+  await prefetchAdminData(true);
+  _applyAdminData(_prefetchCache);
+  updateCloudStatus('done');
   chipAlert('Data refreshed.');
 }
 
@@ -4115,7 +4197,11 @@ function updateCloudStatus(state){
 }
 
 async function refreshAdminData(){
-  await renderAdminDashboard();
+  // Force a fresh fetch (bypass the 30s cache) then repaint instantly.
+  updateCloudStatus('loading');
+  await prefetchAdminData(true);
+  _applyAdminData(_prefetchCache);
+  updateCloudStatus('done');
   chipAlert('Data refreshed.');
 }
 
@@ -4383,14 +4469,16 @@ function goOnboarding(){
   // Generate unique attempt ID for this session
   currentAttemptId='ATT-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
   attemptStartedAt=new Date().toLocaleString('en-IN');
-  perQuestionSeconds=300; // default 5 minutes; overridden by batch
+  // Default 10 minutes per question for Day / Wave flows.
+  // Sessions override this with their own manually-configured time below.
+  perQuestionSeconds=600;
   const batchVal=document.getElementById('login-batch').value;
   if(batchVal){
     selectedBatch=batchVal;
     const batch=_availableBatches.find(b=>b.batchId===batchVal);
     selectedBatchName=batch?batch.batchName:batchVal;
     selectedDay=0;
-    if(batch&&batch.timePerQuestionSec)perQuestionSeconds=Number(batch.timePerQuestionSec)||300;
+    if(batch&&batch.timePerQuestionSec)perQuestionSeconds=Number(batch.timePerQuestionSec)||600;
     document.getElementById('onboard-day-tag').textContent='Batch';
     document.getElementById('onboard-day-title').textContent=selectedBatchName;
     document.getElementById('onboard-desc').textContent='Questions from the '+selectedBatchName+' batch. Each question has '+formatSeconds(perQuestionSeconds)+' to answer.';
@@ -4401,14 +4489,14 @@ function goOnboarding(){
     if(day){
       document.getElementById('onboard-day-tag').textContent='Day '+selectedDay;
       document.getElementById('onboard-day-title').textContent=day.name;
-      document.getElementById('onboard-desc').textContent='15 randomly selected questions from the Day '+selectedDay+' policy bank ('+day.name+'). Each question has 5 minutes to answer.';
+      document.getElementById('onboard-desc').textContent='15 randomly selected questions from the Day '+selectedDay+' policy bank ('+day.name+'). Each question has 10 minutes to answer.';
     } else {
       // Custom day (6+)
       const meta=_availableDays.find(d=>Number(d.dayNumber)===selectedDay);
       const label=meta?(meta.dayName||'Custom'):'Custom';
       document.getElementById('onboard-day-tag').textContent='Day '+selectedDay;
       document.getElementById('onboard-day-title').textContent=label;
-      document.getElementById('onboard-desc').textContent='Questions from Day '+selectedDay+' — '+label+'. Each question has 5 minutes to answer.';
+      document.getElementById('onboard-desc').textContent='Questions from Day '+selectedDay+' — '+label+'. Each question has 10 minutes to answer.';
     }
   }
   document.getElementById('phase-login').style.display='none';
@@ -4589,6 +4677,8 @@ function switchQueue(type,btn){
 /* ════ LOAD QUESTION ════ */
 function loadQuestion(){
   answered=false;
+  hideTimeReminder(true);
+  _reminderShown=false;
   if(currentQIdx>=activeQBank.length){endAssessment();return;}
   const q=activeQBank[currentQIdx];
   // Start the per-question timing clock
@@ -4693,11 +4783,54 @@ function setActionsEnabled(en){
 /* ════ TIMER ════ */
 function startTimer(){
   clearInterval(timerInterval);
-  timerVal=perQuestionSeconds||300;updateTimerDisplay();
+  timerVal=perQuestionSeconds||600;updateTimerDisplay();
+  _reminderShown=false;
   timerInterval=setInterval(()=>{
     timerVal--;updateTimerDisplay();
-    if(timerVal<=0){clearInterval(timerInterval);if(!answered)timeOut();}
+    // Show the 60-second reminder once, when a full minute remains — but
+    // only if this question was given more than 60 seconds to begin with.
+    if(!_reminderShown && !answered && timerVal===60 && (perQuestionSeconds||600)>60){
+      _reminderShown=true;
+      showTimeReminder();
+    }
+    if(timerVal<=0){clearInterval(timerInterval);hideTimeReminder(true);if(!answered)timeOut();}
   },1000);
+}
+
+let _reminderShown=false;
+let _trCountInterval=null;
+
+function showTimeReminder(){
+  const overlay=document.getElementById('time-reminder');
+  if(!overlay)return;
+  overlay.classList.add('show');
+  // Animate the ring + countdown from 60 down
+  const ring=document.getElementById('tr-ring-fg');
+  const countEl=document.getElementById('tr-count');
+  const R=42, CIRC=2*Math.PI*R;
+  if(ring){ring.style.strokeDasharray=CIRC;ring.style.strokeDashoffset='0';}
+  let n=Math.min(60,Math.max(1,timerVal));
+  if(countEl)countEl.textContent=n;
+  clearInterval(_trCountInterval);
+  _trCountInterval=setInterval(()=>{
+    n=timerVal;
+    if(countEl)countEl.textContent=Math.max(0,n);
+    if(ring){const frac=Math.max(0,Math.min(1,n/60));ring.style.strokeDashoffset=String(CIRC*(1-frac));}
+    if(n<=0){clearInterval(_trCountInterval);}
+  },1000);
+  // Auto-dismiss after 6 seconds so it doesn't block the workspace
+  clearTimeout(window._trAutoHide);
+  window._trAutoHide=setTimeout(()=>hideTimeReminder(false),6000);
+}
+
+function dismissTimeReminder(){hideTimeReminder(false);}
+
+function hideTimeReminder(immediate){
+  const overlay=document.getElementById('time-reminder');
+  if(!overlay)return;
+  overlay.classList.remove('show');
+  clearInterval(_trCountInterval);
+  clearTimeout(window._trAutoHide);
 }
 function updateTimerDisplay(){
   const el=document.getElementById('ws-timer');
@@ -4727,7 +4860,36 @@ function showMustSelectToast(){
 }
 
 /* ════ DECISIONS ════ */
-function submitDecision(dec){if(answered)return;processDecision(dec,'');}
+function requireModComment(){
+  // Returns true if a comment is present; otherwise flags the box and returns false.
+  const box=document.getElementById('mod-comment');
+  const val=(box&&box.value||'').trim();
+  if(val.length>0)return true;
+  showModCommentPrompt();
+  return false;
+}
+
+function showModCommentPrompt(){
+  const overlay=document.getElementById('modc-required');
+  if(!overlay)return;
+  overlay.classList.add('show');
+  // Highlight the comment box
+  const box=document.getElementById('mod-comment');
+  if(box)box.classList.add('comment-error');
+}
+function dismissModCommentPrompt(){
+  const overlay=document.getElementById('modc-required');
+  if(overlay)overlay.classList.remove('show');
+  // Focus the comment box so they can type immediately
+  const box=document.getElementById('mod-comment');
+  if(box){box.focus();}
+}
+
+function submitDecision(dec){
+  if(answered)return;
+  if(!requireModComment())return;
+  processDecision(dec,'');
+}
 
 const REASON_SETS={
   moderation_remove:['AI Generated','Affiliation Stated in Review','Allegation of Fraud','Allegation of Blackmail','Allegation of Bullying','Allegation of Incentives','Commercial','Custom Bulk Template','Custom Template','DC Policy','Discriminatory Language','Duplicate','Experience >1 Year','Hard to Read','Illegal Activity','Impacted by Bug','Ineligible Experience','Irrelevant Commentary','Listing Update','Multiple Listings','Non-Original','Not Substantive','Other','Owner Support','Personally Insulting','Private Information','Profane/Vulgar','Property Policy Complaint','Rating Misunderstood','Rating Not Experienced','Secondhand Experience','Sexually Explicit/Graphic','TA Commentary','Threatening Language','Underage User','Unsupported Language','User Support','Will Not List','Wrong Listing'],
@@ -4738,6 +4900,7 @@ const REASON_SETS={
 let modalDec='';
 function openReasonModal(dec){
   if(answered)return;
+  if(!requireModComment())return;
   modalDec=dec;
   const titles={moderation_remove:'Moderation Remove — Select Reason',member_fraud:'Member Fraud Remove — Select Reason',property_fraud:'Property Fraud Remove — Select Reason'};
   document.getElementById('modal-title').textContent=titles[dec];
@@ -4755,7 +4918,7 @@ function saveReason(){const reason=document.getElementById('modal-reason-select'
 
 function processDecision(dec,reason){
   if(answered)return;
-  answered=true;clearInterval(timerInterval);setActionsEnabled(false);
+  answered=true;clearInterval(timerInterval);setActionsEnabled(false);hideTimeReminder(true);
   const q=activeQBank[currentQIdx];
   const actionCorrect=dec===q.correct;
   const correctReason=CORRECT_REASONS[q.id];
@@ -5153,6 +5316,44 @@ function backToHome(){
 }
 
 // Rotate tips on page load + populate login dropdowns
+/* ═══ BACKGROUND PREFETCH ═══
+   To make the admin dashboard open instantly, we fetch all the heavy
+   data (scores, sessions, waves, days) in the background the moment the
+   page loads — long before anyone types the admin password. The results
+   are cached here and reused by renderAdminDashboard, which then does a
+   silent refresh so the numbers stay live.                              */
+let _prefetchCache={records:null,batches:null,waves:null,days:null,ready:false,ts:0};
+let _prefetchPromise=null;
+
+async function prefetchAdminData(force){
+  // Skip if a recent prefetch already ran (within 30s) unless forced
+  if(!force && _prefetchCache.ready && (Date.now()-_prefetchCache.ts)<30000)return _prefetchCache;
+  if(_prefetchPromise && !force)return _prefetchPromise;
+  _prefetchPromise=(async()=>{
+    try{
+      const results=await Promise.all([
+        getAllRecords().catch(()=>null),
+        CONFIG.GOOGLE_SHEET_URL?fetchBatches().catch(()=>null):Promise.resolve([]),
+        CONFIG.GOOGLE_SHEET_URL?fetchWaves().catch(()=>null):Promise.resolve([]),
+        CONFIG.GOOGLE_SHEET_URL?fetchDays().catch(()=>null):Promise.resolve([])
+      ]);
+      _prefetchCache={
+        records:results[0],
+        batches:results[1],
+        waves:results[2],
+        days:results[3],
+        ready:true,
+        ts:Date.now()
+      };
+    }catch(e){
+      console.warn('Prefetch failed:',e);
+    }
+    _prefetchPromise=null;
+    return _prefetchCache;
+  })();
+  return _prefetchPromise;
+}
+
 window.addEventListener('load',()=>{
   const tipEl=document.getElementById('login-tip');
   if(tipEl) tipEl.innerHTML='💡 <strong>Tip:</strong> '+FUN_TIPS[Math.floor(Math.random()*FUN_TIPS.length)].slice(2);
@@ -5163,6 +5364,9 @@ window.addEventListener('load',()=>{
   populateDayDropdown();
   // Default flow: no wave → session mode → lock Day
   onWaveChange();
+  // Kick off the admin data prefetch in the background so the dashboard
+  // opens instantly when the trainer logs in.
+  prefetchAdminData(false);
 });
 </script>
 </body>
