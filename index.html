@@ -5430,10 +5430,15 @@ window.addEventListener('load',()=>{
   populateDayDropdown();
   // Default flow: no wave → session mode → lock Day
   onWaveChange();
-  // Kick off the admin data prefetch in the background so the dashboard
-  // opens instantly when the trainer logs in.
-  prefetchAdminData(false);
 });
+
+// Connect to the Google Sheet the instant this script runs, rather than
+// waiting for the browser's "load" event (which also waits on external
+// resources like the PDF library at cdnjs). Firing here means the sheet
+// data is already syncing in the background before the page has even
+// finished painting, so the login dropdowns and admin dashboard are
+// populated as fast as the network allows, with no extra wait built in.
+prefetchAdminData(false);
 </script>
 </body>
 </html>
