@@ -15,13 +15,13 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.googleusercontent.com; font-src 'self' data:; frame-ancestors 'self'; base-uri 'self'">
-<title>URD Training Simulator — Practice Assessment</title>
+<title>URD Training Simulator: Practice Assessment</title>
 <style>
 :root{
   --green:#34E0A1;--green-d:#00AF87;--black:#111;--ink:#1a1a1a;
   --gray:#767676;--gray-l:#E8E8E8;--bdr:#DEDEDE;--surf:#F7F7F7;
   --white:#FFF;--red:#D0021B;--orange:#E8781A;--blue:#0055CC;--purple:#7B2D8B;
-  --pub:#00AF87;--mod:#E8781A;--mem:#C0392B;--prop:#7B2D8B;
+  --pub:#4B7E37;--mod:#D58615;--mem:#374B7E;--prop:#7E374B;
   --admin:#1a237e;--admin-l:#3949ab;
   --font:'Helvetica Neue',Helvetica,Arial,sans-serif;
   --sh:0 2px 8px rgba(0,0,0,.09);--sh-lg:0 8px 32px rgba(0,0,0,.14);
@@ -36,10 +36,38 @@ select{cursor:pointer;}
 .hidden{display:none!important;}
 
 /* ── LOGIN ── */
-#phase-login{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:1000;overflow-y:auto;padding:14px;}
+#phase-login{position:fixed;inset:0;background:#fff;z-index:1000;overflow-y:auto;}
 .login-bg{position:absolute;inset:0;background:linear-gradient(135deg,#f0fff8 0%,#e8f4fd 50%,#f8f0ff 100%);z-index:0;}
 .login-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%, rgba(52,224,161,.08) 0%, transparent 50%),radial-gradient(circle at 80% 20%, rgba(123,45,139,.06) 0%, transparent 40%);z-index:1;}
-.login-card{position:relative;z-index:2;background:#fff;border:1px solid var(--bdr);border-radius:16px;padding:30px 44px 26px;width:min(880px,95vw);box-shadow:0 20px 60px rgba(0,0,0,.12);margin:0 auto;max-height:calc(100vh - 16px);overflow:visible;}
+
+/* Split-screen shell: branding/value panel on the left, login card on the right */
+.login-split{position:relative;z-index:2;min-height:100vh;display:flex;align-items:stretch;}
+.login-card-wrap{flex:1 1 auto;min-width:0;display:flex;align-items:center;justify-content:center;padding:24px;}
+
+/* Left info panel */
+.login-info-panel{flex:0 0 43%;max-width:580px;min-width:400px;position:relative;overflow:hidden;background:linear-gradient(155deg,#07362a 0%,#0d3d5c 52%,#33124a 100%);color:#fff;display:flex;align-items:center;padding:60px 54px;}
+.login-info-panel::before{content:'';position:absolute;top:-120px;right:-120px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle, rgba(52,224,161,.22) 0%, transparent 70%);}
+.login-info-panel::after{content:'';position:absolute;bottom:-140px;left:-100px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle, rgba(123,45,139,.28) 0%, transparent 70%);}
+.lip-content{position:relative;z-index:2;max-width:440px;width:100%;}
+.lip-logo{display:flex;align-items:center;gap:11px;margin-bottom:30px;}
+.lip-logo-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#34E0A1,#7B2D8B);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 4px 14px rgba(52,224,161,.25);}
+.lip-logo-text{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.2px;}
+.lip-logo-text span{display:block;font-size:9px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.lip-headline{font-size:30px;font-weight:800;line-height:1.28;letter-spacing:-.6px;margin-bottom:14px;color:#fff;}
+.lip-headline em{font-style:normal;background:linear-gradient(135deg,#5FF0BE,#B383E8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.lip-sub{font-size:14px;line-height:1.7;color:rgba(255,255,255,.72);margin-bottom:34px;}
+.lip-features{display:flex;flex-direction:column;gap:18px;margin-bottom:32px;}
+.lip-feature{display:flex;gap:14px;align-items:flex-start;}
+.lip-feature-icon{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.lip-feature-text{padding-top:2px;}
+.lip-feature-text strong{display:block;font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;letter-spacing:-.1px;}
+.lip-feature-text p{font-size:11.5px;color:rgba(255,255,255,.62);line-height:1.55;margin:0;}
+.lip-footer{padding-top:22px;border-top:1px solid rgba(255,255,255,.14);font-size:10.5px;color:rgba(255,255,255,.5);letter-spacing:.2px;}
+@media(max-width:1080px){.login-info-panel{display:none;}}
+@media(max-height:820px){.login-info-panel{padding:44px 46px;}.lip-headline{font-size:26px;margin-bottom:11px;}.lip-sub{font-size:13.5px;margin-bottom:26px;}.lip-features{gap:14px;margin-bottom:24px;}}
+@media(max-height:700px){.login-info-panel{padding:32px 40px;}.lip-logo{margin-bottom:20px;}.lip-headline{font-size:22px;margin-bottom:8px;}.lip-sub{font-size:12.5px;line-height:1.55;margin-bottom:20px;}.lip-features{gap:11px;margin-bottom:18px;}.lip-feature-icon{width:30px;height:30px;font-size:14px;}.lip-feature-text strong{font-size:12px;}.lip-feature-text p{font-size:10.5px;}.lip-footer{padding-top:14px;font-size:9.5px;}}
+
+.login-card{position:relative;z-index:2;background:#fff;border:1px solid var(--bdr);border-radius:16px;padding:30px 44px 26px;width:min(880px,100%);box-shadow:0 20px 60px rgba(0,0,0,.12);margin:0 auto;max-height:calc(100vh - 16px);overflow:visible;}
 .login-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
 @media(max-width:540px){.login-row{grid-template-columns:1fr;gap:0;}}
 /* Row with Day / OR / Batch — a slim OR chip splits the two selects */
@@ -563,14 +591,14 @@ table.admin-table tr.row-fail:hover td{background:#fff0f0;}
 .right-action-btns{display:flex;flex-direction:column;gap:4px;}
 .right-btn{padding:8px 9px;border-radius:5px;font-size:10.5px;font-weight:700;color:#fff;transition:all var(--tr);text-align:center;width:100%;}
 .right-btn:disabled{opacity:.45;cursor:not-allowed;}
-.right-btn.pub{background:var(--pub);}
-.right-btn.pub:hover:not(:disabled){background:#008060;}
-.right-btn.mod{background:var(--mod);}
-.right-btn.mod:hover:not(:disabled){background:#c5650e;}
-.right-btn.mem{background:var(--mem);}
-.right-btn.mem:hover:not(:disabled){background:#9c2b1f;}
-.right-btn.prop{background:var(--prop);}
-.right-btn.prop:hover:not(:disabled){background:#622175;}
+.right-btn.pub{background:var(--pub);opacity:.9;}
+.right-btn.pub:hover:not(:disabled){opacity:1;}
+.right-btn.mod{background:var(--mod);opacity:.9;}
+.right-btn.mod:hover:not(:disabled){opacity:1;}
+.right-btn.mem{background:var(--mem);opacity:.9;}
+.right-btn.mem:hover:not(:disabled){opacity:1;}
+.right-btn.prop{background:var(--prop);opacity:.9;}
+.right-btn.prop:hover:not(:disabled){opacity:1;}
 .rp-chip-group{display:flex;flex-wrap:wrap;gap:4px;padding:6px 9px;}
 .rp-chip{padding:3px 7px;border-radius:16px;font-size:9.5px;font-weight:600;background:#fff;border:1px solid var(--bdr);color:var(--ink);transition:all var(--tr);}
 .rp-chip:hover{background:var(--surf);border-color:#999;}
@@ -695,6 +723,41 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
 <!-- ═══ PHASE 1: LOGIN ═══ -->
 <div id="phase-login">
   <div class="login-bg"></div>
+  <div class="login-split">
+    <div class="login-info-panel">
+      <div class="lip-content">
+        <div class="lip-logo">
+          <div class="lip-logo-mark">🛡️</div>
+          <div class="lip-logo-text">URD Simulator<span>Training Platform</span></div>
+        </div>
+        <h1 class="lip-headline">Practice real moderation <em>decisions</em> before they count.</h1>
+        <p class="lip-sub">A hands on simulator for Trust and Safety trainees. Review realistic cases, apply the right policy, and get instant feedback, all before you touch a live queue.</p>
+        <div class="lip-features">
+          <div class="lip-feature">
+            <div class="lip-feature-icon">🎯</div>
+            <div class="lip-feature-text"><strong>Realistic review scenarios</strong><p>Practice on cases modeled after real moderation queues, not abstract quizzes.</p></div>
+          </div>
+          <div class="lip-feature">
+            <div class="lip-feature-icon">⚡</div>
+            <div class="lip-feature-text"><strong>Instant scoring and feedback</strong><p>See exactly what you got right, and why, the moment you decide.</p></div>
+          </div>
+          <div class="lip-feature">
+            <div class="lip-feature-icon">⏱</div>
+            <div class="lip-feature-text"><strong>Timed like the real queue</strong><p>Build speed and confidence with a live per question timer.</p></div>
+          </div>
+          <div class="lip-feature">
+            <div class="lip-feature-icon">🧭</div>
+            <div class="lip-feature-text"><strong>Covers the full policy set</strong><p>Fraud, harmful content, quality issues, and everything in between.</p></div>
+          </div>
+          <div class="lip-feature">
+            <div class="lip-feature-icon">📊</div>
+            <div class="lip-feature-text"><strong>Built in progress tracking</strong><p>Trainers see scores, timing and comments for every attempt.</p></div>
+          </div>
+        </div>
+        <div class="lip-footer">Built for Sutherland Trust &amp; Safety training programs.</div>
+      </div>
+    </div>
+    <div class="login-card-wrap">
   <div class="login-card">
     <div class="login-logo">
       <div class="tool-name">URD Simulator</div>
@@ -702,12 +765,12 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     </div>
     <div class="login-divider"></div>
     <h2 class="login-title">Content Moderation Assessment</h2>
-    <p class="login-sub">Enter your training ID and display name to start a practice assessment. This is an internal training simulator — no passwords or personal account details are collected.</p>
+    <p class="login-sub">Enter your training ID and display name to start a practice assessment. This is an internal training simulator. No passwords or personal account details are collected.</p>
     <div class="login-row">
       <div class="login-field">
         <label>Training ID <span style="color:var(--red)">*</span></label>
         <input type="text" id="login-empid" placeholder="e.g. 233223" maxlength="20" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
-        <div class="login-err" id="empid-err">Required — numbers only (3–20 digits)</div>
+        <div class="login-err" id="empid-err">Required, numbers only (3 to 20 digits)</div>
       </div>
       <div class="login-field">
         <label>Display Name <span style="color:var(--red)">*</span></label>
@@ -719,32 +782,32 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <div class="login-field">
         <label>Country <span style="color:var(--red)">*</span></label>
         <select id="login-country" onchange="validateLogin()">
-          <option value="">— Select your country —</option>
+          <option value="">Select your country</option>
         </select>
       </div>
       <div class="login-field">
         <label>Trainer Name <span style="color:var(--red)">*</span></label>
         <select id="login-trainer" onchange="validateLogin()">
-          <option value="">— Select your trainer —</option>
+          <option value="">Select your trainer</option>
         </select>
       </div>
     </div>
     <div class="login-field">
       <label>Wave Code</label>
       <select id="login-wave" onchange="onWaveChange()">
-        <option value="">— Select a wave (optional) —</option>
+        <option value="">Select a wave (optional)</option>
       </select>
     </div>
     <div class="day-batch-row">
       <div class="login-field">
         <label>Select Training Day</label>
         <select id="login-day" onchange="onDayChange()">
-          <option value="">— Choose a day —</option>
-          <option value="1">Day 1 — Review Quality Policies</option>
-          <option value="2">Day 2 — Content & Experience Validity</option>
-          <option value="3">Day 3 — Harmful Content & Language</option>
-          <option value="4">Day 4 — Fraud, Duplication & Misconduct</option>
-          <option value="5">Day 5 — Advanced Moderation Decisions</option>
+          <option value="">Choose a day</option>
+          <option value="1">Day 1: Review Quality Policies</option>
+          <option value="2">Day 2: Content & Experience Validity</option>
+          <option value="3">Day 3: Harmful Content & Language</option>
+          <option value="4">Day 4: Fraud, Duplication & Misconduct</option>
+          <option value="5">Day 5: Advanced Moderation Decisions</option>
         </select>
         <div class="login-err" id="day-err">Please select a training day</div>
       </div>
@@ -752,7 +815,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <div class="login-field">
         <label>Trainer Session</label>
         <select id="login-batch" onchange="onBatchChange()">
-          <option value="">— Select a session —</option>
+          <option value="">Select a session</option>
         </select>
       </div>
     </div>
@@ -766,6 +829,8 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <button class="btn-admin-portal" onclick="showAdminModal()">🔐 Admin Portal Access</button>
     </div>
     <div class="login-fun-tips" id="login-tip">💡 <strong>Did you know?</strong> Real moderators review hundreds of reviews daily. This simulator trains your eye for subtle violations!</div>
+  </div>
+    </div>
   </div>
 </div>
 
@@ -818,7 +883,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <div class="admin-field">
       <label>Select Day <span style="color:var(--red)">*</span></label>
       <select id="edit-day-select" onchange="onEditDaySelect()">
-        <option value="">— Choose a day —</option>
+        <option value="">Choose a day</option>
       </select>
       <div style="font-size:10px;color:var(--gray);margin-top:4px;" id="edit-day-hint">Only custom days (Day 6+) can be edited.</div>
     </div>
@@ -880,7 +945,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <div class="admin-field" style="margin-bottom:0;">
         <label>Attach to Wave (optional)</label>
         <select id="batch-wave">
-          <option value="">— None (no wave) —</option>
+          <option value="">None (no wave)</option>
         </select>
         <div style="font-size:9.5px;color:var(--gray);margin-top:4px;">Waves group cohorts. Create waves via 🌊 Create Wave.</div>
       </div>
@@ -1000,7 +1065,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <div id="cloud-status" class="admin-cloud-status status-warn"><span class="cloud-dot warn"></span>Initializing…</div>
     <div class="admin-nav-right">
       <button class="admin-logout-btn" onclick="refreshAdminData()">↻ Refresh</button>
-      <span class="admin-badge" id="admin-id-display">—</span>
+      <span class="admin-badge" id="admin-id-display">N/A</span>
       <button class="admin-logout-btn" onclick="adminLogout()">← Exit</button>
     </div>
   </nav>
@@ -1023,11 +1088,11 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
         <div class="admin-stat-lbl">In Progress</div>
       </div>
       <div class="admin-stat-card orange">
-        <div class="admin-stat-val" id="stat-avg">—</div>
+        <div class="admin-stat-val" id="stat-avg">N/A</div>
         <div class="admin-stat-lbl">Average Score</div>
       </div>
       <div class="admin-stat-card teal">
-        <div class="admin-stat-val" id="stat-htq">—</div>
+        <div class="admin-stat-val" id="stat-htq">N/A</div>
         <div class="admin-stat-lbl">Avg HTQ</div>
       </div>
     </div>
@@ -1035,7 +1100,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <!-- BATCHES SECTION -->
     <div class="admin-batches-card">
       <div class="admin-batches-header">
-        <h3>🛠 Trainer Tools — Days, Waves &amp; Sessions</h3>
+        <h3>🛠 Trainer Tools: Days, Waves &amp; Sessions</h3>
         <div class="admin-batches-actions">
           <button class="admin-upload-day6-btn" onclick="showUpdateDayMenu(event)">🔄 Update Day ▾</button>
           <button class="admin-create-wave-btn" onclick="showWaveModal()">🌊 Create Wave</button>
@@ -1166,7 +1231,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
           <div class="lbl">Score needed to pass</div>
         </div>
         <div class="fun-stat" data-emoji="⏱">
-          <div class="val">10 min</div>
+          <div class="val">5 min</div>
           <div class="lbl">Per question timer</div>
         </div>
         <div class="fun-stat" data-emoji="✅">
@@ -1176,11 +1241,11 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       </div>
       <div class="onboard-rules">
         <h3>How It Works</h3>
-        <div class="rule-row"><div class="rule-emoji">🎲</div><p><strong>Randomised every time</strong> — questions are shuffled from the full day bank so no two sessions are identical.</p></div>
+        <div class="rule-row"><div class="rule-emoji">🎲</div><p><strong>Randomised every time.</strong> Questions are shuffled from the full day bank so no two sessions are identical.</p></div>
         <div class="rule-row"><div class="rule-emoji">⚡</div><p><strong>4 decision types:</strong> Publish, Moderation Remove, Member Fraud Remove, Property Fraud Remove. Pick the right one!</p></div>
         <div class="rule-row"><div class="rule-emoji">💬</div><p><strong>Remove decisions</strong> require you to select from a dropdown of policy-specific removal reasons before submitting.</p></div>
         <div class="rule-row"><div class="rule-emoji">📜</div><p><strong>Certificate issued</strong> with your name, Day number and Policy upon scoring 80% or above.</p></div>
-        <div class="rule-row"><div class="rule-emoji">🔒</div><p><strong>Must decide</strong> before navigating — you cannot skip a question without answering.</p></div>
+        <div class="rule-row"><div class="rule-emoji">🔒</div><p><strong>Must decide</strong> before navigating. You cannot skip a question without answering.</p></div>
       </div>
       <button class="btn-begin" onclick="goWorkspace()">Start Assessment 🚀</button>
       <div class="fun-strip">
@@ -1198,7 +1263,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
   <div class="ws-navbar" id="ws-navbar">
     <div class="nav-brand">URD <span>Sim</span></div>
     <div class="ws-search"><span class="ico">⌕</span><input type="text" placeholder="Search…"></div>
-    <select class="ws-nav-select" id="sample-ids-select" onchange="jumpToQById(this)" style="width:130px;"><option value="">— Jump to Q —</option></select>
+    <select class="ws-nav-select" id="sample-ids-select" onchange="jumpToQById(this)" style="width:130px;"><option value="">Jump to Q</option></select>
     <div class="ws-nav-tabs" style="position:relative;">
       <button class="ws-nav-tab active" id="tab-reviews" onclick="toggleNavDropdown('reviews-dd',this)">Reviews</button>
       <button class="ws-nav-tab" id="tab-advanced" onclick="toggleNavDropdown('advanced-dd',this)">Advanced</button>
@@ -1219,13 +1284,13 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <div class="ws-sidenav">
       <div class="sidenav-section"><div class="sidenav-section-title">Language</div><div class="sidenav-field"><select id="lang-select" onchange="translateReview(this.value)"><option>English</option><option>Spanish</option><option>French</option><option>German</option><option>Italian</option><option>Portuguese</option></select></div></div>
       <div class="sidenav-section"><div class="sidenav-section-title">Provider</div><div class="sidenav-field"><select><option>All</option><option>Tripadvisor</option><option>Expedia</option><option>Viator</option></select></div></div>
-      <div class="sidenav-section"><div class="sidenav-section-title">Classifier</div><div class="sidenav-field"><div class="sidenav-classifier-val" id="classifier-val">—</div></div></div>
+      <div class="sidenav-section"><div class="sidenav-section-title">Classifier</div><div class="sidenav-field"><div class="sidenav-classifier-val" id="classifier-val">N/A</div></div></div>
       <div class="sidenav-section"><div class="sidenav-section-title">Queue</div><div class="sidenav-tabs"><button class="sidenav-tab active" id="tab-incoming" onclick="switchQueue('incoming',this)">Incoming</button><button class="sidenav-tab" id="tab-reported" onclick="switchQueue('reported',this)">Reported</button></div></div>
     </div>
     <div class="ws-content">
       <div class="content-subnav">
         <span class="ta-logo-sm">URD Simulator</span>
-        <div class="reviewer-id-badge" id="sub-reviewer-id">Reviewer: —</div>
+        <div class="reviewer-id-badge" id="sub-reviewer-id">Reviewer: N/A</div>
         <div class="search-id-wrap"><span>REV →</span><strong id="sub-url-id">00001</strong></div>
         <div class="queue-mode-badge" id="queue-mode-badge" style="background:#e8f5e9;color:#15803d;border:1px solid #bbf7d0;">Incoming</div>
         <div class="day-mode-badge" id="day-mode-badge">Day 1</div>
@@ -1272,7 +1337,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
                 <button class="queue-tab" onclick="toggleQueueTabPanel(this,'assign-filter')">Assign</button>
               </div>
               <div class="queue-filter-panel" id="queue-filter"><h6>Select Queue</h6><label class="qf-check"><input type="checkbox"> incoming-svc</label><label class="qf-check"><input type="checkbox"> reported-svc</label><label class="qf-check"><input type="checkbox"> fraud-svc</label><label class="qf-check"><input type="checkbox"> escalations-svc</label><label class="qf-check"><input type="checkbox"> gdpr-svc</label></div>
-              <div class="queue-filter-panel" id="assign-filter"><div class="assign-wrap"><label>Assign To Team</label><select id="assign-team-select"><option value="">— Select Team —</option><option value="serious_alleg-svc">serious_alleg-svc</option><option value="onshore-cmi-svc">onshore-cmi-svc</option><option value="gdpr-svc">gdpr-svc</option><option value="2nd Ops-CMI">2nd Ops-CMI</option><option value="support staff-cmi">support staff-cmi</option><option value="onshore-vr">onshore-vr</option><option value="reviewbombs">reviewbombs</option><option value="listingrequests">listingrequests</option><option value="shiqueue">shiqueue</option><option value="ts_moderation">ts_moderation</option></select></div></div>
+              <div class="queue-filter-panel" id="assign-filter"><div class="assign-wrap"><label>Assign To Team</label><select id="assign-team-select"><option value="">Select Team</option><option value="serious_alleg-svc">serious_alleg-svc</option><option value="onshore-cmi-svc">onshore-cmi-svc</option><option value="gdpr-svc">gdpr-svc</option><option value="2nd Ops-CMI">2nd Ops-CMI</option><option value="support staff-cmi">support staff-cmi</option><option value="onshore-vr">onshore-vr</option><option value="reviewbombs">reviewbombs</option><option value="listingrequests">listingrequests</option><option value="shiqueue">shiqueue</option><option value="ts_moderation">ts_moderation</option></select></div></div>
             </div>
           </div>
           <div class="rp-section">
@@ -1289,7 +1354,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
           <div class="rp-section"><div class="rp-section-title">Verify</div><div class="rp-chip-group"><button class="rp-chip blue" onclick="chipAlert('Verification started.')">Verify</button><button class="rp-chip blue" onclick="chipAlert('Suspicious verify queued.')">Susp. Verify</button><button class="rp-chip blue" onclick="chipAlert('Member verify started.')">Member Verify</button></div></div>
           <div class="rp-section">
             <div class="rp-section-title">Helpful Links</div>
-            <div class="rp-select-wrap"><select onchange="openHelpfulLink(this)"><option value="">— Select a link —</option><option value="__google_email__">Google: Email Search</option><option value="https://www.tripadvisor.com/help/review-policy">Review Policy</option><option value="https://www.tripadvisor.com/help/fraud-policy">Fraud Guidelines</option></select></div>
+            <div class="rp-select-wrap"><select onchange="openHelpfulLink(this)"><option value="">Select a link</option><option value="__google_email__">Google: Email Search</option><option value="https://www.tripadvisor.com/help/review-policy">Review Policy</option><option value="https://www.tripadvisor.com/help/fraud-policy">Fraud Guidelines</option></select></div>
           </div>
           <div class="rp-section"><div class="rp-section-title">Content Safety Report</div><div class="csr-body"><select class="csr-select"><option>Incident Category</option><option>Hate Speech</option><option>Fraud / Scam</option><option>Privacy Violation</option><option>Spam</option></select><select class="csr-select"><option>Incident Type</option><option>Single Post</option><option>Coordinated Attack</option><option>Bot Activity</option></select><button class="csr-submit" onclick="chipAlert('Report submitted.')">Submit Report</button></div></div>
         </div>
@@ -1303,7 +1368,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
   <div class="modal-card">
     <h3 id="modal-title">Select Removal Reason</h3>
     <p class="modal-sub">Select the primary reason (required). Pre-filled comment shown below.</p>
-    <select class="modal-select" id="modal-reason-select" onchange="onReasonChange(this)"><option value="">— Select a reason (required) —</option></select>
+    <select class="modal-select" id="modal-reason-select" onchange="onReasonChange(this)"><option value="">Select a reason (required)</option></select>
     <div class="modal-comment-lbl">Moderator Comment (pre-filled)</div>
     <div class="modal-pre-comment" id="modal-pre-comment">No comment entered.</div>
     <div class="modal-footer">
@@ -1323,7 +1388,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     <div class="modc-icon">📝</div>
     <div class="modc-title">Moderator comment required</div>
     <div class="modc-sub">Please add your moderator comment for this review before submitting your decision. Documenting your reasoning is a required part of the moderation process.</div>
-    <button class="modc-btn" onclick="dismissModCommentPrompt()">OK — I'll add a comment</button>
+    <button class="modc-btn" onclick="dismissModCommentPrompt()">OK, I'll add a comment</button>
   </div>
 </div>
 
@@ -1340,7 +1405,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
     </div>
     <div class="tr-title">⏰ Time is running out!</div>
     <div class="tr-sub">You have <strong>less than 60 seconds</strong> left for this review. Please finalise your decision and moderator comment.</div>
-    <button class="tr-btn" onclick="dismissTimeReminder()">Got it — keep going</button>
+    <button class="tr-btn" onclick="dismissTimeReminder()">Got it, keep going</button>
   </div>
 </div>
 
@@ -1366,10 +1431,10 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
       <div class="score-card">
         <div class="score-big" id="final-score-num">0</div>
         <div class="score-label">Final Score</div>
-        <div class="pass-badge" id="pass-badge">—</div>
+        <div class="pass-badge" id="pass-badge">N/A</div>
         <div style="font-size:9px;color:var(--gray);margin-top:7px;" id="final-summary"></div>
       </div>
-      <div class="analytics-card"><h3>Review Analytics — Decision Log</h3><div id="analytics-rows"></div></div>
+      <div class="analytics-card"><h3>Review Analytics: Decision Log</h3><div id="analytics-rows"></div></div>
     </div>
     <div class="results-right">
       <div class="cert-container">
@@ -1378,16 +1443,16 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
           <div class="cert-issuer">Sutherland Trust &amp; Safety &nbsp;·&nbsp; Tripadvisor</div>
           <div class="cert-title">Certificate of Completion</div>
           <div class="cert-subtitle">URD Simulator · Content Moderation Training</div>
-          <div class="cert-day-line" id="cert-day-line">Day 1 — Review Quality Policies</div>
+          <div class="cert-day-line" id="cert-day-line">Day 1: Review Quality Policies</div>
           <div class="cert-divider-line"><span></span></div>
           <div class="cert-to">This is to certify that</div>
-          <div class="cert-name" id="cert-name-preview">—</div>
-          <div class="cert-empid" id="cert-empid-preview">Employee ID: —</div>
+          <div class="cert-name" id="cert-name-preview">N/A</div>
+          <div class="cert-empid" id="cert-empid-preview">Employee ID: N/A</div>
           <div class="cert-body-text">has successfully completed all modules of the Tripadvisor Content Moderation Training and demonstrated proficiency in evaluating user-generated content.</div>
           <div class="cert-stats-row">
-            <div class="cert-stat"><div class="cert-stat-lbl">Score</div><div class="cert-stat-val" id="cert-score-val">—</div></div>
+            <div class="cert-stat"><div class="cert-stat-lbl">Score</div><div class="cert-stat-val" id="cert-score-val">N/A</div></div>
             <div class="cert-stat"><div class="cert-stat-lbl">Questions</div><div class="cert-stat-val">15</div></div>
-            <div class="cert-stat"><div class="cert-stat-lbl">Date</div><div class="cert-stat-val" id="cert-date-val">—</div></div>
+            <div class="cert-stat"><div class="cert-stat-lbl">Date</div><div class="cert-stat-val" id="cert-date-val">N/A</div></div>
           </div>
           <div class="cert-sig-line"></div>
           <div class="cert-sig-name">Sutherland Trust &amp; Safety</div>
@@ -1416,7 +1481,7 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
 const CONFIG = {
   // Paste your Google Apps Script Web App URL here (the one ending in /exec)
   // Example: 'https://script.google.com/macros/s/AKfycb.../exec'
-  GOOGLE_SHEET_URL: 'https://script.google.com/macros/s/AKfycbwHHQFCgHJrw1vZeLnyBN32btez6AmVkUH4HNBdMUaIZxiFGeZJyHCa9ZxulMR2gXoM/exec',
+  GOOGLE_SHEET_URL: 'https://script.google.com/macros/s/AKfycbyG0zg902O8ToqTkrLNm9raxphxOvLGiXzeaOLdjm3hGbYmmwsw8wpdzbkvkWFVHHFO/exec',
 };
 
 /* ════════════════════════════════════════════════
@@ -2458,7 +2523,7 @@ async function populateTrainerDropdown(){
   const sel=document.getElementById('login-trainer');
   if(!sel)return;
   const cur=sel.value;
-  sel.innerHTML='<option value="">— Select your trainer —</option>';
+  sel.innerHTML='<option value="">Select your trainer</option>';
   if(!CONFIG.GOOGLE_SHEET_URL){
     const opt=document.createElement('option');
     opt.value='';opt.textContent='(Cloud not configured)';opt.disabled=true;
@@ -2475,7 +2540,7 @@ async function populateTrainerDropdown(){
   _availableTrainers=trainers;
   if(trainers.length===0){
     const opt=document.createElement('option');
-    opt.value='';opt.textContent='(No trainers created yet — admin adds them via batches/waves)';opt.disabled=true;
+    opt.value='';opt.textContent='(No trainers created yet. Admin adds them via batches/waves)';opt.disabled=true;
     sel.appendChild(opt);
     return;
   }
@@ -2491,7 +2556,7 @@ async function populateWaveDropdown(){
   const sel=document.getElementById('login-wave');
   if(!sel)return;
   const cur=sel.value;
-  sel.innerHTML='<option value="">— Select a wave (optional) —</option>';
+  sel.innerHTML='<option value="">Select a wave (optional)</option>';
   if(!CONFIG.GOOGLE_SHEET_URL)return;
   const waves=await fetchWaves();
   if(!waves)return;
@@ -2500,7 +2565,7 @@ async function populateWaveDropdown(){
     const opt=document.createElement('option');
     opt.value=w.waveCode;
     let label=w.waveCode;
-    if(w.waveName)label+=' — '+w.waveName;
+    if(w.waveName)label+=': '+w.waveName;
     if(w.startDate)label+=' ('+w.startDate+')';
     opt.textContent=label;
     sel.appendChild(opt);
@@ -2511,7 +2576,7 @@ async function populateWaveDropdown(){
 async function populateBatchDropdown(){
   const sel=document.getElementById('login-batch');
   if(!sel)return;
-  sel.innerHTML='<option value="">— Select a batch —</option>';
+  sel.innerHTML='<option value="">Select a batch</option>';
   if(!CONFIG.GOOGLE_SHEET_URL){
     const opt=document.createElement('option');
     opt.value='';opt.textContent='(Cloud not configured)';opt.disabled=true;
@@ -2555,7 +2620,7 @@ async function onBatchChange(){
       box.innerHTML=`<strong>${batch.batchName}</strong><br>` +
         (batch.startDate?'Start: '+batch.startDate+(batch.endDate?' · End: '+batch.endDate:''):'')+
         (batch.trainerName?'<br>Trainer: '+batch.trainerName:'')+
-        '<br>'+batch.questionCount+' Q · '+formatSeconds(tpq)+' per Q · Created: '+(batch.createdAt||'—');
+        '<br>'+batch.questionCount+' Q · '+formatSeconds(tpq)+' per Q · Created: '+(batch.createdAt||'N/A');
     }
   } else {
     box.style.display='none';
@@ -2577,8 +2642,8 @@ function formatSeconds(sec){
 // Map each Duplicate-policy question to a specific sub-category for the popup.
 // All other questions get "No dupe content found".
 const DUPE_SUBCATEGORY = {
-  4001:'Completed copy — same user (two accounts, same property)',
-  4002:'Completed copy — fraud pattern (verbatim text from another reviewer)',
+  4001:'Completed copy: same user (two accounts, same property)',
+  4002:'Completed copy: fraud pattern (verbatim text from another reviewer)',
 };
 
 function checkDupe(evt){
@@ -2635,7 +2700,7 @@ function checkProperty(evt){
       ok:true,
       icon:'🏠',
       title:'Property verified',
-      body:'No affiliation found. The property check returned a clean record — this looks like a genuine, independent reviewer.',
+      body:'No affiliation found. The property check returned a clean record. This looks like a genuine, independent reviewer.',
       detail:'Status: Verified · No affiliation · All genuine'
     });
   }
@@ -2680,7 +2745,7 @@ function showBatchModal(){
   document.getElementById('btn-create-batch').textContent='Create Batch →';
   // Populate wave dropdown from cached waves with richer labels
   const waveSel=document.getElementById('batch-wave');
-  waveSel.innerHTML='<option value="">— None (no wave) —</option>';
+  waveSel.innerHTML='<option value="">None (no wave)</option>';
   _availableWaves.forEach(w=>{
     const opt=document.createElement('option');
     opt.value=w.waveCode;
@@ -2860,7 +2925,7 @@ async function populateDayDropdown(){
     const opt=document.createElement('option');
     opt.value=String(d.dayNumber);
     opt.dataset.custom='true';
-    opt.textContent='Day '+d.dayNumber+' — '+(d.dayName||'Custom');
+    opt.textContent='Day '+d.dayNumber+': '+(d.dayName||'Custom');
     sel.appendChild(opt);
   });
   if(cur)sel.value=cur;
@@ -2929,7 +2994,7 @@ async function processAddDay(){
     });
     let result={ok:true};try{result=await res.json();}catch(e){}
     if(result.ok===false){_statusErr(status,'✗ Server error: '+(result.error||'unknown'));btn.disabled=false;return;}
-    _statusOk(status,'✓ Day <strong>'+dayNumber+' — '+dayName+'</strong> created with '+parsed.questions.length+' questions. Candidates can now select it at login.');
+    _statusOk(status,'✓ Day <strong>'+dayNumber+': '+dayName+'</strong> created with '+parsed.questions.length+' questions. Candidates can now select it at login.');
     btn.textContent='Create Another →';btn.disabled=false;
     await populateDayDropdown();
   }catch(e){_statusErr(status,'✗ Create day failed: '+String(e.message||e));btn.disabled=false;}
@@ -2940,12 +3005,12 @@ let _editDayCurrentQuestions=[];
 async function showEditDayModal(){
   document.getElementById('edit-day-modal').classList.remove('hidden');
   const sel=document.getElementById('edit-day-select');
-  sel.innerHTML='<option value="">— Choose a day —</option>';
+  sel.innerHTML='<option value="">Choose a day</option>';
   if(_availableDays.length===0)await fetchDays().then(d=>{if(d)_availableDays=d;});
   _availableDays.sort((a,b)=>Number(a.dayNumber)-Number(b.dayNumber)).forEach(d=>{
     const opt=document.createElement('option');
     opt.value=String(d.dayNumber);
-    opt.textContent='Day '+d.dayNumber+' — '+(d.dayName||'Custom')+' ('+d.questionCount+' Qs)';
+    opt.textContent='Day '+d.dayNumber+': '+(d.dayName||'Custom')+' ('+d.questionCount+' Qs)';
     sel.appendChild(opt);
   });
   document.getElementById('edit-day-mode-wrap').style.display='none';
@@ -3189,13 +3254,13 @@ function downloadCSVTemplate(){
   const qWidths=[220,380,120,160,320,320,50,140,110,90,160,320];
   const samples=[
     // publish
-    {row:['Detailed genuine stay in Goa','Three nights at Beach Cliff Resort in Room 214. Chef Anand prepared a wonderful anniversary dinner. Manager Pooja arranged a sunset cruise. Highly recommend.','publish','','Genuine detailed review with room number and named staff. Publish.','This is authentic guest feedback — no policy violation. Publish it.',5,'Beach Cliff Resort','Hotels','2026-01-15','Valid — Publish','Thank you for such a warm review! Chef Anand and Manager Pooja will be delighted.'],style:'rowPublish'},
+    {row:['Detailed genuine stay in Goa','Three nights at Beach Cliff Resort in Room 214. Chef Anand prepared a wonderful anniversary dinner. Manager Pooja arranged a sunset cruise. Highly recommend.','publish','','Genuine detailed review with room number and named staff. Publish.','This is authentic guest feedback, no policy violation. Publish it.',5,'Beach Cliff Resort','Hotels','2026-01-15','Valid: Publish','Thank you for such a warm review! Chef Anand and Manager Pooja will be delighted.'],style:'rowPublish'},
     // moderation_remove
     {row:['AI-generated review pattern','Certainly! Here is a detailed review of my recent stay. The rooms were spacious and the service was impeccable throughout my visit.','moderation_remove','AI Generated','Opening "Certainly!" and generic staging is a classic AI assistant pattern. Correct: Moderation Remove → AI Generated.','AI-generated content undermines trust and must be removed under the AI Generated policy.',5,'Sample Hotel','Hotels','2026-01-16','AI Generated','We appreciate the sentiment but the phrasing indicates AI generation. Flagged for platform review.'],style:'rowRemove'},
     // member_fraud
-    {row:['Coordinated bot pattern','Worst hotel never go here scam!!! [System: one of 47 fresh accounts posting 1-star reviews within 6 hours]','member_fraud','Review Bomb','47 fresh accounts targeting the same property within hours is a textbook coordinated Review Bomb. Escalate.','The system metadata confirms coordinated attack. Not a legitimate complaint — this is Member Fraud: Review Bomb.',1,'City Centre Hotel','Hotels','2026-01-17','Member Fraud — Review Bomb','We are aware of the coordinated attack and have escalated to the platform integrity team.'],style:'rowMember'},
+    {row:['Coordinated bot pattern','Worst hotel never go here scam!!! [System: one of 47 fresh accounts posting 1-star reviews within 6 hours]','member_fraud','Review Bomb','47 fresh accounts targeting the same property within hours is a textbook coordinated Review Bomb. Escalate.','The system metadata confirms coordinated attack. Not a legitimate complaint, this is Member Fraud: Review Bomb.',1,'City Centre Hotel','Hotels','2026-01-17','Member Fraud: Review Bomb','We are aware of the coordinated attack and have escalated to the platform integrity team.'],style:'rowMember'},
     // property_fraud
-    {row:['Owner-orchestrated boosting','Best stay ever! Amazing service! [Account audit: created 14:32, posted 14:34 from property WiFi, alongside 31 identical reviews same hour]','property_fraud','Confirmed Boosting','31 reviews from property WiFi in one hour from fresh accounts = Confirmed Boosting.','This is Property Fraud: coordinated orchestrated boosting from the property itself.',5,'Suspect Resort','Hotels','2026-01-18','Property Fraud — Confirmed Boosting','We are cooperating fully with the platform integrity investigation.'],style:'rowProperty'}
+    {row:['Owner-orchestrated boosting','Best stay ever! Amazing service! [Account audit: created 14:32, posted 14:34 from property WiFi, alongside 31 identical reviews same hour]','property_fraud','Confirmed Boosting','31 reviews from property WiFi in one hour from fresh accounts = Confirmed Boosting.','This is Property Fraud: coordinated orchestrated boosting from the property itself.',5,'Suspect Resort','Hotels','2026-01-18','Property Fraud: Confirmed Boosting','We are cooperating fully with the platform integrity investigation.'],style:'rowProperty'}
   ];
 
   let x='<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?>';
@@ -3219,7 +3284,7 @@ function downloadCSVTemplate(){
   // Sheet 2: How to Use
   x+='<Worksheet ss:Name="How to Use"><Table><Column ss:Width="700"/>';
   const helpLines=[
-    {t:'URD Simulator — Question CSV Template',s:'titleGreen'},
+    {t:'URD Simulator: Question CSV Template',s:'titleGreen'},
     {t:'',s:'body'},
     {t:'HOW TO USE THIS TEMPLATE',s:'subtitle'},
     {t:'1. Go to the "Questions" tab and replace the 4 sample rows with your own questions. Keep the header row.',s:'body'},
@@ -3227,7 +3292,7 @@ function downloadCSVTemplate(){
     {t:'3. In the simulator admin panel, use Upload Day 6 CSV or Create New Batch and pick your saved CSV.',s:'body'},
     {t:'',s:'body'},
     {t:'REQUIRED COLUMNS',s:'subtitle'},
-    {t:'title, body, correct_action — all rows missing these are silently dropped.',s:'body'},
+    {t:'title, body, correct_action: all rows missing these are silently dropped.',s:'body'},
     {t:'',s:'body'},
     {t:'correct_action MUST be EXACTLY one of these (lowercase, underscore not space):',s:'bodyBold'},
     {t:'    publish              → the review should be published (candidate clicks Publish)',s:'mono'},
@@ -3245,16 +3310,16 @@ function downloadCSVTemplate(){
     {t:'• If correct_action is any of the three Remove types  →  correct_reason MUST match a value from the "Valid Reasons" tab (case-insensitive).',s:'goodCell'},
     {t:'',s:'body'},
     {t:'HOW TO WRITE A GOOD REVIEW (body column)',s:'subtitle'},
-    {t:'The body is the actual review text a candidate will read. Write it in first-person as if a real Tripadvisor reviewer submitted it. Include specifics only if the correct answer is publish. Include red-flag patterns for the removal cases (obvious AI phrasing, repeated slurs, coordinated-attack markers, fraud confessions, etc.). Multi-line is fine — enclose the whole field in double-quotes.',s:'body'},
+    {t:'The body is the actual review text a candidate will read. Write it in first-person as if a real Tripadvisor reviewer submitted it. Include specifics only if the correct answer is publish. Include red-flag patterns for the removal cases (obvious AI phrasing, repeated slurs, coordinated-attack markers, fraud confessions, etc.). Multi-line is fine, enclose the whole field in double-quotes.',s:'body'},
     {t:'',s:'body'},
     {t:'HOW TO WRITE explanation_correct',s:'subtitle'},
     {t:'Shown after the candidate answers correctly. 2-3 sentences confirming why their choice was right and reinforcing the policy. Reference the specific evidence in the body.',s:'body'},
     {t:'',s:'body'},
     {t:'HOW TO WRITE explanation_wrong',s:'subtitle'},
-    {t:'Shown when the candidate is wrong. 2-3 sentences pointing to the specific evidence they missed. Should teach — not just say "you\'re wrong."',s:'body'},
+    {t:'Shown when the candidate is wrong. 2-3 sentences pointing to the specific evidence they missed. Should teach, not just say "you\'re wrong."',s:'body'},
     {t:'',s:'body'},
     {t:'HOW TO WRITE owner_response',s:'subtitle'},
-    {t:'3-4 lines from the property owner\'s point of view — shown when the candidate switches to the Reported queue. It should react to the review without giving away the policy answer.',s:'body'},
+    {t:'3-4 lines from the property owner\'s point of view, shown when the candidate switches to the Reported queue. It should react to the review without giving away the policy answer.',s:'body'},
     {t:'',s:'body'},
     {t:'OTHER COLUMNS',s:'subtitle'},
     {t:'rating           1-5 stars shown in the simulator (defaults to 3 if missing)',s:'mono'},
@@ -3277,13 +3342,13 @@ function downloadCSVTemplate(){
 
   // Sheet 3: Valid Reasons
   const validReasons={
-    'moderation_remove':['AI Generated','Affiliation Stated in Review','Allegation of Fraud','Allegation of Blackmail','Allegation of Bullying','Allegation of Incentives','Commercial','Custom Bulk Template','Custom Template','DC Policy','Discriminatory Language','Duplicate','Experience >1 Year','Hard to Read','Illegal Activity','Impacted by Bug','Ineligible Experience','Irrelevant Commentary','Listing Update','Multiple Listings','Non-Original','Not Substantive','Other','Owner Support','Personally Insulting','Private Information','Profane/Vulgar','Property Policy Complaint','Rating Misunderstood','Rating Not Experienced','Secondhand Experience','Sexually Explicit/Graphic','TA Commentary','Threatening Language','Test Review','Underage User','Unsupported Language','User Support','Will Not List','Wrong Listing'],
+    'moderation_remove':['AI Generated','Affiliation Stated in Review','Allegation of Fraud','Allegation of Blackmail','Allegation of Bullying','Allegation of Incentives','Commercial','Custom Bulk Template','Custom Template','DC Policy','Discriminatory Language','Duplicate','Experience >1 Year','Hard to Read','Illegal Activity','Impacted by Bug','Ineligible Experience','Irrelevant Commentary','Listing Update','Multiple Listings','Non-Original','Not Substantive','Other','Owner Support','Personally Insulting','Private Information','Profane/Vulgar','Property Policy Complaint','Rating Misunderstood','Rating Not Experienced','Secondhand Experience','Sexually Explicit/Graphic','TA Commentary','Threatening Language','Underage User','Unsupported Language','User Support','Will Not List','Wrong Listing'],
     'member_fraud':['Blackmail','Current / Ex-Employee','Deceptive Resubmission','Decoy / Seeding','Disgruntled Customer','Impersonation','Invalid Email','Nonsense / Spam','Plagiarized Content','Promotion Fraud','Review Bomb','Sideways Boosting','Sideways Marketing','Temporary Email'],
     'property_fraud':['Confirmed Boosting','Confirmed Incentives','Confirmed Vandalism','Owner Bullying Member','Suspected Boosting','Suspected Incentives','Suspected Vandalism'],
     'publish':['(leave correct_reason EMPTY when correct_action is publish)']
   };
   x+='<Worksheet ss:Name="Valid Reasons"><Table><Column ss:Width="200"/><Column ss:Width="500"/>';
-  x+='<Row ss:Height="34"><Cell ss:MergeAcross="1" ss:StyleID="titlePurple"><Data ss:Type="String">Valid correct_reason values — must match EXACTLY (case-insensitive)</Data></Cell></Row>';
+  x+='<Row ss:Height="34"><Cell ss:MergeAcross="1" ss:StyleID="titlePurple"><Data ss:Type="String">Valid correct_reason values: must match EXACTLY (case-insensitive)</Data></Cell></Row>';
   x+='<Row><Cell><Data ss:Type="String"></Data></Cell></Row>';
   x+='<Row ss:StyleID="hdrGreen"><Cell><Data ss:Type="String">correct_action</Data></Cell><Cell><Data ss:Type="String">Valid values for correct_reason</Data></Cell></Row>';
   Object.keys(validReasons).forEach(action=>{
@@ -3423,7 +3488,7 @@ function parseCSVToQuestions(csvText){
     if(!q.body){errors.push('Row '+(i+1)+': missing body');continue;}
     const action=q.correct_action.toLowerCase();
     if(!DAY6_VALID_ACTIONS.includes(action)){
-      errors.push('Row '+(i+1)+': invalid correct_action "'+q.correct_action+'" — must be one of: '+DAY6_VALID_ACTIONS.join(', '));
+      errors.push('Row '+(i+1)+': invalid correct_action "'+q.correct_action+'", must be one of: '+DAY6_VALID_ACTIONS.join(', '));
       continue;
     }
     q.correct_action=action;
@@ -3574,18 +3639,18 @@ async function processUpload(){
    DAY CONFIG
 ════════════════════════════════════════════════ */
 const DAYS = {
-  1:{name:'Review Quality Policies',desc:'Assess reviews for substantive content quality issues — Not Substantive, Hard to Read, Unsupported Language, Non-Original, AI-Generated, Commercial, and Affiliation violations.'},
-  2:{name:'Content & Experience Validity',desc:'Evaluate reviews for experience legitimacy — Direct Competitor, Ineligible Experience, Secondhand, Property Policy Complaints, Owner Support issues, User Support, stale experiences, personal insults, irrelevant commentary.'},
-  3:{name:'Harmful Content & Language',desc:'Detect and action harmful content — Multiple Listings, Profane/Vulgar language, Discriminatory Language, Threatening Language, Sexually Explicit content, Illegal Activities, and Private Information exposure.'},
-  4:{name:'Fraud, Duplication & Misconduct',desc:'Identify fraud patterns — Duplicate reviews, Fraud Allegations, Blackmail, Bullying, Incentives — across Member Fraud and Property Fraud categories.'},
+  1:{name:'Review Quality Policies',desc:'Assess reviews for substantive content quality issues: Not Substantive, Hard to Read, Unsupported Language, Non-Original, AI-Generated, Commercial, and Affiliation violations.'},
+  2:{name:'Content & Experience Validity',desc:'Evaluate reviews for experience legitimacy: Direct Competitor, Ineligible Experience, Secondhand, Property Policy Complaints, Owner Support issues, User Support, stale experiences, personal insults, irrelevant commentary.'},
+  3:{name:'Harmful Content & Language',desc:'Detect and action harmful content: Multiple Listings, Profane/Vulgar language, Discriminatory Language, Threatening Language, Sexually Explicit content, Illegal Activities, and Private Information exposure.'},
+  4:{name:'Fraud, Duplication & Misconduct',desc:'Identify fraud patterns: Duplicate reviews, Fraud Allegations, Blackmail, Bullying, Incentives, across Member Fraud and Property Fraud categories.'},
   5:{name:'Advanced Moderation Decisions',desc:'Apply advanced policy judgement across Property Fraud (Boosting, Vandalism, Incentives), Member Fraud (Bombing, Marketing, Resubmission), Listing Updates, Rating mismatches, and valid publishing decisions.'},
   6:{name:'Serious Issues',desc:'Reviews uploaded by your trainer covering current serious issues, escalations, and high-priority moderation scenarios. Question set is updated whenever the trainer uploads a new CSV.'},
 };
 
 const FUN_TIPS = [
-  '💡 Real moderators review 200+ pieces of content per day — speed and accuracy matter equally.',
+  '💡 Real moderators review 200+ pieces of content per day. Speed and accuracy matter equally.',
   '🔍 The clue is often in the first sentence. Train your eye to spot patterns quickly.',
-  '🎯 80% correct to pass — that\'s 12 out of 15. You\'ve got this!',
+  '🎯 80% correct to pass, that\'s 12 out of 15. You\'ve got this!',
   '⚡ Fresh eyes catch more violations. Take a breath before each question.',
   '📖 When in doubt, always ask: does this help future travellers make informed decisions?',
 ];
@@ -3759,9 +3824,9 @@ function _applyAdminData(cache){
   document.getElementById('stat-total').textContent=total;
   document.getElementById('stat-passed').textContent=passed;
   document.getElementById('stat-failed').textContent=failed;
-  document.getElementById('stat-avg').textContent=completed.length>0?avg+'%':'—';
+  document.getElementById('stat-avg').textContent=completed.length>0?avg+'%':'N/A';
   if(ipEl)ipEl.textContent=inProgress;
-  if(htqEl)htqEl.textContent=avgHtq>0?formatSeconds(avgHtq):'—';
+  if(htqEl)htqEl.textContent=avgHtq>0?formatSeconds(avgHtq):'N/A';
   renderAdminBatches();
   populateAdminFilterDropdowns();
   renderAdminTable();
@@ -3783,7 +3848,7 @@ function renderAdminBatches(){
       type:'session',
       typeLabel:'Session',
       name:b.batchName||'(unnamed)',
-      dates:(b.startDate||'—')+' → '+(b.endDate||'—'),
+      dates:(b.startDate||'N/A')+' → '+(b.endDate||'N/A'),
       meta:(b.questionCount||0)+' Qs · '+attempts+' attempt'+(attempts===1?'':'s'),
       id:b.batchId||'',
       sortKey:_cardSortKey(b.createdAt,b.startDate,b.batchId)
@@ -3797,7 +3862,7 @@ function renderAdminBatches(){
       type:'wave',
       typeLabel:'Wave',
       name:w.waveCode+(w.waveName?' · '+w.waveName:''),
-      dates:(w.startDate||'—')+' → '+(w.endDate||'—'),
+      dates:(w.startDate||'N/A')+' → '+(w.endDate||'N/A'),
       meta:(w.trainerName?w.trainerName+' · ':'')+attempts+' attempt'+(attempts===1?'':'s'),
       id:w.waveId||'',
       sortKey:_cardSortKey(w.createdAt,w.startDate,w.waveId)
@@ -3810,8 +3875,8 @@ function renderAdminBatches(){
     cards.push({
       type:'day',
       typeLabel:'Day',
-      name:'Day '+d.dayNumber+' — '+(d.dayName||'Custom'),
-      dates:'Created: '+(d.createdAt||'—'),
+      name:'Day '+d.dayNumber+': '+(d.dayName||'Custom'),
+      dates:'Created: '+(d.createdAt||'N/A'),
       meta:(d.questionCount||0)+' Qs · '+attempts+' attempt'+(attempts===1?'':'s'),
       id:d.dayId||'',
       sortKey:_cardSortKey(d.createdAt,'',d.dayId)
@@ -3883,7 +3948,7 @@ function populateAdminFilterDropdowns(){
       const opt=document.createElement('option');
       opt.value=String(n);
       opt.dataset.custom='true';
-      opt.textContent='Day '+n+(meta&&meta.dayName?' — '+meta.dayName:'');
+      opt.textContent='Day '+n+(meta&&meta.dayName?': '+meta.dayName:'');
       if(batchOnlyOpt)daySel.insertBefore(opt,batchOnlyOpt);
       else daySel.appendChild(opt);
     });
@@ -3960,7 +4025,7 @@ function populateAdminFilterDropdowns(){
         seen.add(w.waveCode);
         const opt=document.createElement('option');
         opt.value=w.waveCode;
-        opt.textContent=w.waveCode+(w.waveName?' — '+w.waveName:'');
+        opt.textContent=w.waveCode+(w.waveName?': '+w.waveName:'');
         waveSel.appendChild(opt);
       }
     });
@@ -4108,14 +4173,14 @@ function renderAdminTable(){
       const cl={'publish':'publish','moderation_remove':'mod','member_fraud':'mem','property_fraud':'prop','timeout':'mod'}[dec]||'mod';
       const labels={'publish':'Publish','moderation_remove':'Moderation Remove','member_fraud':'Member Fraud','property_fraud':'Property Fraud','timeout':'Timeout'};
       const selectedLabel=(labels[dec]||dec)+(d.reason?' → '+d.reason:'');
-      const correctLabel=(labels[d.correctAnswer]||d.correctAnswer||'—')+(d.correctReason?' → '+d.correctReason:'');
+      const correctLabel=(labels[d.correctAnswer]||d.correctAnswer||'N/A')+(d.correctReason?' → '+d.correctReason:'');
       const iconMark=d.correct?'<span class="q-correct-tag ok">✓</span>':'<span class="q-correct-tag bad">✕</span>';
-      const timeCell=d.timeSeconds!==undefined?formatSeconds(Number(d.timeSeconds)||0):'—';
+      const timeCell=d.timeSeconds!==undefined?formatSeconds(Number(d.timeSeconds)||0):'N/A';
       const review=d.reviewTitle||'(untitled)';
-      const policy=d.policy||'—';
+      const policy=d.policy||'N/A';
       const qType=d.queueType||'Incoming';
       const qTypeCls=qType==='Reported'?'qt-reported':'qt-incoming';
-      const modC=d.modComment?String(d.modComment):'—';
+      const modC=d.modComment?String(d.modComment):'N/A';
       return`<div class="q-detail-row">
         <span class="q-detail-cell qnum">${iconMark} Q${d.q||j+1}</span>
         <span class="q-detail-cell qtype"><span class="qt-pill ${qTypeCls}">${qType}</span></span>
@@ -4129,23 +4194,23 @@ function renderAdminTable(){
     }).join('');
     const dayOrBatchLabel=(r.batch||r.batchId)
       ? '<span style="color:#00875a;font-weight:700;">📋 '+(r.batch||'Batch')+'</span>'
-      : 'Day '+(r.day||'—')+(DAYS[r.day]?' — '+DAYS[r.day].name:'');
+      : 'Day '+(r.day||'N/A')+(DAYS[r.day]?': '+DAYS[r.day].name:'');
     const resultCell=isInProgress
       ? '<span class="score-pill inprogress">IN PROGRESS</span>'
       : '<span class="score-pill '+(pass?'pass':'fail')+'">'+(pass?'PASSED':'FAILED')+'</span>';
-    const htqCell=Number(r.htqSeconds)>0?formatSeconds(Number(r.htqSeconds)):(isInProgress?'—':'—');
-    const scoreCell=isInProgress?'—':'<strong>'+(r.score||0)+' pts</strong>';
-    const correctCell=isInProgress?'—':(r.correct||0)+' / '+(r.total||15);
+    const htqCell=Number(r.htqSeconds)>0?formatSeconds(Number(r.htqSeconds)):(isInProgress?'N/A':'N/A');
+    const scoreCell=isInProgress?'N/A':'<strong>'+(r.score||0)+' pts</strong>';
+    const correctCell=isInProgress?'N/A':(r.correct||0)+' / '+(r.total||15);
     const pctCell=isInProgress
-      ? '—'
+      ? 'N/A'
       : '<div class="pct-cell"><div class="pct-bar-track"><div class="pct-bar-fill '+pctClass+'" style="width:'+(r.pct||0)+'%"></div></div><span class="pct-num '+pctClass+'">'+(r.pct||0)+'%</span></div>';
     return`<tr class="${rowClass}">
       <td>${i+1}</td>
-      <td><strong>${r.empId||'—'}</strong></td>
-      <td>${r.name||'—'}</td>
-      <td>${r.country?'<span style="color:#324a6e;font-weight:600;">'+r.country+'</span>':'<span style="color:var(--gray);">—</span>'}</td>
-      <td>${r.trainer?'<span style="color:#5a3a80;font-weight:600;">'+r.trainer+'</span>':'<span style="color:var(--gray);">—</span>'}</td>
-      <td>${r.wave?'<span style="color:#7B2D8B;font-weight:700;">'+r.wave+'</span>':'<span style="color:var(--gray);">—</span>'}</td>
+      <td><strong>${r.empId||'N/A'}</strong></td>
+      <td>${r.name||'N/A'}</td>
+      <td>${r.country?'<span style="color:#324a6e;font-weight:600;">'+r.country+'</span>':'<span style="color:var(--gray);">N/A</span>'}</td>
+      <td>${r.trainer?'<span style="color:#5a3a80;font-weight:600;">'+r.trainer+'</span>':'<span style="color:var(--gray);">N/A</span>'}</td>
+      <td>${r.wave?'<span style="color:#7B2D8B;font-weight:700;">'+r.wave+'</span>':'<span style="color:var(--gray);">N/A</span>'}</td>
       <td>${dayOrBatchLabel}</td>
       <td><span class="attempt-badge">#${r.attemptNumber||1}</span></td>
       <td>${scoreCell}</td>
@@ -4153,13 +4218,13 @@ function renderAdminTable(){
       <td>${pctCell}</td>
       <td>${htqCell}</td>
       <td>${resultCell}</td>
-      <td style="font-size:10px;color:var(--gray)">${r.datetime||'—'}</td>
+      <td style="font-size:10px;color:var(--gray)">${r.datetime||'N/A'}</td>
       <td><button class="answer-expand-btn" onclick="toggleAnswerRow(this,'detail-${i}')">View Answers</button></td>
     </tr>
     <tr class="answer-detail-row" id="detail-${i}">
       <td colspan="15">
         <div class="answer-detail-inner">
-          <div class="q-detail-title">📋 Answer Breakdown — ${r.name||'—'} · Attempt #${r.attemptNumber||1}</div>
+          <div class="q-detail-title">📋 Answer Breakdown: ${r.name||'N/A'} · Attempt #${r.attemptNumber||1}</div>
           <div class="q-detail-header">
             <span class="q-detail-cell qnum">Q</span>
             <span class="q-detail-cell qtype">Queue</span>
@@ -4181,7 +4246,7 @@ function updateCloudStatus(state){
   const el=document.getElementById('cloud-status');
   if(!el)return;
   if(!CONFIG.GOOGLE_SHEET_URL){
-    el.innerHTML='<span class="cloud-dot warn"></span>Local only — not connected to Google Sheets';
+    el.innerHTML='<span class="cloud-dot warn"></span>Local only (not connected to Google Sheets)';
     el.className='admin-cloud-status status-warn';
     return;
   }
@@ -4192,7 +4257,7 @@ function updateCloudStatus(state){
     el.innerHTML='<span class="cloud-dot ok"></span>Connected to Google Sheets';
     el.className='admin-cloud-status status-ok';
   } else {
-    el.innerHTML='<span class="cloud-dot err"></span>Sheet unreachable — showing local only';
+    el.innerHTML='<span class="cloud-dot err"></span>Sheet unreachable, showing local only';
     el.className='admin-cloud-status status-err';
   }
 }
@@ -4270,10 +4335,10 @@ function _recordsToWideCSV(records){
       lines.push(row.map(_quoteCSV).join(','));
     } else {
       decisions.forEach((d,j)=>{
-        const sel=actionLabels[d.decision]||d.decision||'—';
-        const selReason=d.reason||(d.decision==='publish'?'(publish — no reason)':'');
-        const cor=actionLabels[d.correctAnswer]||d.correctAnswer||'—';
-        const corReason=d.correctReason||(d.correctAnswer==='publish'?'(publish — no reason)':'');
+        const sel=actionLabels[d.decision]||d.decision||'N/A';
+        const selReason=d.reason||(d.decision==='publish'?'(publish, no reason)':'');
+        const cor=actionLabels[d.correctAnswer]||d.correctAnswer||'N/A';
+        const corReason=d.correctReason||(d.correctAnswer==='publish'?'(publish, no reason)':'');
         const t=formatSeconds(Number(d.timeSeconds)||0);
         const qResult=d.correct?'Correct':(d.decision==='timeout'?'Timeout':'Incorrect');
         // Per-question score: 10 for correct, 0 for wrong/timeout
@@ -4313,7 +4378,7 @@ function exportAllCSV(){
   if(!records.length){chipAlert('No records to export.');return;}
   const stamp=new Date().toISOString().slice(0,10);
   _triggerDownload('URD_Full_Report_All_'+stamp+'.csv',_recordsToWideCSV(records));
-  chipAlert('Downloaded '+records.length+' attempt(s) — all data.');
+  chipAlert('Downloaded '+records.length+' attempt(s), all data.');
 }
 
 function exportFilteredCSV(){
@@ -4418,9 +4483,9 @@ const DAY_DESCRIPTIONS={
   1:'Focus: Not Substantive · Hard to Read · Unsupported Language · Non-Original · AI Generated · Commercial · Affiliation',
   2:'Focus: Direct Competitor · Ineligible Experience · Secondhand · Policy Complaint · Owner Support · User Support · Stale · Insulting · Irrelevant · TA Commentary',
   3:'Focus: Multiple Listings · Profane/Vulgar · Discriminatory · Threatening · Sexually Explicit · Illegal Activity · Private Information',
-  4:'Focus: Duplicate · Allegation of Fraud · Blackmail · Bullying · Incentives — plus Member Fraud & Property Fraud patterns',
+  4:'Focus: Duplicate · Allegation of Fraud · Blackmail · Bullying · Incentives, plus Member Fraud & Property Fraud patterns',
   5:'Focus: Property Fraud (Boosting/Vandalism/Incentives) · Member Fraud (Bombing/Marketing/Resubmission) · Listing Updates · Rating Issues · Publishing Decisions',
-  6:'Focus: Trainer-uploaded serious issues — content varies based on the latest CSV upload by your trainer.',
+  6:'Focus: Trainer-uploaded serious issues. Content varies based on the latest CSV upload by your trainer.',
 };
 
 async function onDayChange(){
@@ -4441,15 +4506,15 @@ async function onDayChange(){
     box.style.display='block';
     const meta=_availableDays.find(d=>Number(d.dayNumber)===dayNum);
     const label=meta?(meta.dayName||'Custom'):'Custom';
-    box.innerHTML=`<strong>Day ${dayNum} — ${label}</strong><br>Trainer-uploaded questions. Content varies with the latest edit.`;
+    box.innerHTML=`<strong>Day ${dayNum}: ${label}</strong><br>Trainer-uploaded questions. Content varies with the latest edit.`;
     box.innerHTML+=`<br><br><span id="d6-status" style="color:var(--gray);">⏳ Checking cloud for questions…</span>`;
     if(!CONFIG.GOOGLE_SHEET_URL){
-      document.getElementById('d6-status').innerHTML='<span style="color:var(--red);">⚠ Google Sheets not configured — ask your trainer.</span>';
+      document.getElementById('d6-status').innerHTML='<span style="color:var(--red);">⚠ Google Sheets not configured. Ask your trainer.</span>';
     } else {
       const qs=await fetchDayQuestions(dayNum);
       const el=document.getElementById('d6-status');
       if(!el)return;
-      if(!qs){el.innerHTML='<span style="color:var(--red);">⚠ Cannot reach Google Sheet — check your connection.</span>';}
+      if(!qs){el.innerHTML='<span style="color:var(--red);">⚠ Cannot reach Google Sheet. Check your connection.</span>';}
       else if(qs.length===0){el.innerHTML='<span style="color:var(--orange);">⚠ No questions available for Day '+dayNum+' yet.</span>';}
       else {el.innerHTML='<span style="color:var(--green-d);font-weight:700;">☁ '+qs.length+' questions available</span>';}
     }
@@ -4497,7 +4562,7 @@ function goOnboarding(){
       const label=meta?(meta.dayName||'Custom'):'Custom';
       document.getElementById('onboard-day-tag').textContent='Day '+selectedDay;
       document.getElementById('onboard-day-title').textContent=label;
-      document.getElementById('onboard-desc').textContent='Questions from Day '+selectedDay+' — '+label+'. Each question has 10 minutes to answer.';
+      document.getElementById('onboard-desc').textContent='Questions from Day '+selectedDay+': '+label+'. Each question has 10 minutes to answer.';
     }
   }
   document.getElementById('phase-login').style.display='none';
@@ -4510,13 +4575,13 @@ async function goWorkspace(){
   document.getElementById('sub-reviewer-id').textContent='Reviewer: '+maskId(empId);
   document.getElementById('classifier-val').textContent=empName;
   if(selectedBatch){
-    document.getElementById('day-mode-badge').textContent='Session — '+selectedBatchName;
+    document.getElementById('day-mode-badge').textContent='Session: '+selectedBatchName;
     document.getElementById('day-mode-badge').style.cssText='background:#e8f5e9;color:#15803d;border:1px solid #bbf7d0;padding:2px 8px;border-radius:16px;font-size:9px;font-weight:700;';
   } else if(DAYS[selectedDay]){
-    document.getElementById('day-mode-badge').textContent='Day '+selectedDay+' — '+DAYS[selectedDay].name;
+    document.getElementById('day-mode-badge').textContent='Day '+selectedDay+': '+DAYS[selectedDay].name;
   } else {
     const meta=_availableDays.find(d=>Number(d.dayNumber)===selectedDay);
-    document.getElementById('day-mode-badge').textContent='Day '+selectedDay+' — '+(meta?meta.dayName||'Custom':'Custom');
+    document.getElementById('day-mode-badge').textContent='Day '+selectedDay+': '+(meta?meta.dayName||'Custom':'Custom');
   }
   // Loading state for cloud-loaded sets
   if(selectedDay>=6||selectedBatch){
@@ -4631,11 +4696,11 @@ function sendInProgressPing(){
 
 function updateSampleIdsDropdown(){
   const sel=document.getElementById('sample-ids-select');
-  sel.innerHTML='<option value="">— Jump to Q —</option>';
+  sel.innerHTML='<option value="">Jump to Q</option>';
   activeQBank.forEach((q,i)=>{
     const opt=document.createElement('option');
     opt.value=i;
-    opt.textContent='Q'+(i+1)+' — '+q.title.slice(0,30)+(q.title.length>30?'…':'');
+    opt.textContent='Q'+(i+1)+': '+q.title.slice(0,30)+(q.title.length>30?'…':'');
     sel.appendChild(opt);
   });
 }
@@ -4893,7 +4958,7 @@ function submitDecision(dec){
 }
 
 const REASON_SETS={
-  moderation_remove:['AI Generated','Affiliation Stated in Review','Allegation of Fraud','Allegation of Blackmail','Allegation of Bullying','Allegation of Incentives','Commercial','Custom Bulk Template','Custom Template','DC Policy','Discriminatory Language','Duplicate','Experience >1 Year','Hard to Read','Illegal Activity','Impacted by Bug','Ineligible Experience','Irrelevant Commentary','Listing Update','Multiple Listings','Non-Original','Not Substantive','Other','Owner Support','Personally Insulting','Private Information','Profane/Vulgar','Property Policy Complaint','Rating Misunderstood','Rating Not Experienced','Secondhand Experience','Sexually Explicit/Graphic','TA Commentary','Threatening Language','Test Review','Underage User','Unsupported Language','User Support','Will Not List','Wrong Listing'],
+  moderation_remove:['AI Generated','Affiliation Stated in Review','Allegation of Fraud','Allegation of Blackmail','Allegation of Bullying','Allegation of Incentives','Commercial','Custom Bulk Template','Custom Template','DC Policy','Discriminatory Language','Duplicate','Experience >1 Year','Hard to Read','Illegal Activity','Impacted by Bug','Ineligible Experience','Irrelevant Commentary','Listing Update','Multiple Listings','Non-Original','Not Substantive','Other','Owner Support','Personally Insulting','Private Information','Profane/Vulgar','Property Policy Complaint','Rating Misunderstood','Rating Not Experienced','Secondhand Experience','Sexually Explicit/Graphic','TA Commentary','Threatening Language','Underage User','Unsupported Language','User Support','Will Not List','Wrong Listing'],
   member_fraud:['Blackmail','Current / Ex-Employee','Deceptive Resubmission','Decoy / Seeding','Disgruntled Customer','Impersonation','Invalid Email','Nonsense / Spam','Plagiarized Content','Promotion Fraud','Review Bomb','Sideways Boosting','Sideways Marketing','Temporary Email'],
   property_fraud:['Confirmed Boosting','Confirmed Incentives','Confirmed Vandalism','Owner Bullying Member','Suspected Boosting','Suspected Incentives','Suspected Vandalism']
 };
@@ -4903,10 +4968,10 @@ function openReasonModal(dec){
   if(answered)return;
   if(!requireModComment())return;
   modalDec=dec;
-  const titles={moderation_remove:'Moderation Remove — Select Reason',member_fraud:'Member Fraud Remove — Select Reason',property_fraud:'Property Fraud Remove — Select Reason'};
+  const titles={moderation_remove:'Moderation Remove: Select Reason',member_fraud:'Member Fraud Remove: Select Reason',property_fraud:'Property Fraud Remove: Select Reason'};
   document.getElementById('modal-title').textContent=titles[dec];
   const sel=document.getElementById('modal-reason-select');
-  sel.innerHTML='<option value="">— Select a reason (required) —</option>';
+  sel.innerHTML='<option value="">Select a reason (required)</option>';
   (REASON_SETS[dec]||[]).forEach(r=>{const opt=document.createElement('option');opt.value=r;opt.textContent=r;sel.appendChild(opt);});
   sel.value='';
   document.getElementById('btn-modal-save').disabled=true;
@@ -4944,7 +5009,7 @@ function processDecision(dec,reason){
     // Build a precise explanation depending on what went wrong
     let detailedBody=q.wrongExpl;
     if(actionCorrect&&!reasonCorrect){
-      detailedBody='Your action ('+decLabel+') was correct — but the reason you selected ("'+reason+'") does not match the policy for this review. The correct reason is "'+correctReason+'". '+q.expl;
+      detailedBody='Your action ('+decLabel+') was correct, but the reason you selected ("'+reason+'") does not match the policy for this review. The correct reason is "'+correctReason+'". '+q.expl;
     } else if(!actionCorrect){
       detailedBody=q.wrongExpl;
     }
@@ -5203,7 +5268,7 @@ function endAssessment(){
 
   document.getElementById('final-score-num').textContent=score+' pts';
   const pb=document.getElementById('pass-badge');
-  pb.textContent=passed?'PASSED — '+pct+'%':'NOT PASSED — '+pct+'%';
+  pb.textContent=passed?'PASSED ('+pct+'%)':'NOT PASSED ('+pct+'%)';
   pb.className='pass-badge '+(passed?'pass':'fail');
   document.getElementById('final-summary').textContent=correctCount+' of '+totalQ+' correct · '+(totalQ-correctCount)+' incorrect';
   document.getElementById('analytics-rows').innerHTML=sessionLog.map(l=>{
@@ -5211,7 +5276,7 @@ function endAssessment(){
     const cl={publish:'Publish',moderation_remove:'Mod Remove',member_fraud:'Mbr Fraud',property_fraud:'Prop Fraud'}[l.correctAnswer];
     let wrongMark='';
     if(!l.correct){
-      if(l.actionCorrect&&!l.reasonCorrect){wrongMark='<span class="wrong-mark">✕ Wrong reason · should be '+(l.correctReason||'—')+'</span>';}
+      if(l.actionCorrect&&!l.reasonCorrect){wrongMark='<span class="wrong-mark">✕ Wrong reason · should be '+(l.correctReason||'N/A')+'</span>';}
       else{wrongMark='<span class="wrong-mark">✕ Should be '+cl+(l.correctReason?' → '+l.correctReason:'')+'</span>';}
     }
     return`<div class="analytics-row"><span class="q-num">Q${l.q}</span><span class="decision">${dl}${l.reason?' → '+l.reason:''}</span>${l.correct?'<span class="correct-mark">✓</span>':wrongMark}</div>`;
@@ -5221,7 +5286,7 @@ function endAssessment(){
   document.getElementById('cert-empid-preview').textContent='Employee ID: '+empId;
   document.getElementById('cert-score-val').textContent=score+' pts ('+pct+'%)';
   document.getElementById('cert-date-val').textContent=new Date().toLocaleDateString('en-GB');
-  document.getElementById('cert-day-line').textContent='Day '+selectedDay+' — '+DAYS[selectedDay].name;
+  document.getElementById('cert-day-line').textContent='Day '+selectedDay+': '+DAYS[selectedDay].name;
   const dlBtn=document.getElementById('btn-dl-cert');
   if(!passed){dlBtn.disabled=true;dlBtn.textContent='Certificate requires 80% score';}
   else{dlBtn.disabled=false;dlBtn.textContent='Download Certificate (PDF)';}
@@ -5242,9 +5307,9 @@ function downloadCert(){
   doc.setFontSize(28);doc.setFont('times','italic');doc.setTextColor(20,20,20);
   doc.text('Certificate of Completion',W/2,46,{align:'center'});
   doc.setFontSize(8.5);doc.setFont('times','normal');doc.setTextColor(140,140,140);
-  doc.text('CONTENT MODERATION TRAINING — URD SIMULATOR',W/2,55,{align:'center'});
+  doc.text('CONTENT MODERATION TRAINING · URD SIMULATOR',W/2,55,{align:'center'});
   doc.setFontSize(8);doc.setFont('times','bold');doc.setTextColor(80,80,80);
-  doc.text('Day '+selectedDay+' — '+DAYS[selectedDay].name,W/2,63,{align:'center'});
+  doc.text('Day '+selectedDay+': '+DAYS[selectedDay].name,W/2,63,{align:'center'});
   doc.setDrawColor(160,160,160);doc.setLineWidth(0.4);doc.line(70,68,W-70,68);
   doc.setFontSize(10);doc.setFont('times','italic');doc.setTextColor(110,110,110);
   doc.text('This is to certify that',W/2,79,{align:'center'});
