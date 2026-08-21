@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -511,7 +512,7 @@ table.admin-table tr.row-fail:hover td{background:#fff0f0;}
 .arrow-btn:hover:not(:disabled){background:var(--green);border-color:var(--green);}
 .arrow-btn:disabled{opacity:.35;cursor:not-allowed;}
 .question-area{display:flex;flex:1;overflow:hidden;min-height:0;}
-.qleft{flex:0 0 80%;max-width:80%;display:flex;overflow:hidden;border-right:1px solid var(--bdr);}
+.qleft{flex:0 0 80%;max-width:80%;display:flex;flex-wrap:wrap;overflow:hidden;border-right:1px solid var(--bdr);overflow-y:auto;}
 .qleft-col1{flex:0 0 50%;max-width:50%;overflow-y:auto;padding:10px;border-right:1px solid var(--bdr);}
 .qleft-col2{flex:0 0 50%;max-width:50%;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;}
 .collapsible{border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:6px;overflow:hidden;}
@@ -716,6 +717,80 @@ body.dark .rp-chip,body.dark .sidenav-classifier-val,body.dark .nav-dropdown{bac
 body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-color:#3a3a3c;}
 @media(max-width:900px){.question-area,.qleft{flex-direction:column;}.qleft,.qleft-col1,.qleft-col2{flex:unset;max-width:100%;width:100%;border-right:none;border-bottom:1px solid var(--bdr);}.qright{flex:unset;max-width:100%;width:100%;}.ws-sidenav{width:100%;min-width:unset;flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--bdr);}.sidenav-section{flex:1;min-width:130px;}.ws-body{flex-direction:column;}}
 @media(max-width:600px){.ws-nav-tabs{display:none;}.ws-search{flex:0 0 110px;}.login-card{padding:28px 20px;}.onboard-card{padding:24px 20px;}.results-body{flex-direction:column;}.results-right{flex:unset;width:100%;min-width:unset;}.fun-stats{grid-template-columns:1fr 1fr;}.admin-stats-row{grid-template-columns:1fr 1fr;}}
+
+/* ── DAY 4 SAME REVIEWS DASHBOARD ── */
+.srd-wrap{border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-top:6px;}
+.srd-section{border-bottom:1px solid var(--bdr);}
+.srd-section:last-child{border-bottom:none;}
+.srd-hdr{display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--surf);cursor:pointer;user-select:none;}
+.srd-hdr:hover{background:#eef1f7;}
+.srd-hdr-icon{width:11px;height:11px;min-width:11px;background:#4d9a3b;border-radius:2px;position:relative;}
+.srd-hdr-icon:after{content:"";position:absolute;width:5px;height:1.5px;background:#fff;left:3px;top:4.5px;border-radius:1px;}
+.srd-section.srd-collapsed .srd-hdr-icon:after{width:1.5px;height:5px;left:4.5px;top:3px;}
+.srd-title{font-size:9px;font-weight:800;color:#173d58;white-space:nowrap;text-transform:uppercase;letter-spacing:.4px;}
+.srd-divider{color:#aaa;font-size:9px;}
+.srd-count{font-size:9px;color:#555;}
+.srd-table-wrap{overflow-x:auto;overflow-y:auto;max-height:140px;scrollbar-width:thin;}
+.srd-left .srd-table-wrap{max-height:110px;}
+.srd-mid .srd-table-wrap{max-height:140px;}
+.srd-left .srd-tbl{min-width:680px;}
+.srd-mid .srd-tbl{min-width:900px;}
+#srd-container-left{border-top:1px solid var(--bdr);width:100%;flex:0 0 100%;}
+.srd-table-wrap::-webkit-scrollbar{width:5px;height:5px;}
+.srd-table-wrap::-webkit-scrollbar-track{background:#f0f0f0;}
+.srd-table-wrap::-webkit-scrollbar-thumb{background:#bbb;border-radius:3px;}
+.srd-section.srd-collapsed .srd-table-wrap{display:none;}
+.srd-tbl{width:100%;min-width:900px;border-collapse:collapse;font-size:8.5px;table-layout:fixed;}
+.srd-tbl thead tr{height:24px;}
+.srd-tbl thead th{background:#b8d1e0;border-right:1px solid rgba(255,255,255,.3);border-bottom:1px solid #a8bfce;color:#102f48;font-weight:700;text-align:left;padding:3px 5px;white-space:nowrap;overflow:hidden;font-size:8px;}
+.srd-tbl tbody tr:nth-child(odd){background:#f9fbfc;}
+.srd-tbl tbody tr:nth-child(even){background:#d9e9f3;}
+.srd-tbl tbody tr:hover{background:#c9e1ed;}
+.srd-tbl tbody td{padding:4px 5px;border-right:1px solid rgba(255,255,255,.6);border-bottom:1px solid #d7e0e5;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;font-size:8px;}
+.srd-tbl td.srd-id{font-weight:700;color:#182d40;font-family:monospace;}
+.srd-tbl td.srd-status{font-weight:700;color:#173d58;}
+.srd-tbl td.srd-rating{text-align:center;font-weight:700;}
+.srd-loc-icon{width:14px;height:11px;margin:0 auto;position:relative;}
+.srd-loc-icon:before{content:"";position:absolute;width:8px;height:5px;border:2px solid #102f45;border-radius:50%;top:2px;left:2px;}
+.srd-loc-icon:after{content:"";position:absolute;width:3px;height:3px;background:#102f45;border-radius:50%;left:5px;top:4px;box-shadow:6px 0 0 #102f45;}
+
+/* ── DUPLICATE REVIEW POPUP ── */
+.dup-overlay{position:fixed;inset:0;z-index:9000;background:rgba(10,10,20,.55);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:16px;animation:dupFadeIn .2s ease;}
+@keyframes dupFadeIn{from{opacity:0}to{opacity:1}}
+.dup-card{background:#fff;border-radius:16px;width:min(600px,96vw);max-height:88vh;overflow-y:auto;box-shadow:0 28px 80px rgba(0,0,0,.3);border-top:5px solid #c0392b;animation:dupPop .28s cubic-bezier(.34,1.56,.64,1);}
+@keyframes dupPop{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
+.dup-card::-webkit-scrollbar{width:6px;}
+.dup-card::-webkit-scrollbar-thumb{background:#c7d0e5;border-radius:3px;}
+.dup-hdr{padding:18px 22px 14px;border-bottom:1px solid #f0f0f0;}
+.dup-hdr-top{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.dup-hdr-icon{width:36px;height:36px;border-radius:10px;background:#fef2f2;border:1.5px solid #fecaca;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.dup-hdr-title{font-size:15px;font-weight:800;color:#c0392b;letter-spacing:-.2px;}
+.dup-hdr-sub{font-size:11px;color:#666;line-height:1.5;}
+.dup-alert-bar{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:9px 13px;margin:14px 22px 0;display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#8b0000;line-height:1.55;}
+.dup-alert-bar strong{display:block;font-size:12px;margin-bottom:2px;color:#c0392b;}
+.dup-body{padding:16px 22px 20px;display:flex;flex-direction:column;gap:14px;}
+.dup-review-block{border:1.5px solid #e0e4ec;border-radius:10px;overflow:hidden;}
+.dup-review-block.original{border-color:#bbf7d0;}
+.dup-review-block.duplicate{border-color:#fecaca;}
+.dup-review-block-hdr{padding:8px 13px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.dup-review-block.original .dup-review-block-hdr{background:#f0fdf4;}
+.dup-review-block.duplicate .dup-review-block-hdr{background:#fff5f5;}
+.dup-review-block-label{font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;}
+.dup-review-block.original .dup-review-block-label{color:#15803d;}
+.dup-review-block.duplicate .dup-review-block-label{color:#c0392b;}
+.dup-review-id{font-family:monospace;font-size:11px;font-weight:700;color:#324a6e;background:#eef1f7;border:1px solid #c7d0e5;border-radius:5px;padding:2px 8px;}
+.dup-review-meta{padding:10px 13px;border-bottom:1px solid #f0f0f0;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;}
+.dup-meta-row{display:flex;gap:4px;font-size:10px;line-height:1.5;}
+.dup-meta-lbl{color:#888;font-weight:600;white-space:nowrap;}
+.dup-meta-val{color:#111827;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dup-review-content{padding:10px 13px;}
+.dup-content-lbl{font-size:9px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.dup-content-title{font-size:12px;font-weight:700;color:#111827;margin-bottom:4px;}
+.dup-content-body{font-size:10.5px;color:#374151;line-height:1.65;background:#fafbfc;border:1px solid #e8ebf0;border-radius:6px;padding:8px 10px;}
+.dup-match-banner{background:linear-gradient(135deg,#fff3cd,#ffeeba);border:1.5px solid #ffc107;border-radius:8px;padding:9px 13px;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:#856404;}
+.dup-footer{padding:14px 22px 18px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;}
+.dup-close-btn{padding:9px 22px;background:#c0392b;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s;}
+.dup-close-btn:hover{background:#a93226;}
 </style>
 </head>
 <body>
@@ -1327,6 +1402,8 @@ body.dark .hist-row,body.dark .queue-filter-panel{background:#2c2c2e;border-colo
               <textarea class="comment-box" id="mod-comment" placeholder="Add your moderation comment here… (required)" oninput="this.classList.remove('comment-error')"></textarea>
             </div>
           </div>
+          <!-- DAY 4: Same Reviews Dashboard - full width below both columns -->
+          <div id="srd-container-left" style="display:none;width:100%;padding:0 10px 8px;box-sizing:border-box;"></div>
         </div>
         <div class="qright">
           <div class="rp-section">
@@ -1939,133 +2016,148 @@ const FULL_BANK = [
  wrongExpl:'The reviewer has published private contact details — social media handle, personal mobile number, and home address — of a named staff member with stated intent to facilitate further contact. This is doxxing and requires immediate Moderation Remove: Private Information.',
  rating:1,prop:'Florence Restaurant',exp:'Restaurants',date:'2024-09-15'},
 
-/* ══ DAY 4 — Fraud, Duplication & Misconduct ══ */
-// 1. Duplicate (2)
-{id:4001,day:4,policy:'Duplicate',
- title:'Lovely lunch today for our walking group',
- body:'Lovely lunch today for our walking group. Excellent food, pleasant atmosphere and very helpful staff. Thank you we will book again in future.',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'Verified duplicate — same user has two accounts submitting identical reviews for the same property. Moderation Remove: Duplicate.',
- wrongExpl:'This is a verified duplicate. The same user operates two accounts and submitted identical reviews for the same property. Duplicate reviews are removed regardless of the quality of the content. Moderation Remove: Duplicate.',
- rating:5,prop:'Café Restaurant',exp:'Restaurants',date:'2024-10-01'},
-{id:4002,day:4,policy:'Duplicate',
- title:'Faruk was the best tour guide in Kyrgyzstan',
- body:'Faruk was the best tour guide I had during my entire stay in Kyrgyzstan. He was professional, incredibly knowledgeable and helpful. We saw Ala Archa National Park — we hiked together up to the panorama point, about a 45-60 minute hike. He helped take many photos of me in exactly the way I wanted. Afterwards, he took me to a local lunch place where we had manti and fried lagman noodles with spicy sauce. Faruk spoke English flawlessly and provided the needed context and information for the tour.',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'Copy-pasted text from previous Review 1023363763. Traceable user with no connection to the property. Duplicate.',
- wrongExpl:'This text is an exact copy of review 1023363763. The user is identified as having copied-and-pasted another reviewer\'s genuine content. Moderation Remove: Duplicate.',
- rating:5,prop:'Kyrgyzstan Tour Operator',exp:'Attractions',date:'2024-10-02'},
-// 2. Allegation of Fraud (2)
-{id:4003,day:4,policy:'Allegation of Fraud',
- title:'Bed bugs, police condemning rooms, fake positive reviews',
- body:'DO NOT EVER BOOK THIS HOTEL. 15 years travelling the world and this is by far the most dangerous, vile, disgusting "resort". They are deleting the real reviews and posting fake positive reviews. I caught the manager who was hiding for 5 days from all guests. Staff were on the verge of tears from complaints about bed bugs, no water for toilets, broken unsecured doors. Police condemned the rooms but staff just pulled the condemned signs off at check-in. No spa, no market, no beach near the hotel. Cockroaches in rooms and food areas. Awful food — we all had food poisoning twice.',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'User mentions allegation of fake reviews: "They are deleting the real reviews and posting fake positive reviews." Allegation of Fraud.',
- wrongExpl:'The review contains a specific allegation that the property is deleting genuine reviews and posting fake positive ones. Allegations of systematic fraud against the review platform require moderation review before publication. Moderation Remove: Allegation of Fraud.',
- rating:1,prop:'Problematic Resort',exp:'Hotels',date:'2024-10-03'},
-{id:4004,day:4,policy:'Allegation of Fraud',
- title:'Expired steak — all reviews probably fake',
- body:'They use expired steak cut, got upset stomach and bloating. Its run by Indians and all the reviews are probably fake. Never had such an expensive bad steak before.',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'User stated "all the reviews are probably fake" — Allegation of Fraud. Also contains discriminatory language.',
- wrongExpl:'This review contains both an unsubstantiated allegation that all reviews are fake and discriminatory language targeting the owners by ethnic origin. Both elements independently require removal. Moderation Remove: Allegation of Fraud.',
- rating:1,prop:'Steakhouse',exp:'Restaurants',date:'2024-10-04'},
-// 3. Allegation of Blackmail (2)
-{id:4005,day:4,policy:'Allegation of Blackmail',
- title:'Manager asked me to remove review for refund',
- body:'The manager asked me to remove my review and I told him I\'d be happy to, if he refunded the cost of my stay.',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'Clear mutual blackmail arrangement — reviewer conditioning review removal on a refund. Moderation Remove.',
- wrongExpl:'This review describes a mutual exchange: the manager wants the review removed and the reviewer will comply for a refund. This is a blackmail arrangement from the reviewer\'s side. Moderation Remove: Allegation of Blackmail.',
- rating:1,prop:'Accommodation',exp:'Hotels',date:'2024-10-05'},
-{id:4006,day:4,policy:'Allegation of Blackmail',
- title:'Will upgrade to 5 stars for free pork scratchings',
- body:'Just having a pint with a mate in the Old Mill Inn and wondering if the lovely Kirstie P will respond? If she does, and we get a free pack of pork scratchings, we\'ll up our review to 5 stars.',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'Clear attempt at blackmail — conditioning a rating upgrade on receiving a free product.',
- wrongExpl:'The reviewer is explicitly conditioning a 5-star review on receiving a free product from the venue. This is textbook blackmail — using a review as leverage for personal gain. Moderation Remove: Allegation of Blackmail.',
- rating:2,prop:'Old Mill Inn',exp:'Restaurants',date:'2024-10-06'},
-// 4. Allegation of Bullying (1)
-{id:4007,day:4,policy:'Allegation of Bullying',
- title:'We saw your comments — you\'ll hear from our legal counsel',
- body:'We saw your comments and would like to let you know that you\'ll hear from our legal counsel.',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'Owner response that is threatening legal action against a reviewer — Bullying the user.',
- wrongExpl:'This owner response constitutes intimidation of a reviewer through the threat of legal action. Property owners threatening legal action against guests for legitimate reviews is classified as Allegation of Bullying and removed.',
- rating:1,prop:'Disputed Property',exp:'Hotels',date:'2024-10-07'},
-// 5. Allegation of Incentives (1)
-{id:4008,day:4,policy:'Allegation of Incentives',
- title:'We would like to present you with a complimentary stay',
- body:'"We would like to present you with a complimentary stay. If acceptable, we\'d appreciate you removing your review."',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'Reverse incentives — property offering a complimentary stay in exchange for removing a review.',
- wrongExpl:'The property is offering a complimentary stay in exchange for removal of a review. This is a reverse incentive — attempting to suppress negative feedback through material rewards. Moderation Remove: Allegation of Incentives.',
- rating:1,prop:'Hotel (Offer)',exp:'Hotels',date:'2024-10-08'},
-// Fill Day 4 to reach 15+
-{id:4009,day:4,policy:'Valid Complaint',
- title:'Good hotel but seriously noisy HVAC system',
- body:'The room itself was comfortable and the location is unbeatable for the price. However, the HVAC unit in room 412 made a grinding noise throughout the night. I reported it to reception at midnight and again at 7am. The second report resulted in a maintenance visit at 9am which didn\'t resolve the noise. Front desk offered a £20 discount which I accepted, but for the inconvenience it felt inadequate.',
- ownerResponse:null,
- correct:'publish',
- expl:'Specific genuine complaint with room number, exact timeline, management response and outcome. Publish.',
- wrongExpl:'This is a detailed, specific review with a room number, exact timeline of events, maintenance response, and compensation offered. All elements confirm this is a genuine guest experience. Publish.',
- rating:2,prop:'Value City Hotel',exp:'Hotels',date:'2024-10-09'},
-{id:4010,day:4,policy:'Valid Complaint',
- title:'Exceptional stay despite check-in mix-up',
- body:'Arrived to find our room had been given to another guest — frustrating start. The duty manager Priya handled it professionally, upgrading us to a junior suite with a written apology and a complimentary breakfast voucher for both mornings. The suite was stunning with harbour views. Overall a genuinely exceptional stay once things were sorted. Credit where it\'s due to the management team.',
- ownerResponse:null,
- correct:'publish',
- expl:'Genuine review with named staff, specific incident and resolution. Balanced and specific. Publish.',
- wrongExpl:'This balanced review names a specific staff member, describes a real service failure, and explains the resolution in detail. The reviewer gives appropriate credit for recovery. This is genuine, specific, helpful content. Publish.',
- rating:4,prop:'Harbour View Hotel',exp:'Hotels',date:'2024-10-10'},
-{id:4011,day:4,policy:'Valid Review',
- title:'Underage user apparent — flagged review',
- body:'Me and my besties went to this super cool place!!! omg we are only 13 and our parents dropped us off lol. The food was SO YUMMY and the staff were so nice to us. Definitely coming back for our bday!!! 🎉🎉🎉',
- ownerResponse:null,
- correct:'moderation_remove',
- expl:'Review explicitly states the reviewer is 13 years old — underage user. Moderation Remove.',
- wrongExpl:'The reviewer explicitly identifies themselves as 13 years old. Platform users must meet minimum age requirements. Reviews from underage users require Moderation Remove regardless of content quality.',
- rating:5,prop:'Restaurant',exp:'Restaurants',date:'2024-10-11'},
-{id:4012,day:4,policy:'Suspected Property Fraud',
- title:'Amazing — posted from hotel WiFi alongside 30 others',
- body:'Amazing hotel! Best I\'ve stayed at in years. Staff are wonderful, rooms are spotless, food is excellent. Will absolutely return! [System: this account shares the hotel\'s WiFi IP with 31 other 5-star reviews submitted in the same 4-hour window.]',
- ownerResponse:null,
+/* ══ DAY 4 — Property Fraud & Duplicates ══ */
+
+/* ── SUSPECTED BOOSTING (3) ── */
+{id:4001,day:4,policy:'Suspected Boosting',
+ title:'Amazing rooms and incredible staff — Priya and team are the best!',
+ body:'Absolutely blown away by Grand Lotus Hotel. The rooms were immaculate, the breakfast spread was outstanding, and the staff went above and beyond. Priya at the front desk was exceptional — she made our entire trip. The pool area was spotless. Cannot recommend highly enough. 5 stars without hesitation!',
+ ownerResponse:'Thank you so much for your kind words! We are thrilled to hear that Priya and the rest of our team made your stay so memorable. We look forward to welcoming you back to Grand Lotus Hotel very soon!',
  correct:'property_fraud',
- expl:'31 reviews from the same IP (hotel WiFi) in 4 hours. Property Fraud Remove: Suspected Boosting.',
- wrongExpl:'31 five-star reviews submitted from the property\'s own WiFi network within a 4-hour window is a clear Suspected Boosting pattern. Property Fraud Remove and escalate for investigation.',
- rating:5,prop:'The IP Hotel',exp:'Hotels',date:'2024-10-12'},
-{id:4013,day:4,policy:'Member Fraud',
- title:'Blackmail: refund me in 24 hours or I\'ll post daily',
- body:'The GM refused my refund so I am warning them now: I will post a new 1-star review every single day across every platform until the refund is issued. My followers will help. You have 24 hours. Refund me £350 or face the consequences.',
- ownerResponse:null,
- correct:'member_fraud',
- expl:'Explicit extortion threat using coordinated review bombing as leverage. Member Fraud Remove: Blackmail.',
- wrongExpl:'Using the threat of daily review bombing across multiple platforms as leverage for a refund is extortion. This is Member Fraud: Blackmail regardless of the legitimacy of the original complaint. The review serves as a threat, not feedback.',
- rating:1,prop:'London Hotel',exp:'Hotels',date:'2024-10-13'},
-{id:4014,day:4,policy:'Member Fraud',
- title:'Review bomb campaign from Facebook group',
- body:'This 1-star review is part of an organised campaign from the Facebook group "Boycott This Hotel". Join us to submit your 1-star reviews. We have 2,000 members ready to post. We will reach our target of 100 negative reviews by Friday.',
- ownerResponse:null,
- correct:'member_fraud',
- expl:'Explicit coordinated review bomb announcement. Member Fraud Remove: Review Bomb.',
- wrongExpl:'The poster openly declares this review is part of a coordinated attack campaign with 2,000 members targeting a specific property. Even if there is a legitimate underlying grievance, organised mass review attacks constitute Member Fraud: Review Bomb.',
- rating:1,prop:'The Continental Hotel',exp:'Hotels',date:'2024-10-14'},
-{id:4015,day:4,policy:'Valid',
- title:'Genuinely excellent bistro — third visit',
- body:'Third visit this year and the standard has only improved. The new head chef\'s tasting menu was exceptional — seven courses, each paired with a wine recommendation from the sommelier. The lamb was cooked perfectly and the chocolate dessert was one of the best I have had. Service as attentive as ever. Already booked for December.',
- ownerResponse:null,
+ expl:'Account created 0 days ago with no review history, submitting a glowing 5-star review from the hotel\'s own WiFi IP. Same email, same property across all same-member reviews. Suspected Boosting — Property Fraud Remove.',
+ wrongExpl:'The reviewer\'s account is 0 days old with no prior reviews, and the submission IP matches the property\'s own network. The praise exactly mirrors the review content with staff names. This is Suspected Boosting. Property Fraud Remove.',
+ rating:5,prop:'Grand Lotus Hotel',exp:'Hotels',date:'2026-07-14'},
+
+{id:4002,day:4,policy:'Suspected Boosting',
+ title:'Best restaurant experience — Chef Marco and team are outstanding!',
+ body:'Visited Bella Vista Ristorante last night and I am completely speechless. Chef Marco prepared the most incredible pasta I have ever tasted. The service from waiter Alessandro was flawless. The ambience was perfect. Every single dish was perfection. This place deserves every 5-star review it gets. Please never change a thing!',
+ ownerResponse:'Grazie mille for your wonderful review! Chef Marco and Alessandro will be absolutely delighted to read your kind words. It was a pleasure having you dine with us at Bella Vista Ristorante. We hope to see you again very soon!',
+ correct:'property_fraud',
+ expl:'Fresh account 0 days old, email matches all same-member entries, property name consistent across sections. Review praises named staff matching the review content. Suspected Boosting — Property Fraud Remove.',
+ wrongExpl:'The account is 0 days old and the glowing review specifically names staff members and matches the property consistently across all sections. This is a coordinated boosting pattern. Property Fraud Remove: Suspected Boosting.',
+ rating:5,prop:'Bella Vista Ristorante',exp:'Restaurants',date:'2026-07-15'},
+
+{id:4003,day:4,policy:'Suspected Boosting',
+ title:'Magical tour — guide Ravi made everything perfect!',
+ body:'Just returned from the most magical day tour with Sunrise Adventures. Our guide Ravi was absolutely phenomenal — knowledgeable, funny, warm, and incredibly professional. The itinerary was perfectly planned. Every detail was taken care of. This is the best tour company in the city without any doubt. Book immediately — you will not regret it!',
+ ownerResponse:'Thank you for your fantastic review of Sunrise Adventures! Ravi is truly one of our star guides and your words will mean the world to him. We are so happy you had a magical experience and hope to see you on another tour very soon!',
+ correct:'property_fraud',
+ expl:'Account age 0 days, email and property name identical across all same-member sections. Staff name Ravi mentioned in both the review body and review content. Suspected Boosting — Property Fraud Remove.',
+ wrongExpl:'Brand new account, zero prior reviews, same email and property throughout. The named staff (Ravi) appears in both the review text and the panel content, confirming coordinated boosting. Property Fraud Remove: Suspected Boosting.',
+ rating:5,prop:'Sunrise Adventures',exp:'Attractions',date:'2026-07-16'},
+
+/* ── SUSPECTED VANDALISM (3) ── */
+{id:4004,day:4,policy:'Suspected Vandalism',
+ title:'Absolutely disgusting — avoid at all costs',
+ body:'The worst hotel experience of my life. Rooms were filthy, sheets were stained, there was mould on the bathroom ceiling. The reception staff were rude and dismissive. The breakfast was inedible. I found cockroaches in my room on the second night. Management ignored all complaints. Do NOT stay here under any circumstances. This place should be shut down.',
+ ownerResponse:'We strongly dispute these claims. Our property undergoes daily deep cleaning and pest control inspections. We have no record of any complaint from this guest during the stated period. We request the platform investigate this review as we believe it to be fabricated.',
+ correct:'property_fraud',
+ expl:'Account created 0 days ago, same email and property across all same-member sections. Extremely negative content with no prior stay evidence. Suspected Vandalism — Property Fraud Remove.',
+ wrongExpl:'Brand new account with 0 days age posting a highly damaging review with no traceable stay. Email and property name consistent across all panels, consistent with targeted vandalism. Property Fraud Remove: Suspected Vandalism.',
+ rating:1,prop:'The Royal Crown Hotel',exp:'Hotels',date:'2026-07-17'},
+
+{id:4005,day:4,policy:'Suspected Vandalism',
+ title:'Complete scam — food was rotten and staff were thieves',
+ body:'Ate at Maison Dupont last week and it was an absolute nightmare. The food was clearly off — I was ill for two days afterwards. My wallet was stolen from the table and staff denied all knowledge. The manager was aggressive when confronted. The place is filthy and the wine list is a complete rip-off. I have reported this to health authorities. Stay far away.',
+ ownerResponse:'We are deeply troubled by these serious accusations. Our restaurant has an unblemished health inspection record. We have no report of any theft or illness from this period. We request urgent platform review as this review appears designed to damage our reputation.',
+ correct:'property_fraud',
+ expl:'0-day-old account, email and property identical throughout same-member sections. Serious accusations with no corroboration. Negative content matches the review body. Suspected Vandalism — Property Fraud Remove.',
+ wrongExpl:'The account is 0 days old and makes serious unverifiable allegations. Same email and property name across all sections confirm targeted behaviour. Property Fraud Remove: Suspected Vandalism.',
+ rating:1,prop:'Maison Dupont Restaurant',exp:'Restaurants',date:'2026-07-18'},
+
+{id:4006,day:4,policy:'Suspected Vandalism',
+ title:'Terrible experience — guide was useless and dangerous',
+ body:'Booked a tour with Peak Explorer Tours and it was a complete disaster. The guide had no idea of the route and got us lost for three hours. Safety equipment was not provided despite being advertised. One member of our group twisted their ankle due to the guide\'s negligence. The company refused to refund us. They should not be operating. Dangerous and incompetent.',
+ ownerResponse:'We categorically deny these allegations. All our guides are certified and safety equipment is always provided. We have no record of any incident or refund request from this booking. We believe this review is malicious and request platform investigation.',
+ correct:'property_fraud',
+ expl:'Account is 0 days old. Email and property consistent across all same-member sections. Negative review matches the body content. No traceable booking. Suspected Vandalism — Property Fraud Remove.',
+ wrongExpl:'Zero-day-old account with damaging allegations and no booking trace. Email and property are the same throughout all panels. This is targeted vandalism. Property Fraud Remove: Suspected Vandalism.',
+ rating:1,prop:'Peak Explorer Tours',exp:'Attractions',date:'2026-07-19'},
+
+/* ── SUSPECTED INCENTIVES (3) ── */
+{id:4007,day:4,policy:'Suspected Incentives',
+ title:'Wonderful stay — and the manager personally gave us complimentary drinks!',
+ body:'We had a truly wonderful stay at Azure Bay Resort. Sofia at reception greeted us with such warmth. The manager Diego personally came to our room and gave us a bottle of champagne and said he would appreciate a positive review on Tripadvisor in return. The pool was beautiful, the spa was relaxing. We felt so well looked after. Diego and Sofia — thank you both so much!',
+ ownerResponse:'Thank you for your lovely review of Azure Bay Resort! Sofia and Diego are wonderful members of our team and it is always great to hear guests feel well looked after. We hope to welcome you back for another beautiful stay very soon!',
+ correct:'property_fraud',
+ expl:'Account 0 days old. Review explicitly states the manager offered a gift in exchange for a positive Tripadvisor review. Staff names Sofia and Diego mentioned. Same email and property throughout. Suspected Incentives — Property Fraud Remove.',
+ wrongExpl:'The reviewer openly states the manager gave them champagne in exchange for a review. Account is 0 days old and all panels share the same email and property. This is Suspected Incentives. Property Fraud Remove.',
+ rating:5,prop:'Azure Bay Resort',exp:'Hotels',date:'2026-07-20'},
+
+{id:4008,day:4,policy:'Suspected Incentives',
+ title:'Brilliant food — chef personally offered us a free dessert for a good review!',
+ body:'Had an amazing lunch at Trattoria Fiorentina. The pasta was genuinely exceptional and Chef Luca came to our table personally. He was incredibly charming and offered us a complimentary tiramisu if we would write a great review on Tripadvisor. Our waiter Giovanni was also brilliant and joined in encouraging the review. We said yes — the food truly is wonderful anyway!',
+ ownerResponse:'Grazie for your kind review of Trattoria Fiorentina! Chef Luca and Giovanni take such pride in every guest\'s experience. We are so pleased you enjoyed the tiramisu and hope to welcome you back for another delicious meal very soon!',
+ correct:'property_fraud',
+ expl:'Account 0 days old. Guest explicitly states chef offered a free dessert in return for a Tripadvisor review. Staff names Luca and Giovanni mentioned. Same email and property across all sections. Suspected Incentives — Property Fraud Remove.',
+ wrongExpl:'The review openly describes receiving a free dessert in exchange for a positive review. Staff names match review content. Account is 0 days old. Property Fraud Remove: Suspected Incentives.',
+ rating:5,prop:'Trattoria Fiorentina',exp:'Restaurants',date:'2026-07-21'},
+
+{id:4009,day:4,policy:'Suspected Incentives',
+ title:'Fantastic tour — the owner paid for our dinner to say thank you for reviewing!',
+ body:'Took a sunset cruise with Blue Horizon Sailing and it was spectacular. Captain James and crew member Elena were both fantastic throughout. After the tour, the company owner approached us and offered to pay for our dinner at a partner restaurant if we left a 5-star review on Tripadvisor that evening. We thought that was incredibly generous. James and Elena truly made the trip!',
+ ownerResponse:'Thank you for your wonderful review of Blue Horizon Sailing! Captain James and Elena are the heart of our team and we are so glad you had a spectacular sunset cruise. We hope to see you sailing with us again very soon!',
+ correct:'property_fraud',
+ expl:'Account 0 days old. Review explicitly describes the owner paying for dinner in exchange for a 5-star review. Named staff James and Elena match the review content. Email and property consistent across all panels. Suspected Incentives — Property Fraud Remove.',
+ wrongExpl:'The reviewer clearly states the owner offered a dinner payment in exchange for a 5-star review. Account is 0 days old. Staff names and email/property match throughout. Property Fraud Remove: Suspected Incentives.',
+ rating:5,prop:'Blue Horizon Sailing',exp:'Attractions',date:'2026-07-22'},
+
+/* ── DUPLICATE (3) ── */
+{id:4010,day:4,policy:'Duplicate',
+ title:'Perfect weekend escape — highly recommend this hidden gem',
+ body:'We had the most perfect weekend escape at Meadow House Inn. The rooms were cosy and beautifully decorated. Breakfast was freshly cooked each morning with local produce. The grounds were peaceful and the staff couldn\'t have been more helpful. We walked to the village pub in the evening which was charming. Definitely coming back next year. A true hidden gem!',
+ ownerResponse:'What a lovely review — thank you so much! We are delighted you enjoyed your weekend with us at Meadow House Inn. We look forward to welcoming you back and hope to see you again very soon!',
+ correct:'moderation_remove',
+ expl:'This review text appears verbatim in a second review submitted under a different Review ID by the same member account. Verified Duplicate — Moderation Remove.',
+ wrongExpl:'This exact text has been submitted twice under different Review IDs by the same member. Duplicate content regardless of quality. Moderation Remove: Duplicate.',
+ rating:5,prop:'Meadow House Inn',exp:'Hotels',date:'2026-07-23'},
+
+{id:4011,day:4,policy:'Duplicate',
+ title:'Unforgettable dining experience in the heart of the city',
+ body:'Dinner at The Copper Spoon was simply unforgettable. The tasting menu was a journey through flavours I had never experienced before. Each course was presented beautifully and the sommelier\'s wine pairings were inspired. The service was impeccable from start to finish. Our table by the window had a stunning city view. A truly special occasion restaurant that exceeded every expectation.',
+ ownerResponse:'Thank you so much for this wonderful review of The Copper Spoon! It is always a joy to know that our tasting menu and sommelier\'s selections have made a lasting impression. We hope to have the pleasure of hosting you again for another special occasion!',
+ correct:'moderation_remove',
+ expl:'Identical review text found submitted under a second Review ID from the same member. Verified Duplicate — Moderation Remove.',
+ wrongExpl:'This text matches exactly another submission from the same account under a different ID. This is a Duplicate and must be removed regardless of content quality.',
+ rating:5,prop:'The Copper Spoon',exp:'Restaurants',date:'2026-07-24'},
+
+{id:4012,day:4,policy:'Duplicate',
+ title:'Thrilling adventure — best day of our entire holiday',
+ body:'Booked the white-water rafting experience with Canyon Rush Adventures and it was without question the best day of our entire holiday. The guides were incredibly safety-conscious while still making every rapid thrilling and fun. The post-rafting BBQ lunch was delicious. All equipment was top quality. Every member of our group — adults and teenagers — had an incredible time. Cannot recommend highly enough!',
+ ownerResponse:'What fantastic feedback — this means so much to our whole Canyon Rush Adventures team! We are thrilled every member of your group had such an incredible time on the water and at the BBQ. We hope to see you back for another adventure!',
+ correct:'moderation_remove',
+ expl:'This review body appears word-for-word under a second Review ID submitted by the same account. Verified Duplicate — Moderation Remove.',
+ wrongExpl:'Exact match found on a second Review ID from the same member. Content quality is irrelevant — this is a Duplicate. Moderation Remove.',
+ rating:5,prop:'Canyon Rush Adventures',exp:'Attractions',date:'2026-07-25'},
+
+/* ── PUBLISH (3) ── */
+{id:4013,day:4,policy:'Publish — Positive',
+ title:'Outstanding service and a room worth every penny',
+ body:'Stayed at Harrington Place for three nights in June for a work trip. Room 308 was spotlessly clean, well-soundproofed and had a very comfortable bed. The breakfast was a highlight — proper cooked options and excellent coffee. Reception staff, particularly a gentleman named Thomas, were proactive and helpful. The gym was well-equipped and open early. Good value for a central location.',
+ ownerResponse:'Thank you for such a thoughtful review of Harrington Place. Thomas and the whole team will be so pleased to hear your kind words. We are glad your stay in room 308 met expectations and hope to welcome you back on your next visit to the city!',
  correct:'publish',
- expl:'Detailed genuine repeat visitor review with specific menu details and service observations. Publish.',
- wrongExpl:'This is a high-credibility repeat visitor review with specific details about the tasting menu, individual courses, wine pairing, and a future booking confirmation. No policy violations. Publish.',
- rating:5,prop:'The Bistro',exp:'Restaurants',date:'2024-10-15'},
+ expl:'Genuine detailed review with specific room number, named staff, and real observations. Account is well-established with many years of history. Posting times across member reviews show large time gaps. Publish.',
+ wrongExpl:'This is a genuine, balanced review from a long-standing account with a strong history. Specific details (room 308, Thomas, gym hours) confirm authenticity. No policy violations. Publish.',
+ rating:4,prop:'Harrington Place',exp:'Hotels',date:'2026-07-26'},
+
+{id:4014,day:4,policy:'Publish — Negative',
+ title:'Disappointing stay — not what we expected at this price point',
+ body:'We booked The Langton for our anniversary based on its reputation but were disappointed. The room was smaller than the photos suggested and the air conditioning was noisy throughout the night. Dinner in the hotel restaurant was overpriced for what was served. Check-in took 40 minutes despite having booked months in advance. Staff were polite but clearly understaffed. Not worth the premium price.',
+ ownerResponse:'Thank you for taking the time to share your feedback about your anniversary stay at The Langton. We are genuinely sorry the room size and air conditioning did not meet expectations. We are actively reviewing staffing levels at check-in and appreciate your constructive comments.',
+ correct:'publish',
+ expl:'Balanced negative review from a long-standing account with significant account history and varied posting dates across member reviews showing genuine usage. No policy violations — Publish.',
+ wrongExpl:'This is a valid complaint from an established member with years of account history and a genuine posting pattern. Specific observations (AC noise, 40-minute check-in) confirm authenticity. Publish.',
+ rating:2,prop:'The Langton Hotel',exp:'Hotels',date:'2026-07-27'},
+
+{id:4015,day:4,policy:'Publish — Positive',
+ title:'The best local restaurant we have found in years',
+ body:'We discovered Rosewood Bistro quite by accident three months ago and have now been back four times. The seasonal menu changes regularly and every visit brings something new and delicious. The owner Maria is always present and clearly passionate about the food. The wine list is thoughtfully curated and fairly priced. Booking is essential as it fills up quickly. A genuine neighbourhood gem that deserves all its recognition.',
+ ownerResponse:'Thank you so much for your continued loyalty to Rosewood Bistro! It means everything to us that you keep coming back. Maria and the whole team work so hard to keep the menu exciting and your kind words are truly motivating. See you soon!',
+ correct:'publish',
+ expl:'Genuine repeat-visitor review from a well-established account. Specific details (four visits, seasonal menu, owner Maria) and old account with varied long-gap posting history confirm authenticity. Publish.',
+ wrongExpl:'Long-standing account with genuine usage history and specific accurate details (repeat visits, named owner). No fraud indicators. Publish.',
+ rating:5,prop:'Rosewood Bistro',exp:'Restaurants',date:'2026-07-28'},
+
 
 /* ══ DAY 5 — Advanced Moderation Decisions ══ */
 // Property Fraud: Suspected/Confirmed Boosting, Vandalism, Incentives (from sheet)
@@ -2318,21 +2410,26 @@ const OWNER_RESPONSES = {
   3015:"We are deeply troubled that our team member Marco's social media handle, personal mobile and home address have been published with stated intent for further contact. We have alerted local police and request immediate platform removal as a privacy/safety emergency.",
 
   // ── Day 4 ──
-  4001:"We thank our wonderful regulars for their loyalty. However, our system has identified this same review submitted from a second account belonging to the same individual. We respectfully request the duplicate be removed per platform policy.",
-  4002:"Faruk genuinely is a wonderful tour guide who deserves recognition! However, this specific text appears verbatim in an earlier review from a different traveller (review 1023363763). We request platform investigation to ensure each review represents an authentic personal stay.",
-  4003:"We are deeply concerned by the strong allegations about review manipulation and police involvement. These claims are unverified and we have CCTV and inspection records that contradict them. We welcome any platform integrity investigation to verify the truth.",
-  4004:"We absolutely reject the unverified allegation that 'all the reviews are probably fake' — we have hundreds of legitimate reviews verified through booking records. The combination of biased commentary about ownership ethnicity and the fraud accusation requires platform review.",
-  4005:"Our manager reached out to understand the guest's concerns, not to negotiate a review exchange. The reviewer's explicit conditional offer to remove the review in exchange for a full refund crosses ethical lines. We request platform investigation.",
-  4006:"We pride ourselves on warm hospitality but cannot allow reviews to be traded for free product. The reviewer's open offer to upgrade their rating for free pork scratchings is a textbook blackmail pattern that we request the platform investigate.",
-  4007:"We have never threatened legal action against any reviewer and this response was issued by an external party without our authorisation. We sincerely apologise and have removed the legal representative's access to our review responses immediately.",
-  4008:"We never offered a complimentary stay in exchange for review removal. This response was issued in error by a junior team member and we apologise for the confusion. We are providing additional training on platform engagement guidelines.",
-  4009:"We sincerely apologise for the HVAC noise in room 412 and have since replaced the unit entirely. The £20 was offered as a goodwill gesture acknowledging the inconvenience. We appreciate your patience while we worked through the issue overnight.",
-  4010:"Priya will be absolutely delighted to hear her quick service recovery was appreciated. We sincerely apologise for the initial booking error and are reviewing our reservation handover protocol to prevent similar issues going forward. Thank you for the balanced feedback.",
-  4011:"We are deeply concerned that the reviewer explicitly identifies themselves as 13 years old. Platform policies require minimum age for reviews to protect minors and ensure verified guest experiences. We have alerted compliance and the platform.",
-  4012:"We absolutely reject any suggestion of coordinated review activity from our WiFi. We work transparently with Tripadvisor's safety team and welcome any investigation that confirms our compliance with platform integrity standards. Our genuine guests deserve credibility.",
-  4013:"We are reporting this extortion attempt to local police and to Tripadvisor's safety team. Threatening coordinated daily review attacks across all platforms in exchange for a £350 refund constitutes criminal behaviour that we will not tolerate.",
-  4014:"We are aware of the Facebook 'Boycott This Hotel' group and have reported it to Tripadvisor's safety team. Coordinated review bombing campaigns of 2,000 members misrepresent our genuine guest experiences and we appreciate the platform's enforcement against such attacks.",
-  4015:"We are honoured by such loyal patronage and delighted by your detailed feedback on the new chef's tasting menu and Sommelier's wine pairings. The December booking is confirmed and we look forward to welcoming you back for another exceptional evening.",
+  // Suspected Boosting
+  4001:"Thank you so much for your kind words! We are thrilled to hear that Priya and the rest of our team made your stay so memorable. We look forward to welcoming you back to Grand Lotus Hotel very soon!",
+  4002:"Grazie mille for your wonderful review! Chef Marco and Alessandro will be absolutely delighted to read your kind words. It was a pleasure having you dine with us at Bella Vista Ristorante. We hope to see you again very soon!",
+  4003:"Thank you for your fantastic review of Sunrise Adventures! Ravi is truly one of our star guides and your words will mean the world to him. We are so happy you had a magical experience and hope to see you on another tour very soon!",
+  // Suspected Vandalism
+  4004:"We strongly dispute these claims. Our property undergoes daily deep cleaning and pest control inspections. We have no record of any complaint from this guest during the stated period. We request the platform investigate this review as we believe it to be fabricated.",
+  4005:"We are deeply troubled by these serious accusations. Our restaurant has an unblemished health inspection record. We have no report of any theft or illness from this period. We request urgent platform review as this review appears designed to damage our reputation.",
+  4006:"We categorically deny these allegations. All our guides are certified and safety equipment is always provided. We have no record of any incident or refund request from this booking. We believe this review is malicious and request platform investigation.",
+  // Suspected Incentives
+  4007:"Thank you for your lovely review of Azure Bay Resort! Sofia and Diego are wonderful members of our team and it is always great to hear guests feel well looked after. We hope to welcome you back for another beautiful stay very soon!",
+  4008:"Grazie for your kind review of Trattoria Fiorentina! Chef Luca and Giovanni take such pride in every guest's experience. We are so pleased you enjoyed the tiramisu and hope to welcome you back for another delicious meal very soon!",
+  4009:"Thank you for your wonderful review of Blue Horizon Sailing! Captain James and Elena are the heart of our team and we are so glad you had a spectacular sunset cruise. We hope to see you sailing with us again very soon!",
+  // Duplicate
+  4010:"What a lovely review — thank you so much! We are delighted you enjoyed your weekend with us at Meadow House Inn. We look forward to welcoming you back and hope to see you again very soon!",
+  4011:"Thank you so much for this wonderful review of The Copper Spoon! It is always a joy to know that our tasting menu and sommelier's selections have made a lasting impression. We hope to have the pleasure of hosting you again for another special occasion!",
+  4012:"What fantastic feedback — this means so much to our whole Canyon Rush Adventures team! We are thrilled every member of your group had such an incredible time on the water and at the BBQ. We hope to see you back for another adventure!",
+  // Publish
+  4013:"Thank you for such a thoughtful review of Harrington Place. Thomas and the whole team will be so pleased to hear your kind words. We are glad your stay in room 308 met expectations and hope to welcome you back on your next visit to the city!",
+  4014:"Thank you for taking the time to share your feedback about your anniversary stay at The Langton. We are genuinely sorry the room size and air conditioning did not meet expectations. We are actively reviewing staffing levels at check-in and appreciate your constructive comments.",
+  4015:"Thank you so much for your continued loyalty to Rosewood Bistro! It means everything to us that you keep coming back. Maria and the whole team work so hard to keep the menu exciting and your kind words are truly motivating. See you soon!",
 
   // ── Day 5 ──
   5001:"We absolutely reject this review. Investigation reveals the text has been copied from another reviewer's submission for the same property — a coordinated vandalism attempt to amplify negative coverage. We request the platform integrity team act immediately.",
@@ -2400,17 +2497,11 @@ const CORRECT_REASONS = {
   3014:'Sexually Explicit/Graphic',
   3015:'Private Information',
   // ── Day 4 ──
-  4001:'Duplicate', 4002:'Duplicate',
-  4003:'Allegation of Fraud', 4004:'Allegation of Fraud',
-  4005:'Allegation of Blackmail', 4006:'Allegation of Blackmail',
-  4007:'Allegation of Bullying',
-  4008:'Allegation of Incentives',
-  4009:null, 4010:null,
-  4011:'Underage User',
-  4012:'Suspected Boosting',
-  4013:'Blackmail',
-  4014:'Review Bomb',
-  4015:null,
+  4001:'Suspected Boosting', 4002:'Suspected Boosting', 4003:'Suspected Boosting',
+  4004:'Suspected Vandalism', 4005:'Suspected Vandalism', 4006:'Suspected Vandalism',
+  4007:'Suspected Incentives', 4008:'Suspected Incentives', 4009:'Suspected Incentives',
+  4010:'Duplicate', 4011:'Duplicate', 4012:'Duplicate',
+  4013:null, 4014:null, 4015:null,
   // ── Day 5 ──
   5001:'Suspected Vandalism', 5002:'Suspected Vandalism',
   5003:'Suspected Incentives', 5004:'Suspected Incentives',
@@ -2731,6 +2822,682 @@ function showCheckPopup(opts){
 /* ════════════════════════════════════════════════
    ADMIN — CREATE BATCH FLOW
 ════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════
+   DAY 4 — MEMBER TOOL DATASETS (one per question)
+   15 unique profiles keyed by question ID (4001–4015).
+════════════════════════════════════════════════ */
+const DAY4_MEMBER_DATA = {
+  /* ── SUSPECTED BOOSTING ── account age 0 days, same email+property throughout */
+  4001: { memberId:'82341901', closedId:'', guid:'AA1F9CC2041983EBC7120CE33B71AA', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'GrandLotusGuest01', username:'GrandLotusGuest01', email:'grandlotusguest01@gmail.com', website:'', location:'Dubai, UAE', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'GrandLotusGuest01&nbsp;&nbsp;2026-07-14 09:01:22.000001', tosDate:'2026-07-14 09:01:22.000001', tosPOS:'en_AE' },
+  4002: { memberId:'73412802', closedId:'', guid:'BB2E8DD3152094FCD8231DF44C82BB', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'BellaVistaFan02', username:'BellaVistaFan02', email:'bellavistafan02@gmail.com', website:'', location:'Milan, Italy', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'BellaVistaFan02&nbsp;&nbsp;2026-07-15 10:14:33.000002', tosDate:'2026-07-15 10:14:33.000002', tosPOS:'it_IT' },
+  4003: { memberId:'61239703', closedId:'', guid:'CC3D7EE4263105GDE9342EG55D93CC', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'SunriseAdventurer03', username:'SunriseAdventurer03', email:'sunriseadventurer03@gmail.com', website:'', location:'Bangkok, Thailand', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'SunriseAdventurer03&nbsp;&nbsp;2026-07-16 08:22:11.000003', tosDate:'2026-07-16 08:22:11.000003', tosPOS:'en_TH' },
+  /* ── SUSPECTED VANDALISM ── account age 0 days, same email+property throughout */
+  4004: { memberId:'94128604', closedId:'', guid:'DD4C6FF5374216HEF0453FH66E04DD', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'RoyalCrownHater04', username:'RoyalCrownHater04', email:'royalcrownhater04@gmail.com', website:'', location:'London, UK', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'RoyalCrownHater04&nbsp;&nbsp;2026-07-17 11:45:09.000004', tosDate:'2026-07-17 11:45:09.000004', tosPOS:'en_GB' },
+  4005: { memberId:'55019505', closedId:'', guid:'EE5B5GG6485327IFG1564GI77F15EE', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'MaisonDupontAngry05', username:'MaisonDupontAngry05', email:'maisondupontangry05@outlook.com', website:'', location:'Paris, France', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'MaisonDupontAngry05&nbsp;&nbsp;2026-07-18 14:03:55.000005', tosDate:'2026-07-18 14:03:55.000005', tosPOS:'fr_FR' },
+  4006: { memberId:'38876406', closedId:'', guid:'FF6A4HH7596438JGH2675HJ88G26FF', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'PeakToursComplainer06', username:'PeakToursComplainer06', email:'peaktourscomplainer06@gmail.com', website:'', location:'Kathmandu, Nepal', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'PeakToursComplainer06&nbsp;&nbsp;2026-07-19 07:59:44.000006', tosDate:'2026-07-19 07:59:44.000006', tosPOS:'en_NP' },
+  /* ── SUSPECTED INCENTIVES ── account age 0 days, same email+property throughout */
+  4007: { memberId:'27763307', closedId:'', guid:'GG7Z3II8607549KHI3786IK99H37GG', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'AzureBayGuest07', username:'AzureBayGuest07', email:'azurebayguest07@gmail.com', website:'', location:'Bali, Indonesia', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'AzureBayGuest07&nbsp;&nbsp;2026-07-20 09:12:38.000007', tosDate:'2026-07-20 09:12:38.000007', tosPOS:'en_ID' },
+  4008: { memberId:'16650208', closedId:'', guid:'HH8Y2JJ9718650LIJ4897JL00I48HH', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'TrattoriaFioFan08', username:'TrattoriaFioFan08', email:'trattoriafan08@gmail.com', website:'', location:'Florence, Italy', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'TrattoriaFioFan08&nbsp;&nbsp;2026-07-21 12:28:17.000008', tosDate:'2026-07-21 12:28:17.000008', tosPOS:'it_IT' },
+  4009: { memberId:'05541109', closedId:'', guid:'II9X1KK0829761MJK5908KM11J59II', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'BlueHorizonSailor09', username:'BlueHorizonSailor09', email:'bluehorizonsailor09@gmail.com', website:'', location:'Sydney, Australia', joined:'Today', status:'Account Open', karma:'0 days', role:'default user', identityHistory:'BlueHorizonSailor09&nbsp;&nbsp;2026-07-22 15:44:02.000009', tosDate:'2026-07-22 15:44:02.000009', tosPOS:'en_AU' },
+  /* ── DUPLICATE ── */
+  4010: { memberId:'91432010', closedId:'', guid:'JJ0W0LL1930872NKL6019LN22K60JJ', fbid:'Not Connected', googleId:'102938475611293847561', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'MeadowHouseRegular10', username:'MeadowHouseRegular10', email:'meadowhouse.regular10@gmail.com', website:'', location:'Oxford, England, UK', joined:'March 14, 2021', status:'Account Open', karma:'N/A', role:'default user', identityHistory:'MeadowHouseRegular10&nbsp;&nbsp;2021-03-14 10:22:01.112233', tosDate:'2021-03-14 10:22:01.112233', tosPOS:'en_GB' },
+  4011: { memberId:'82323011', closedId:'', guid:'KK1V9MM2041983OLM7120MO33L71KK', fbid:'100049238810234', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'CopperSpoonDiner11', username:'CopperSpoonDiner11', email:'copperspoondiner11@outlook.com', website:'', location:'Edinburgh, Scotland, UK', joined:'August 7, 2019', status:'Account Open', karma:'N/A', role:'default user', identityHistory:'CopperSpoonDiner11&nbsp;&nbsp;2019-08-07 18:33:14.556677', tosDate:'2019-08-07 18:33:14.556677', tosPOS:'en_GB' },
+  4012: { memberId:'73214012', closedId:'', guid:'LL2U8NN3152094PMN8231NP44M82LL', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'ap.user.441029384756', naverId:'Not Connected', displayName:'CanyonRushAdventurer12', username:'CanyonRushAdventurer12', email:'canyonrush.adventurer12@icloud.com', website:'', location:'Denver, Colorado, USA', joined:'May 22, 2020', status:'Account Open', karma:'N/A', role:'default user', identityHistory:'CanyonRushAdventurer12&nbsp;&nbsp;2020-05-22 14:11:09.889900', tosDate:'2020-05-22 14:11:09.889900', tosPOS:'en_US' },
+  /* ── PUBLISH ── old established accounts */
+  4013: { memberId:'64105013', closedId:'', guid:'MM3T7OO4263105QNO9342OQ55N93MM', fbid:'Not Connected', googleId:'108432156700231489012', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'HarringtonRegular_James', username:'HarringtonRegular_James', email:'harrington.james.reviewer@gmail.com', website:'www.jamestravel.co.uk', location:'Bristol, England, UK', joined:'February 3, 2009', status:'Account Open', karma:'Top Contributor — 14 years', role:'contributor', identityHistory:'HarringtonRegular_James&nbsp;&nbsp;2009-02-03 08:44:21.001122', tosDate:'2009-02-03 08:44:21.001122', tosPOS:'en_GB' },
+  4014: { memberId:'55098014', closedId:'', guid:'NN4S6PP5374216RON0453PR66O04NN', fbid:'Not Connected', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'ap.user.998172634550', naverId:'Not Connected', displayName:'LangtonStay_Rachel', username:'LangtonStay_Rachel', email:'rachel.langton.stays@icloud.com', website:'', location:'Manchester, England, UK', joined:'June 19, 2012', status:'Account Open', karma:'Senior Contributor — 11 years', role:'contributor', identityHistory:'LangtonStay_Rachel&nbsp;&nbsp;2012-06-19 16:55:38.334455', tosDate:'2012-06-19 16:55:38.334455', tosPOS:'en_GB' },
+  4015: { memberId:'46081015', closedId:'', guid:'OO5R5QQ6485327SPO1564QS77P15OO', fbid:'100037412890123', googleId:'Not Connected', vkId:'Not Connected', lineV2:'Not Connected', lineApac:'Not Connected', appleId:'Not Connected', naverId:'Not Connected', displayName:'RosewoodBistroLover_Helen', username:'RosewoodBistroLover_Helen', email:'helen.rosewood.bistro@gmail.com', website:'www.helensrestaurantreviews.com', location:'Bath, England, UK', joined:'October 11, 2010', status:'Account Open', karma:'Senior Contributor — 13 years', role:'contributor', identityHistory:'RosewoodBistroLover_Helen&nbsp;&nbsp;2010-10-11 12:19:44.667788', tosDate:'2010-10-11 12:19:44.667788', tosPOS:'en_GB' },
+};
+
+function openMemberTool(qId) {
+  const d = DAY4_MEMBER_DATA[qId];
+  if (!d) return;
+  const escaped = (s) => String(s).replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\${/g,'\\${');
+  const roleOpts = ['default user','contributor','moderator','administrator'].map(r=>`<option${r===d.role?' selected':''}>${r}</option>`).join('');
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Member Tool</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body { background: #fff; color: #12314d; font-family: Arial, Helvetica, sans-serif; font-size: 15px; overflow-x: hidden; }
+  .page { min-height: 100vh; padding: 0 20px 20px; position: relative; }
+  .topbar { height: 78px; position: relative; }
+  .brand { position: absolute; left: 18px; top: 4px; display: flex; align-items: center; color: #444; font-size: 34px; font-weight: 700; letter-spacing: -1.7px; }
+  .brand-mark { width: 61px; height: 36px; margin-right: 7px; position: relative; display: inline-block; }
+  .brand-mark:before, .brand-mark:after { content: ""; position: absolute; border: 5px solid #173b57; width: 24px; height: 24px; border-radius: 50%; top: 5px; background: #fff; }
+  .brand-mark:before { left: 1px; } .brand-mark:after { left: 28px; }
+  .brand-mark span, .brand-mark i { position: absolute; width: 9px; height: 9px; border-radius: 50%; top: 13px; z-index: 2; background: #e9a53b; border: 2px solid #173b57; }
+  .brand-mark span { left: 10px; } .brand-mark i { left: 37px; }
+  .search-panel { position: absolute; right: 63px; top: 0; width: 586px; height: 68px; background: #e9a45b; padding: 0 14px 9px; }
+  .search-title { color: #111; font-size: 16px; font-weight: 700; margin: -2px 0 7px; }
+  .search-row { display: flex; align-items: center; gap: 10px; }
+  .search-input { width: 273px; height: 22px; border: 1px solid #999; font-size: 14px; padding: 2px 5px; }
+  .search-by { color: #111; font-size: 13px; font-weight: 700; }
+  select { height: 24px; border: 1px solid #aaa; background: #eee; font-size: 13px; }
+  .search-btn, .update-btn, .reset-btn { border: 1px solid #aaa; background: linear-gradient(#fff, #ddd); color: #222; border-radius: 2px; cursor: pointer; font-size: 12px; padding: 2px 8px; }
+  .search-btn { height: 22px; margin-left: 2px; }
+  .heading-row { height: 75px; position: relative; }
+  .heading-row h1 { margin: 0; padding: 14px 0 0 5px; font-size: 27px; line-height: 1; color: #142b45; height: 50px; position: relative; border-bottom: 3px solid #1b6872; }
+  .heading-row h2 { position: absolute; right: 10px; top: 10px; margin: 0; font-size: 27px; color: #142b45; }
+  .content { padding-left: 4px; }
+  .member-title { margin: 0 0 10px; font-size: 24px; color: #183b59; }
+  .profile { font-size: 15px; line-height: 21px; color: #183b59; }
+  .profile a { color: #0d4d93; text-decoration: underline; font-weight: 700; }
+  .row { min-height: 22px; display: flex; align-items: center; white-space: nowrap; }
+  .bullet { width: 13px; font-weight: 700; }
+  .label { font-weight: 700; margin-right: 5px; }
+  .value { font-weight: 400; }
+  .field { height: 25px; border: 1px solid #aaa; background: #fff; color: #1b3150; font-size: 14px; padding: 2px 5px; outline: none; }
+  .field:focus { border-color: #4688a0; }
+  .display-name { width: 304px; } .username { width: 316px; } .email { width: 297px; } .website { width: 280px; }
+  .update-btn { margin-left: 5px; height: 24px; font-size: 12px; padding: 1px 7px; }
+  .radio-wrap { display: inline-flex; align-items: center; gap: 3px; margin-right: 6px; font-weight: 400; }
+  .radio-wrap input { margin: 0; accent-color: #0077c8; }
+  .password { width: 272px; border: 0; background: transparent; padding-left: 0; }
+  .reset-btn { margin-left: 4px; height: 23px; }
+  .close-account { margin-left: 4px; }
+  .footer-space { height: 80px; }
+  .extended-details { margin-top: 2px; padding-bottom: 40px; }
+  .detail-row { min-height: 22px; display: flex; align-items: center; white-space: nowrap; color: #183b59; }
+  .detail-row .bullet { width: 13px; font-weight: 700; }
+  .detail-label { font-weight: 700; margin-right: 5px; }
+  .karma-input { width: 390px; height: 24px; border: 1px solid #aaa; font-size: 14px; padding: 2px 5px; color: #183b59; }
+  .small-action { height: 24px; margin-left: 5px; padding: 1px 6px; border: 1px solid #aaa; border-radius: 2px; background: linear-gradient(#fff,#ddd); color: #1b3150; font-size: 12px; cursor: pointer; }
+  .avatar-wrap { margin-left: 13px; margin-top: 2px; width: 108px; }
+  .avatar-placeholder { width: 108px; height: 104px; background: #d8e2ed; border: 1px solid #777; display: flex; align-items: center; justify-content: center; font-size: 38px; color: #7a9ab5; }
+  .remove-avatar { margin-top: 2px; width: 75px; height: 23px; padding: 1px 4px; border: 1px solid #aaa; border-radius: 2px; background: linear-gradient(#fff,#ddd); color: #183b59; font-size: 12px; cursor: pointer; }
+  .cover-none { margin-left: 13px; line-height: 20px; }
+  .banning { margin-top: 21px; }
+  .banning-title { margin: 0 0 10px; font-size: 27px; line-height: 1; color: #183b59; }
+  .ban-row { min-height: 31px; display: flex; align-items: center; white-space: nowrap; color: #183b59; }
+  .ban-status-label { font-weight: 700; margin-right: 5px; }
+  .ban-status { margin-right: 10px; }
+  .ban-button { height: 24px; padding: 1px 7px; border: 1px solid #aaa; border-radius: 2px; background: linear-gradient(#fff,#ddd); color: #183b59; cursor: pointer; font-size: 12px; margin-right: 5px; }
+  .reason-label { margin-right: 5px; }
+  .reason-select { width: 315px; height: 27px; border: 1px solid #999; background: #fff; color: #183b59; font-size: 14px; padding-left: 4px; margin-right: 5px; }
+  .comment-label { margin-right: 4px; }
+  .comment-input { width: 380px; height: 26px; border: 1px solid #aaa; font-size: 14px; padding: 2px 5px; margin-right: 5px; }
+  .omit-label { font-weight: 700; margin-right: 3px; }
+  .omit-check { width: 14px; height: 14px; margin: 0; vertical-align: middle; accent-color: #789; }
+  .lower-features { margin-top: 28px; padding-bottom: 70px; color: #183b59; }
+  .feature-heading { margin: 0 0 10px; font-size: 27px; line-height: 1.05; color: #183b59; }
+  .feature-note { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .feature-row { min-height: 26px; display: flex; align-items: center; white-space: nowrap; font-size: 16px; }
+  .feature-row .bullet { width: 14px; }
+  .feature-label { font-weight: 700; margin-right: 5px; }
+  .feature-check { width: 16px; height: 16px; margin: 0 0 0 2px; accent-color: #4b6f8a; }
+  .social-section { margin-top: 23px; }
+  .role-select { width: 274px; height: 29px; border: 1px solid #999; background: #fff; color: #183b59; font-size: 15px; padding-left: 5px; }
+  .history-section { margin-top: 31px; }
+  .history-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .history-line { margin-left: 13px; min-height: 27px; display: inline-flex; align-items: center; background: rgba(220,225,235,.55); padding: 2px 7px; font-size: 16px; }
+  .tos-section { margin-top: 28px; }
+  .tos-table { border-collapse: collapse; margin-left: 13px; font-size: 16px; }
+  .tos-table th { background: #b7c5d7; font-weight: 700; text-align: left; padding: 2px 7px; border-right: 1px solid #aab8c8; }
+  .tos-table td { background: rgba(220,225,235,.55); padding: 3px 7px; white-space: nowrap; }
+  .logout-btn { margin-top: 17px; margin-left: 13px; height: 25px; padding: 1px 8px; border: 1px solid #aaa; border-radius: 2px; background: linear-gradient(#fff,#ddd); color: #183b59; font-size: 13px; cursor: pointer; }
+  html { overflow-y: scroll; }
+  ::-webkit-scrollbar { width: 14px; } ::-webkit-scrollbar-track { background: #f2f2f2; }
+  ::-webkit-scrollbar-thumb { background: #999; border: 3px solid #f2f2f2; border-radius: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="brand" aria-label="tripadvisor">tripadvisor</div>
+    <div class="search-panel">
+      <div class="search-title">Search for members</div>
+      <div class="search-row">
+        <input id="memberSearch" class="search-input" value="` + d['memberId'] + `" aria-label="Member ID">
+        <span class="search-by">by</span>
+        <select><option>ID</option><option>Username</option><option>Email</option><option>GUID</option></select>
+        <button class="search-btn" onclick="alert('Searching for member: '+document.getElementById('memberSearch').value)">Search</button>
+      </div>
+    </div>
+  </header>
+  <section class="heading-row">
+    <h1>Member Tool</h1>
+    <h2>Bulk Member Action</h2>
+  </section>
+  <main class="content">
+    <h3 class="member-title">Member Info</h3>
+    <div class="profile">
+      <div class="row"><a href="#" onclick="return false;">public profile</a></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">ID:</span><span class="value">` + d['memberId'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Closed Member ID:</span><span class="value">` + d['closedId'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">GUID:</span><span class="value">` + d['guid'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">FBID:</span><span class="value">` + d['fbid'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Google ID:</span><span class="value">` + d['googleId'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">VK ID:</span><span class="value">` + d['vkId'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">LINE-V2 ID:</span><span class="value">` + d['lineV2'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">LINE-V2 APAC ID:</span><span class="value">` + d['lineApac'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Apple ID:</span><span class="value">` + d['appleId'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Naver ID:</span><span class="value">` + d['naverId'] + `</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Displayname:</span><input id="displayName" class="field display-name" value="` + d['displayName'] + `"><button class="update-btn" onclick="alert('Displayname updated to: '+document.getElementById('displayName').value)">Update</button></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Username:</span><input id="username" class="field username" value="` + d['username'] + `"><button class="update-btn" onclick="alert('Username updated to: '+document.getElementById('username').value)">Update</button></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Displayname Option:</span><label class="radio-wrap"><input type="radio" name="displayOption">ScreenName</label><label class="radio-wrap"><input type="radio" name="displayOption" checked>FriendlyName</label><button class="update-btn" onclick="alert('Displayname option updated')">Update</button></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">E-mail:</span><input id="email" class="field email" value="` + d['email'] + `"><button class="update-btn" onclick="alert('E-mail updated to: '+document.getElementById('email').value)">Update</button></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Phone Numbers:</span></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Website:</span><input id="website" class="field website" value="` + d['website'] + `"><button class="update-btn" onclick="alert('Website updated to: '+document.getElementById('website').value)">Update</button></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Password:</span><span class="value password">PasswordHidden</span><button class="reset-btn" onclick="alert('Password reset requested')">Reset</button></div>
+      <div class="row"><span class="bullet">&bull;</span><span class="label">Status:</span><span class="value">` + d['status'] + `</span><button class="reset-btn close-account" onclick="if(confirm('Close this account?'))alert('Account close action submitted.')">Close Account</button></div>
+    </div>
+    <div class="extended-details">
+      <div class="detail-row"><span class="bullet">&bull;</span><span class="detail-label">Location:</span><span>` + d['location'] + `</span></div>
+      <div class="detail-row"><span class="bullet">&bull;</span><span class="detail-label">Joined:</span><span>` + d['joined'] + `</span></div>
+      <div class="detail-row"><span class="bullet">&bull;</span><span class="detail-label">Last Site Visit:</span></div>
+      <div class="detail-row"><span class="bullet">&bull;</span><span class="detail-label">Profile Views:</span></div>
+      <div class="detail-row"><span class="bullet">&bull;</span><span class="detail-label">Destination Expert:</span><span>No</span></div>
+      <div class="detail-row"><span class="bullet">&bull;</span><span class="detail-label">Verified property affiliation:</span><span>No</span></div>
+      <div class="detail-row"><span class="bullet">&bull;</span><span class="detail-label">Karma:</span><input id="karma" class="karma-input" value="` + d['karma'] + `"><button class="small-action" onclick="document.getElementById('karma').readOnly=true;alert('Karma locked.')">lock</button><button class="small-action" onclick="var i=document.getElementById('karma');i.readOnly=false;i.value='';i.focus();">clear</button></div>
+      <div class="detail-row" style="align-items:flex-start;">
+        <span class="bullet">&bull;</span><span class="detail-label">Avatar:</span>
+        <div class="avatar-wrap">
+          <div class="avatar-placeholder" id="avatarPlaceholder">&#128100;</div>
+          <button class="remove-avatar" onclick="document.getElementById('avatarPlaceholder').innerHTML='<span style=\\'color:#999;font-size:11px;padding:4px;\\'>Removed</span>';this.textContent='Removed';">Remove</button>
+        </div>
+      </div>
+      <div class="detail-row" style="align-items:flex-start;margin-top:3px;"><span class="bullet">&bull;</span><span class="detail-label">Cover photo:</span><span class="cover-none">None</span></div>
+      <section class="banning">
+        <h3 class="banning-title">Banning</h3>
+        <div class="ban-row"><span class="bullet">&bull;</span><span class="ban-status-label">Forum / PM Status:</span><span class="ban-status">Active</span><button class="ban-button" onclick="alert('Forum Ban action submitted.')">Forum Ban</button><span class="reason-label">Reason</span><select class="reason-select"><option>- select reason -</option><option>Spam</option><option>Abuse</option><option>Harassment</option><option>Other</option></select><span class="comment-label">Comment</span><input class="comment-input"><span class="omit-label">Omit Notification</span><input class="omit-check" type="checkbox"></div>
+        <div class="ban-row"><span class="bullet">&bull;</span><span class="ban-status-label">Review Status:</span><span class="ban-status">Active</span><button class="ban-button" onclick="alert('Member Ban action submitted.')">Member Ban</button><span class="reason-label">Reason</span><select class="reason-select"><option>- select reason -</option><option>Spam</option><option>Abuse</option><option>Harassment</option><option>Other</option></select><span class="comment-label">Comment</span><input class="comment-input"><span class="omit-label">Omit Notification</span><input class="omit-check" type="checkbox"></div>
+        <div class="ban-row"><span class="bullet">&bull;</span><span class="ban-status-label">Account Status:</span><span class="ban-status">Active</span><button class="ban-button" onclick="alert('Account Ban action submitted.')">Account Ban</button><span class="reason-label">Reason</span><select class="reason-select"><option>- select reason -</option><option>Spam</option><option>Abuse</option><option>Harassment</option><option>Other</option></select><span class="comment-label">Comment</span><input class="comment-input"><span class="omit-label">Omit Notification</span><input class="omit-check" type="checkbox"></div>
+      </section>
+    </div>
+    <section class="lower-features">
+      <h2 class="feature-heading">Tripadvisor employees only</h2>
+      <div class="feature-note">Please ensure following feature is only set for Tripadvisor employee accounts</div>
+      <div class="feature-row"><span class="bullet">&bull;</span><span class="feature-label">Can set primary photo:</span><input class="feature-check" type="checkbox"></div>
+      <div class="social-section">
+        <h2 class="feature-heading">Social Features</h2>
+        <div class="feature-note">Please ensure brand / PR is aware of feature changes</div>
+        <div class="feature-row"><span class="bullet">&bull;</span><span class="feature-label">User Role:</span><select class="role-select">` + roleOpts + `</select></div>
+        <div class="feature-row"><span class="bullet">&bull;</span><span class="feature-label">Verified:</span><input class="feature-check" type="checkbox"></div>
+        <div class="feature-row"><span class="bullet">&bull;</span><span class="feature-label">Can upload video:</span><input class="feature-check" type="checkbox"></div>
+        <div class="feature-row"><span class="bullet">&bull;</span><span class="feature-label">Can post link:</span><input class="feature-check" type="checkbox"></div>
+      </div>
+      <div class="history-section">
+        <div class="history-title"><span class="bullet">&bull;</span> Identity History:</div>
+        <div class="history-line">` + d['identityHistory'] + `</div>
+      </div>
+      <div class="tos-section">
+        <div class="history-title"><span class="bullet">&bull;</span> Terms of Service Acceptance History:</div>
+        <table class="tos-table"><thead><tr><th>Action</th><th>Timestamp</th><th>POS</th></tr></thead><tbody><tr><td>Registration</td><td>` + d['tosDate'] + `</td><td>` + d['tosPOS'] + `</td></tr></tbody></table>
+        <br>
+        <button class="logout-btn" onclick="if(confirm('Log this user out of all sessions?'))alert('Logout from all sessions requested.')">Log user out of all sessions</button>
+      </div>
+    </section>
+  </main>
+  <div class="footer-space"></div>
+</div>
+</body>
+</html>`;
+  const blob = new Blob([html], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+  setTimeout(() => URL.revokeObjectURL(url), 15000);
+}
+
+
+/* ════════════════════════════════════════════════
+   DAY 4 — SAME REVIEWS DASHBOARD DATA (15 datasets)
+   2 rows per section × 3 sections = 6 rows total.
+   Boosting/Vandalism/Incentives: same email+property everywhere, 0-day accounts.
+   Duplicate: different IDs same content.
+   Publish: old accounts, wide date gaps, positive + negative.
+════════════════════════════════════════════════ */
+const DAY4_SRD = {
+
+  /* ─── SUSPECTED BOOSTING 1: Grand Lotus Hotel ─── */
+  4001:{
+    member:[
+      {id:'1071440101',loc:'Grand Lotus Hotel',city:'Dubai, UAE',title:'Amazing rooms and incredible staff',type:'review',rating:5,email:'grandlotusguest01@gmail.com',ip:'94.188.66.12',submitted:'Jul 14, 2026 09:15 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071330102',loc:'Grand Lotus Hotel',city:'Dubai, UAE',title:'Best hotel stay ever',type:'review',rating:5,email:'grandlotusguest01@gmail.com',ip:'94.188.66.12',submitted:'Jul 14, 2026 09:22 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1071440101',loc:'Grand Lotus Hotel',city:'Dubai, UAE',title:'Amazing rooms and incredible staff',type:'review',rating:5,email:'grandlotusguest01@gmail.com',ip:'94.188.66.12',submitted:'Jul 14, 2026 09:15 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071330102',loc:'Grand Lotus Hotel',city:'Dubai, UAE',title:'Best hotel stay ever',type:'review',rating:5,email:'grandlotusguest01@gmail.com',ip:'94.188.66.12',submitted:'Jul 14, 2026 09:22 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1071440101',loc:'Grand Lotus Hotel',city:'Dubai, UAE',title:'Amazing rooms and incredible staff',type:'review',rating:5,email:'grandlotusguest01@gmail.com',ip:'94.188.66.12',submitted:'Jul 14, 2026 09:15 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071330102',loc:'Grand Lotus Hotel',city:'Dubai, UAE',title:'Best hotel stay ever',type:'review',rating:5,email:'grandlotusguest01@gmail.com',ip:'94.188.66.12',submitted:'Jul 14, 2026 09:22 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED BOOSTING 2: Bella Vista Ristorante ─── */
+  4002:{
+    member:[
+      {id:'1071550201',loc:'Bella Vista Ristorante',city:'Milan, Italy',title:'Best restaurant experience — Chef Marco outstanding',type:'review',rating:5,email:'bellavistafan02@gmail.com',ip:'151.74.22.88',submitted:'Jul 15, 2026 10:18 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071440202',loc:'Bella Vista Ristorante',city:'Milan, Italy',title:'Incredible pasta — must visit',type:'review',rating:5,email:'bellavistafan02@gmail.com',ip:'151.74.22.88',submitted:'Jul 15, 2026 10:25 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1071550201',loc:'Bella Vista Ristorante',city:'Milan, Italy',title:'Best restaurant experience — Chef Marco outstanding',type:'review',rating:5,email:'bellavistafan02@gmail.com',ip:'151.74.22.88',submitted:'Jul 15, 2026 10:18 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071440202',loc:'Bella Vista Ristorante',city:'Milan, Italy',title:'Incredible pasta — must visit',type:'review',rating:5,email:'bellavistafan02@gmail.com',ip:'151.74.22.88',submitted:'Jul 15, 2026 10:25 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1071550201',loc:'Bella Vista Ristorante',city:'Milan, Italy',title:'Best restaurant experience — Chef Marco outstanding',type:'review',rating:5,email:'bellavistafan02@gmail.com',ip:'151.74.22.88',submitted:'Jul 15, 2026 10:18 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071440202',loc:'Bella Vista Ristorante',city:'Milan, Italy',title:'Incredible pasta — must visit',type:'review',rating:5,email:'bellavistafan02@gmail.com',ip:'151.74.22.88',submitted:'Jul 15, 2026 10:25 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED BOOSTING 3: Sunrise Adventures ─── */
+  4003:{
+    member:[
+      {id:'1071660301',loc:'Sunrise Adventures',city:'Bangkok, Thailand',title:'Magical tour — guide Ravi made everything perfect',type:'review',rating:5,email:'sunriseadventurer03@gmail.com',ip:'171.88.44.66',submitted:'Jul 16, 2026 08:30 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071550302',loc:'Sunrise Adventures',city:'Bangkok, Thailand',title:'Best tour company in the city',type:'review',rating:5,email:'sunriseadventurer03@gmail.com',ip:'171.88.44.66',submitted:'Jul 16, 2026 08:38 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1071660301',loc:'Sunrise Adventures',city:'Bangkok, Thailand',title:'Magical tour — guide Ravi made everything perfect',type:'review',rating:5,email:'sunriseadventurer03@gmail.com',ip:'171.88.44.66',submitted:'Jul 16, 2026 08:30 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071550302',loc:'Sunrise Adventures',city:'Bangkok, Thailand',title:'Best tour company in the city',type:'review',rating:5,email:'sunriseadventurer03@gmail.com',ip:'171.88.44.66',submitted:'Jul 16, 2026 08:38 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1071660301',loc:'Sunrise Adventures',city:'Bangkok, Thailand',title:'Magical tour — guide Ravi made everything perfect',type:'review',rating:5,email:'sunriseadventurer03@gmail.com',ip:'171.88.44.66',submitted:'Jul 16, 2026 08:30 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071550302',loc:'Sunrise Adventures',city:'Bangkok, Thailand',title:'Best tour company in the city',type:'review',rating:5,email:'sunriseadventurer03@gmail.com',ip:'171.88.44.66',submitted:'Jul 16, 2026 08:38 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED VANDALISM 1: The Royal Crown Hotel ─── */
+  4004:{
+    member:[
+      {id:'1071770401',loc:'The Royal Crown Hotel',city:'London, UK',title:'Absolutely disgusting — avoid at all costs',type:'review',rating:1,email:'royalcrownhater04@gmail.com',ip:'86.33.77.44',submitted:'Jul 17, 2026 11:50 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071660402',loc:'The Royal Crown Hotel',city:'London, UK',title:'Worst hotel of my life — filth everywhere',type:'review',rating:1,email:'royalcrownhater04@gmail.com',ip:'86.33.77.44',submitted:'Jul 17, 2026 11:58 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1071770401',loc:'The Royal Crown Hotel',city:'London, UK',title:'Absolutely disgusting — avoid at all costs',type:'review',rating:1,email:'royalcrownhater04@gmail.com',ip:'86.33.77.44',submitted:'Jul 17, 2026 11:50 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071660402',loc:'The Royal Crown Hotel',city:'London, UK',title:'Worst hotel of my life — filth everywhere',type:'review',rating:1,email:'royalcrownhater04@gmail.com',ip:'86.33.77.44',submitted:'Jul 17, 2026 11:58 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1071770401',loc:'The Royal Crown Hotel',city:'London, UK',title:'Absolutely disgusting — avoid at all costs',type:'review',rating:1,email:'royalcrownhater04@gmail.com',ip:'86.33.77.44',submitted:'Jul 17, 2026 11:50 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071660402',loc:'The Royal Crown Hotel',city:'London, UK',title:'Worst hotel of my life — filth everywhere',type:'review',rating:1,email:'royalcrownhater04@gmail.com',ip:'86.33.77.44',submitted:'Jul 17, 2026 11:58 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED VANDALISM 2: Maison Dupont Restaurant ─── */
+  4005:{
+    member:[
+      {id:'1071880501',loc:'Maison Dupont Restaurant',city:'Paris, France',title:'Complete scam — food was rotten',type:'review',rating:1,email:'maisondupontangry05@outlook.com',ip:'90.44.122.77',submitted:'Jul 18, 2026 14:08 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071770502',loc:'Maison Dupont Restaurant',city:'Paris, France',title:'Food poisoning and theft — avoid',type:'review',rating:1,email:'maisondupontangry05@outlook.com',ip:'90.44.122.77',submitted:'Jul 18, 2026 14:16 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1071880501',loc:'Maison Dupont Restaurant',city:'Paris, France',title:'Complete scam — food was rotten',type:'review',rating:1,email:'maisondupontangry05@outlook.com',ip:'90.44.122.77',submitted:'Jul 18, 2026 14:08 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071770502',loc:'Maison Dupont Restaurant',city:'Paris, France',title:'Food poisoning and theft — avoid',type:'review',rating:1,email:'maisondupontangry05@outlook.com',ip:'90.44.122.77',submitted:'Jul 18, 2026 14:16 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1071880501',loc:'Maison Dupont Restaurant',city:'Paris, France',title:'Complete scam — food was rotten',type:'review',rating:1,email:'maisondupontangry05@outlook.com',ip:'90.44.122.77',submitted:'Jul 18, 2026 14:08 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071770502',loc:'Maison Dupont Restaurant',city:'Paris, France',title:'Food poisoning and theft — avoid',type:'review',rating:1,email:'maisondupontangry05@outlook.com',ip:'90.44.122.77',submitted:'Jul 18, 2026 14:16 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED VANDALISM 3: Peak Explorer Tours ─── */
+  4006:{
+    member:[
+      {id:'1071990601',loc:'Peak Explorer Tours',city:'Kathmandu, Nepal',title:'Terrible experience — guide was useless',type:'review',rating:1,email:'peaktourscomplainer06@gmail.com',ip:'202.79.33.55',submitted:'Jul 19, 2026 08:05 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071880602',loc:'Peak Explorer Tours',city:'Kathmandu, Nepal',title:'Dangerous and incompetent — do not book',type:'review',rating:1,email:'peaktourscomplainer06@gmail.com',ip:'202.79.33.55',submitted:'Jul 19, 2026 08:12 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1071990601',loc:'Peak Explorer Tours',city:'Kathmandu, Nepal',title:'Terrible experience — guide was useless',type:'review',rating:1,email:'peaktourscomplainer06@gmail.com',ip:'202.79.33.55',submitted:'Jul 19, 2026 08:05 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071880602',loc:'Peak Explorer Tours',city:'Kathmandu, Nepal',title:'Dangerous and incompetent — do not book',type:'review',rating:1,email:'peaktourscomplainer06@gmail.com',ip:'202.79.33.55',submitted:'Jul 19, 2026 08:12 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1071990601',loc:'Peak Explorer Tours',city:'Kathmandu, Nepal',title:'Terrible experience — guide was useless',type:'review',rating:1,email:'peaktourscomplainer06@gmail.com',ip:'202.79.33.55',submitted:'Jul 19, 2026 08:05 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071880602',loc:'Peak Explorer Tours',city:'Kathmandu, Nepal',title:'Dangerous and incompetent — do not book',type:'review',rating:1,email:'peaktourscomplainer06@gmail.com',ip:'202.79.33.55',submitted:'Jul 19, 2026 08:12 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED INCENTIVES 1: Azure Bay Resort ─── */
+  4007:{
+    member:[
+      {id:'1072100701',loc:'Azure Bay Resort',city:'Bali, Indonesia',title:'Wonderful stay — manager gave us complimentary drinks!',type:'review',rating:5,email:'azurebayguest07@gmail.com',ip:'180.244.55.33',submitted:'Jul 20, 2026 09:18 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071990702',loc:'Azure Bay Resort',city:'Bali, Indonesia',title:'Sofia and Diego were incredible — champagne surprise!',type:'review',rating:5,email:'azurebayguest07@gmail.com',ip:'180.244.55.33',submitted:'Jul 20, 2026 09:26 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1072100701',loc:'Azure Bay Resort',city:'Bali, Indonesia',title:'Wonderful stay — manager gave us complimentary drinks!',type:'review',rating:5,email:'azurebayguest07@gmail.com',ip:'180.244.55.33',submitted:'Jul 20, 2026 09:18 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071990702',loc:'Azure Bay Resort',city:'Bali, Indonesia',title:'Sofia and Diego were incredible — champagne surprise!',type:'review',rating:5,email:'azurebayguest07@gmail.com',ip:'180.244.55.33',submitted:'Jul 20, 2026 09:26 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1072100701',loc:'Azure Bay Resort',city:'Bali, Indonesia',title:'Wonderful stay — manager gave us complimentary drinks!',type:'review',rating:5,email:'azurebayguest07@gmail.com',ip:'180.244.55.33',submitted:'Jul 20, 2026 09:18 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1071990702',loc:'Azure Bay Resort',city:'Bali, Indonesia',title:'Sofia and Diego were incredible — champagne surprise!',type:'review',rating:5,email:'azurebayguest07@gmail.com',ip:'180.244.55.33',submitted:'Jul 20, 2026 09:26 am',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED INCENTIVES 2: Trattoria Fiorentina ─── */
+  4008:{
+    member:[
+      {id:'1072210801',loc:'Trattoria Fiorentina',city:'Florence, Italy',title:'Brilliant food — chef offered free dessert for review!',type:'review',rating:5,email:'trattoriafan08@gmail.com',ip:'93.40.88.11',submitted:'Jul 21, 2026 12:33 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1072100802',loc:'Trattoria Fiorentina',city:'Florence, Italy',title:'Luca and Giovanni — stars of the show!',type:'review',rating:5,email:'trattoriafan08@gmail.com',ip:'93.40.88.11',submitted:'Jul 21, 2026 12:41 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1072210801',loc:'Trattoria Fiorentina',city:'Florence, Italy',title:'Brilliant food — chef offered free dessert for review!',type:'review',rating:5,email:'trattoriafan08@gmail.com',ip:'93.40.88.11',submitted:'Jul 21, 2026 12:33 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1072100802',loc:'Trattoria Fiorentina',city:'Florence, Italy',title:'Luca and Giovanni — stars of the show!',type:'review',rating:5,email:'trattoriafan08@gmail.com',ip:'93.40.88.11',submitted:'Jul 21, 2026 12:41 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1072210801',loc:'Trattoria Fiorentina',city:'Florence, Italy',title:'Brilliant food — chef offered free dessert for review!',type:'review',rating:5,email:'trattoriafan08@gmail.com',ip:'93.40.88.11',submitted:'Jul 21, 2026 12:33 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1072100802',loc:'Trattoria Fiorentina',city:'Florence, Italy',title:'Luca and Giovanni — stars of the show!',type:'review',rating:5,email:'trattoriafan08@gmail.com',ip:'93.40.88.11',submitted:'Jul 21, 2026 12:41 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── SUSPECTED INCENTIVES 3: Blue Horizon Sailing ─── */
+  4009:{
+    member:[
+      {id:'1072320901',loc:'Blue Horizon Sailing',city:'Sydney, Australia',title:'Fantastic tour — owner paid for our dinner for review!',type:'review',rating:5,email:'bluehorizonsailor09@gmail.com',ip:'203.56.77.22',submitted:'Jul 22, 2026 15:49 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1072210902',loc:'Blue Horizon Sailing',city:'Sydney, Australia',title:'Captain James and Elena were phenomenal!',type:'review',rating:5,email:'bluehorizonsailor09@gmail.com',ip:'203.56.77.22',submitted:'Jul 22, 2026 15:57 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    fingerprint:[
+      {id:'1072320901',loc:'Blue Horizon Sailing',city:'Sydney, Australia',title:'Fantastic tour — owner paid for our dinner for review!',type:'review',rating:5,email:'bluehorizonsailor09@gmail.com',ip:'203.56.77.22',submitted:'Jul 22, 2026 15:49 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1072210902',loc:'Blue Horizon Sailing',city:'Sydney, Australia',title:'Captain James and Elena were phenomenal!',type:'review',rating:5,email:'bluehorizonsailor09@gmail.com',ip:'203.56.77.22',submitted:'Jul 22, 2026 15:57 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+    cookie:[
+      {id:'1072320901',loc:'Blue Horizon Sailing',city:'Sydney, Australia',title:'Fantastic tour — owner paid for our dinner for review!',type:'review',rating:5,email:'bluehorizonsailor09@gmail.com',ip:'203.56.77.22',submitted:'Jul 22, 2026 15:49 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+      {id:'1072210902',loc:'Blue Horizon Sailing',city:'Sydney, Australia',title:'Captain James and Elena were phenomenal!',type:'review',rating:5,email:'bluehorizonsailor09@gmail.com',ip:'203.56.77.22',submitted:'Jul 22, 2026 15:57 pm',status:'REMOVED',queue:'Fraud',system:'91.00%'},
+    ],
+  },
+
+  /* ─── DUPLICATE 1: Meadow House Inn — same content, different ID ─── */
+  4010:{
+    member:[
+      {id:'1070881001',loc:'Meadow House Inn',city:'Oxford, England, UK',title:'Perfect weekend escape — highly recommend this hidden gem',type:'review',rating:5,email:'meadowhouse.regular10@gmail.com',ip:'82.44.201.11',submitted:'Jul 23, 2026 10:30 am',status:'PUBLISHED',queue:'Resolved',system:'97.80%'},
+      {id:'1070771002',loc:'Meadow House Inn',city:'Oxford, England, UK',title:'Perfect weekend escape — highly recommend this hidden gem',type:'review',rating:5,email:'meadowhouse.regular10@gmail.com',ip:'82.44.201.11',submitted:'Jul 23, 2026 10:44 am',status:'REMOVED',queue:'Duplicate',system:'97.80%'},
+    ],
+    fingerprint:[
+      {id:'1070881001',loc:'Meadow House Inn',city:'Oxford, England, UK',title:'Perfect weekend escape — highly recommend this hidden gem',type:'review',rating:5,email:'meadowhouse.regular10@gmail.com',ip:'82.44.201.11',submitted:'Jul 23, 2026 10:30 am',status:'PUBLISHED',queue:'Resolved',system:'97.80%'},
+      {id:'1070771002',loc:'Meadow House Inn',city:'Oxford, England, UK',title:'Perfect weekend escape — highly recommend this hidden gem',type:'review',rating:5,email:'meadowhouse.regular10@gmail.com',ip:'82.44.201.11',submitted:'Jul 23, 2026 10:44 am',status:'REMOVED',queue:'Duplicate',system:'97.80%'},
+    ],
+    cookie:[
+      {id:'1070881001',loc:'Meadow House Inn',city:'Oxford, England, UK',title:'Perfect weekend escape — highly recommend this hidden gem',type:'review',rating:5,email:'meadowhouse.regular10@gmail.com',ip:'82.44.201.11',submitted:'Jul 23, 2026 10:30 am',status:'PUBLISHED',queue:'Resolved',system:'97.80%'},
+      {id:'1070771002',loc:'Meadow House Inn',city:'Oxford, England, UK',title:'Perfect weekend escape — highly recommend this hidden gem',type:'review',rating:5,email:'meadowhouse.regular10@gmail.com',ip:'82.44.201.11',submitted:'Jul 23, 2026 10:44 am',status:'REMOVED',queue:'Duplicate',system:'97.80%'},
+    ],
+  },
+
+  /* ─── DUPLICATE 2: The Copper Spoon — same content, different ID ─── */
+  4011:{
+    member:[
+      {id:'1070991101',loc:'The Copper Spoon',city:'Edinburgh, Scotland, UK',title:'Unforgettable dining experience in the heart of the city',type:'review',rating:5,email:'copperspoondiner11@outlook.com',ip:'86.44.77.33',submitted:'Jul 24, 2026 07:50 pm',status:'PUBLISHED',queue:'Resolved',system:'97.50%'},
+      {id:'1070881102',loc:'The Copper Spoon',city:'Edinburgh, Scotland, UK',title:'Unforgettable dining experience in the heart of the city',type:'review',rating:5,email:'copperspoondiner11@outlook.com',ip:'86.44.77.33',submitted:'Jul 24, 2026 08:05 pm',status:'REMOVED',queue:'Duplicate',system:'97.50%'},
+    ],
+    fingerprint:[
+      {id:'1070991101',loc:'The Copper Spoon',city:'Edinburgh, Scotland, UK',title:'Unforgettable dining experience in the heart of the city',type:'review',rating:5,email:'copperspoondiner11@outlook.com',ip:'86.44.77.33',submitted:'Jul 24, 2026 07:50 pm',status:'PUBLISHED',queue:'Resolved',system:'97.50%'},
+      {id:'1070881102',loc:'The Copper Spoon',city:'Edinburgh, Scotland, UK',title:'Unforgettable dining experience in the heart of the city',type:'review',rating:5,email:'copperspoondiner11@outlook.com',ip:'86.44.77.33',submitted:'Jul 24, 2026 08:05 pm',status:'REMOVED',queue:'Duplicate',system:'97.50%'},
+    ],
+    cookie:[
+      {id:'1070991101',loc:'The Copper Spoon',city:'Edinburgh, Scotland, UK',title:'Unforgettable dining experience in the heart of the city',type:'review',rating:5,email:'copperspoondiner11@outlook.com',ip:'86.44.77.33',submitted:'Jul 24, 2026 07:50 pm',status:'PUBLISHED',queue:'Resolved',system:'97.50%'},
+      {id:'1070881102',loc:'The Copper Spoon',city:'Edinburgh, Scotland, UK',title:'Unforgettable dining experience in the heart of the city',type:'review',rating:5,email:'copperspoondiner11@outlook.com',ip:'86.44.77.33',submitted:'Jul 24, 2026 08:05 pm',status:'REMOVED',queue:'Duplicate',system:'97.50%'},
+    ],
+  },
+
+  /* ─── DUPLICATE 3: Canyon Rush Adventures — same content, different ID ─── */
+  4012:{
+    member:[
+      {id:'1071101201',loc:'Canyon Rush Adventures',city:'Denver, Colorado, USA',title:'Thrilling adventure — best day of our entire holiday',type:'review',rating:5,email:'canyonrush.adventurer12@icloud.com',ip:'104.33.55.77',submitted:'Jul 25, 2026 03:30 pm',status:'PUBLISHED',queue:'Resolved',system:'97.20%'},
+      {id:'1070991202',loc:'Canyon Rush Adventures',city:'Denver, Colorado, USA',title:'Thrilling adventure — best day of our entire holiday',type:'review',rating:5,email:'canyonrush.adventurer12@icloud.com',ip:'104.33.55.77',submitted:'Jul 25, 2026 03:48 pm',status:'REMOVED',queue:'Duplicate',system:'97.20%'},
+    ],
+    fingerprint:[
+      {id:'1071101201',loc:'Canyon Rush Adventures',city:'Denver, Colorado, USA',title:'Thrilling adventure — best day of our entire holiday',type:'review',rating:5,email:'canyonrush.adventurer12@icloud.com',ip:'104.33.55.77',submitted:'Jul 25, 2026 03:30 pm',status:'PUBLISHED',queue:'Resolved',system:'97.20%'},
+      {id:'1070991202',loc:'Canyon Rush Adventures',city:'Denver, Colorado, USA',title:'Thrilling adventure — best day of our entire holiday',type:'review',rating:5,email:'canyonrush.adventurer12@icloud.com',ip:'104.33.55.77',submitted:'Jul 25, 2026 03:48 pm',status:'REMOVED',queue:'Duplicate',system:'97.20%'},
+    ],
+    cookie:[
+      {id:'1071101201',loc:'Canyon Rush Adventures',city:'Denver, Colorado, USA',title:'Thrilling adventure — best day of our entire holiday',type:'review',rating:5,email:'canyonrush.adventurer12@icloud.com',ip:'104.33.55.77',submitted:'Jul 25, 2026 03:30 pm',status:'PUBLISHED',queue:'Resolved',system:'97.20%'},
+      {id:'1070991202',loc:'Canyon Rush Adventures',city:'Denver, Colorado, USA',title:'Thrilling adventure — best day of our entire holiday',type:'review',rating:5,email:'canyonrush.adventurer12@icloud.com',ip:'104.33.55.77',submitted:'Jul 25, 2026 03:48 pm',status:'REMOVED',queue:'Duplicate',system:'97.20%'},
+    ],
+  },
+
+  /* ─── PUBLISH 1: Harrington Place — old account, positive ─── */
+  4013:{
+    member:[
+      {id:'1049221301',loc:'Harrington Place',city:'Bristol, England, UK',title:'Outstanding service and a room worth every penny',type:'review',rating:4,email:'harrington.james.reviewer@gmail.com',ip:'90.210.55.33',submitted:'Jul 26, 2026 08:45 am',status:'PUBLISHED',queue:'Resolved',system:'98.90%'},
+      {id:'1011441302',loc:'The Grand Clifton Hotel',city:'Bristol, England, UK',title:'Excellent base for a city break',type:'review',rating:4,email:'harrington.james.reviewer@gmail.com',ip:'90.210.55.33',submitted:'Mar 14, 2018 11:30 am',status:'PUBLISHED',queue:'Resolved',system:'98.90%'},
+    ],
+    fingerprint:[
+      {id:'1049221301',loc:'Harrington Place',city:'Bristol, England, UK',title:'Outstanding service and a room worth every penny',type:'review',rating:4,email:'harrington.james.reviewer@gmail.com',ip:'90.210.55.33',submitted:'Jul 26, 2026 08:45 am',status:'PUBLISHED',queue:'Resolved',system:'98.90%'},
+      {id:'1011441302',loc:'The Grand Clifton Hotel',city:'Bristol, England, UK',title:'Excellent base for a city break',type:'review',rating:4,email:'harrington.james.reviewer@gmail.com',ip:'90.210.55.33',submitted:'Mar 14, 2018 11:30 am',status:'PUBLISHED',queue:'Resolved',system:'98.90%'},
+    ],
+    cookie:[
+      {id:'1049221301',loc:'Harrington Place',city:'Bristol, England, UK',title:'Outstanding service and a room worth every penny',type:'review',rating:4,email:'harrington.james.reviewer@gmail.com',ip:'90.210.55.33',submitted:'Jul 26, 2026 08:45 am',status:'PUBLISHED',queue:'Resolved',system:'98.90%'},
+      {id:'1011441302',loc:'The Grand Clifton Hotel',city:'Bristol, England, UK',title:'Excellent base for a city break',type:'review',rating:4,email:'harrington.james.reviewer@gmail.com',ip:'90.210.55.33',submitted:'Mar 14, 2018 11:30 am',status:'PUBLISHED',queue:'Resolved',system:'98.90%'},
+    ],
+  },
+
+  /* ─── PUBLISH 2: The Langton Hotel — old account, negative ─── */
+  4014:{
+    member:[
+      {id:'1051331401',loc:'The Langton Hotel',city:'Manchester, England, UK',title:'Disappointing stay — not what we expected',type:'review',rating:2,email:'rachel.langton.stays@icloud.com',ip:'82.44.88.55',submitted:'Jul 27, 2026 06:15 pm',status:'PUBLISHED',queue:'Resolved',system:'98.70%'},
+      {id:'1023661402',loc:'Radisson Blu Manchester',city:'Manchester, England, UK',title:'Average stay — nothing special',type:'review',rating:3,email:'rachel.langton.stays@icloud.com',ip:'82.44.88.55',submitted:'Sep 05, 2015 02:20 pm',status:'PUBLISHED',queue:'Resolved',system:'98.70%'},
+    ],
+    fingerprint:[
+      {id:'1051331401',loc:'The Langton Hotel',city:'Manchester, England, UK',title:'Disappointing stay — not what we expected',type:'review',rating:2,email:'rachel.langton.stays@icloud.com',ip:'82.44.88.55',submitted:'Jul 27, 2026 06:15 pm',status:'PUBLISHED',queue:'Resolved',system:'98.70%'},
+      {id:'1023661402',loc:'Radisson Blu Manchester',city:'Manchester, England, UK',title:'Average stay — nothing special',type:'review',rating:3,email:'rachel.langton.stays@icloud.com',ip:'82.44.88.55',submitted:'Sep 05, 2015 02:20 pm',status:'PUBLISHED',queue:'Resolved',system:'98.70%'},
+    ],
+    cookie:[
+      {id:'1051331401',loc:'The Langton Hotel',city:'Manchester, England, UK',title:'Disappointing stay — not what we expected',type:'review',rating:2,email:'rachel.langton.stays@icloud.com',ip:'82.44.88.55',submitted:'Jul 27, 2026 06:15 pm',status:'PUBLISHED',queue:'Resolved',system:'98.70%'},
+      {id:'1023661402',loc:'Radisson Blu Manchester',city:'Manchester, England, UK',title:'Average stay — nothing special',type:'review',rating:3,email:'rachel.langton.stays@icloud.com',ip:'82.44.88.55',submitted:'Sep 05, 2015 02:20 pm',status:'PUBLISHED',queue:'Resolved',system:'98.70%'},
+    ],
+  },
+
+  /* ─── PUBLISH 3: Rosewood Bistro — old account, positive ─── */
+  4015:{
+    member:[
+      {id:'1053441501',loc:'Rosewood Bistro',city:'Bath, England, UK',title:'The best local restaurant we have found in years',type:'review',rating:5,email:'helen.rosewood.bistro@gmail.com',ip:'90.44.33.22',submitted:'Jul 28, 2026 07:00 pm',status:'PUBLISHED',queue:'Resolved',system:'99.10%'},
+      {id:'1018771502',loc:'The Olive Branch Bath',city:'Bath, England, UK',title:'Wonderful neighbourhood restaurant',type:'review',rating:5,email:'helen.rosewood.bistro@gmail.com',ip:'90.44.33.22',submitted:'Nov 12, 2013 08:30 pm',status:'PUBLISHED',queue:'Resolved',system:'99.10%'},
+    ],
+    fingerprint:[
+      {id:'1053441501',loc:'Rosewood Bistro',city:'Bath, England, UK',title:'The best local restaurant we have found in years',type:'review',rating:5,email:'helen.rosewood.bistro@gmail.com',ip:'90.44.33.22',submitted:'Jul 28, 2026 07:00 pm',status:'PUBLISHED',queue:'Resolved',system:'99.10%'},
+      {id:'1018771502',loc:'The Olive Branch Bath',city:'Bath, England, UK',title:'Wonderful neighbourhood restaurant',type:'review',rating:5,email:'helen.rosewood.bistro@gmail.com',ip:'90.44.33.22',submitted:'Nov 12, 2013 08:30 pm',status:'PUBLISHED',queue:'Resolved',system:'99.10%'},
+    ],
+    cookie:[
+      {id:'1053441501',loc:'Rosewood Bistro',city:'Bath, England, UK',title:'The best local restaurant we have found in years',type:'review',rating:5,email:'helen.rosewood.bistro@gmail.com',ip:'90.44.33.22',submitted:'Jul 28, 2026 07:00 pm',status:'PUBLISHED',queue:'Resolved',system:'99.10%'},
+      {id:'1018771502',loc:'The Olive Branch Bath',city:'Bath, England, UK',title:'Wonderful neighbourhood restaurant',type:'review',rating:5,email:'helen.rosewood.bistro@gmail.com',ip:'90.44.33.22',submitted:'Nov 12, 2013 08:30 pm',status:'PUBLISHED',queue:'Resolved',system:'99.10%'},
+    ],
+  },
+
+};
+
+/* Build the Same Reviews Dashboard HTML for a Day 4 question.
+   mode: 'left' = compact (left col), 'mid' = full (middle col)
+   Always shows exactly 2 rows per section = 6 rows total. */
+function buildSRD(qId, mode) {
+  mode = mode || 'left';
+  const data = DAY4_SRD[qId];
+  if (!data) return '';
+  const ROWS_PER_SECTION = 2;
+  const sections = [
+    {key:'member', label:'Same Member Reviews'},
+    {key:'fingerprint', label:'Same Fingerprint Reviews'},
+    {key:'cookie', label:'Same Cookie Reviews'},
+  ];
+  const locIcon = '<div class="srd-loc-icon"></div>';
+  const buildTable = (rows) => {
+    rows = rows.slice(0, ROWS_PER_SECTION);
+    const trs = rows.map(r => {
+      const statusColor = r.status === 'REMOVED' ? 'color:#c0392b;' : 'color:#15803d;';
+      return `<tr>
+        <td class="srd-id">${(selectedDay===4&&qId>=4010&&qId<=4012&&DUP_ID_MAP[r.id])?`<a href="#" onclick="openDupPopup('${r.id}');return false;" style="color:#0d4d93;text-decoration:underline;font-weight:700;cursor:pointer;">${r.id}</a>`:r.id}</td>
+        <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;">${r.loc}</td>
+        <td style="text-align:center;">${locIcon}</td>
+        <td>${r.city}</td>
+        <td>${r.title}</td>
+        <td style="text-align:center;">${r.type}</td>
+        <td class="srd-rating">${r.rating}</td>
+        <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;">${r.email}</td>
+        <td>${r.ip}</td>
+        <td>${r.submitted}</td>
+        <td class="srd-status" style="${statusColor}">${r.status}</td>
+        <td>${r.queue}</td>
+        <td>${r.system}</td>
+      </tr>`;
+    }).join('');
+    return `<table class="srd-tbl">
+      <thead><tr>
+        <th style="width:88px;">ID</th>
+        <th style="width:130px;">Location Name</th>
+        <th style="width:60px;">Loc Type</th>
+        <th style="width:120px;">City/State</th>
+        <th style="width:100px;">Title</th>
+        <th style="width:55px;">Type</th>
+        <th style="width:48px;">Rating</th>
+        <th style="width:155px;">E-mail</th>
+        <th style="width:110px;">IP</th>
+        <th style="width:145px;">Submitted</th>
+        <th style="width:82px;">Status</th>
+        <th style="width:70px;">Queue</th>
+        <th style="width:70px;">System</th>
+      </tr></thead>
+      <tbody>${trs}</tbody>
+    </table>`;
+  };
+  const wrapClass = 'srd-wrap ' + (mode==='left'?'srd-left':'srd-mid');
+  return '<div class="'+wrapClass+'">' + sections.map(sec => {
+    const rows = data[sec.key] || [];
+    return `<div class="srd-section">
+      <div class="srd-hdr" onclick="this.closest('.srd-section').classList.toggle('srd-collapsed')">
+        <span class="srd-hdr-icon"></span>
+        <span class="srd-title">${sec.label}</span>
+        <span class="srd-divider">|</span>
+        <span class="srd-count">showing ${Math.min(rows.length,ROWS_PER_SECTION)} of ${rows.length}</span>
+      </div>
+      <div class="srd-table-wrap">${buildTable(rows)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+
+/* ════════════════════════════════════════════════
+   DUPLICATE REVIEW POPUP — Day 4 (Q4010, 4011, 4012)
+   Each entry defines both review IDs with full details
+   so clicking either ID in the SRD table opens the popup.
+════════════════════════════════════════════════ */
+const DUP_POPUP_DATA = {
+
+  /* Q4010 — Meadow House Inn */
+  4010: {
+    email: 'meadowhouse.regular10@gmail.com',
+    property: 'Meadow House Inn',
+    city: 'Oxford, England, UK',
+    title: 'Perfect weekend escape — highly recommend this hidden gem',
+    body: 'We had the most perfect weekend escape at Meadow House Inn. The rooms were cosy and beautifully decorated. Breakfast was freshly cooked each morning with local produce. The grounds were peaceful and the staff couldn\'t have been more helpful. We walked to the village pub in the evening which was charming. Definitely coming back next year. A true hidden gem!',
+    reviews: [
+      { id:'1070881001', submitted:'Jul 23, 2026  10:30 am', status:'PUBLISHED',  queue:'Resolved',  rating:5 },
+      { id:'1070771002', submitted:'Jul 23, 2026  10:44 am', status:'REMOVED',    queue:'Duplicate', rating:5 },
+    ],
+  },
+
+  /* Q4011 — The Copper Spoon */
+  4011: {
+    email: 'copperspoondiner11@outlook.com',
+    property: 'The Copper Spoon',
+    city: 'Edinburgh, Scotland, UK',
+    title: 'Unforgettable dining experience in the heart of the city',
+    body: 'Dinner at The Copper Spoon was simply unforgettable. The tasting menu was a journey through flavours I had never experienced before. Each course was presented beautifully and the sommelier\'s wine pairings were inspired. The service was impeccable from start to finish. Our table by the window had a stunning city view. A truly special occasion restaurant that exceeded every expectation.',
+    reviews: [
+      { id:'1070991101', submitted:'Jul 24, 2026  07:50 pm', status:'PUBLISHED',  queue:'Resolved',  rating:5 },
+      { id:'1070881102', submitted:'Jul 24, 2026  08:05 pm', status:'REMOVED',    queue:'Duplicate', rating:5 },
+    ],
+  },
+
+  /* Q4012 — Canyon Rush Adventures */
+  4012: {
+    email: 'canyonrush.adventurer12@icloud.com',
+    property: 'Canyon Rush Adventures',
+    city: 'Denver, Colorado, USA',
+    title: 'Thrilling adventure — best day of our entire holiday',
+    body: 'Booked the white-water rafting experience with Canyon Rush Adventures and it was without question the best day of our entire holiday. The guides were incredibly safety-conscious while still making every rapid thrilling and fun. The post-rafting BBQ lunch was delicious. All equipment was top quality. Every member of our group — adults and teenagers — had an incredible time. Cannot recommend highly enough!',
+    reviews: [
+      { id:'1071101201', submitted:'Jul 25, 2026  03:30 pm', status:'PUBLISHED',  queue:'Resolved',  rating:5 },
+      { id:'1070991202', submitted:'Jul 25, 2026  03:48 pm', status:'REMOVED',    queue:'Duplicate', rating:5 },
+    ],
+  },
+};
+
+/* ID → qId lookup so the SRD table cells can call openDupPopup by review ID */
+const DUP_ID_MAP = {
+  '1070881001':4010, '1070771002':4010,
+  '1070991101':4011, '1070881102':4011,
+  '1071101201':4012, '1070991202':4012,
+};
+
+function openDupPopup(reviewId) {
+  const qId = DUP_ID_MAP[reviewId];
+  if (!qId) return;
+  const d = DUP_POPUP_DATA[qId];
+  if (!d) return;
+
+  const stars = (n) => '★'.repeat(n) + '☆'.repeat(5-n);
+
+  const buildBlock = (rev, isOriginal) => {
+    const cls   = isOriginal ? 'original' : 'duplicate';
+    const label = isOriginal ? '✓ Original Review' : '⚠ Duplicate Submission';
+    const statusColor = rev.status === 'PUBLISHED' ? '#15803d' : '#c0392b';
+    return `
+      <div class="dup-review-block ${cls}">
+        <div class="dup-review-block-hdr">
+          <span class="dup-review-block-label">${label}</span>
+          <span class="dup-review-id">${rev.id}</span>
+        </div>
+        <div class="dup-review-meta">
+          <div class="dup-meta-row"><span class="dup-meta-lbl">Property:</span><span class="dup-meta-val">${d.property}</span></div>
+          <div class="dup-meta-row"><span class="dup-meta-lbl">Location:</span><span class="dup-meta-val">${d.city}</span></div>
+          <div class="dup-meta-row"><span class="dup-meta-lbl">Email:</span><span class="dup-meta-val">${d.email}</span></div>
+          <div class="dup-meta-row"><span class="dup-meta-lbl">Submitted:</span><span class="dup-meta-val">${rev.submitted}</span></div>
+          <div class="dup-meta-row"><span class="dup-meta-lbl">Rating:</span><span class="dup-meta-val" style="color:#e67e22;letter-spacing:1px;">${stars(rev.rating)}</span></div>
+          <div class="dup-meta-row"><span class="dup-meta-lbl">Status:</span><span class="dup-meta-val" style="color:${statusColor};font-weight:700;">${rev.status}</span></div>
+          <div class="dup-meta-row"><span class="dup-meta-lbl">Queue:</span><span class="dup-meta-val">${rev.queue}</span></div>
+        </div>
+        <div class="dup-review-content">
+          <div class="dup-content-lbl">Review Content</div>
+          <div class="dup-content-title">${d.title}</div>
+          <div class="dup-content-body">${d.body}</div>
+        </div>
+      </div>`;
+  };
+
+  const html = `
+    <div class="dup-overlay" id="dup-overlay" onclick="if(event.target===this)closeDupPopup()">
+      <div class="dup-card">
+        <div class="dup-hdr">
+          <div class="dup-hdr-top">
+            <div class="dup-hdr-icon">🔍</div>
+            <div>
+              <div class="dup-hdr-title">Duplicate Review Detected</div>
+              <div class="dup-hdr-sub">Review ID <strong>${reviewId}</strong> · Property: <strong>${d.property}</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="dup-alert-bar">
+          <span style="font-size:16px;flex-shrink:0;">⚠</span>
+          <div>
+            <strong>Existing review found with identical content</strong>
+            The same member account (<strong>${d.email}</strong>) has submitted two reviews for <strong>${d.property}</strong> with exactly the same review text. Both reviews are shown below for comparison. This confirms a Duplicate submission — Moderation Remove: Duplicate.
+          </div>
+        </div>
+        <div class="dup-body">
+          ${buildBlock(d.reviews[0], true)}
+          <div class="dup-match-banner">
+            <span style="font-size:16px;">🔗</span>
+            <span>Review content is <strong>100% identical</strong> across both submissions — same member, same property, same text.</span>
+          </div>
+          ${buildBlock(d.reviews[1], false)}
+        </div>
+        <div class="dup-footer">
+          <button class="dup-close-btn" onclick="closeDupPopup()">Close ✕</button>
+        </div>
+      </div>
+    </div>`;
+
+  const wrapper = document.createElement('div');
+  wrapper.id = 'dup-popup-mount';
+  wrapper.innerHTML = html;
+  document.body.appendChild(wrapper);
+}
+
+function closeDupPopup() {
+  const el = document.getElementById('dup-popup-mount');
+  if (el) el.remove();
+}
+
 
 function showBatchModal(){
   document.getElementById('batch-modal').classList.remove('hidden');
@@ -4749,7 +5516,14 @@ function loadQuestion(){
   const q=activeQBank[currentQIdx];
   // Start the per-question timing clock
   questionStartTime=Date.now();
-  const rev=REVIEWERS[q.id%REVIEWERS.length];
+  // Day 4: use per-question member data for consistent email/property
+  let rev;
+  if(selectedDay===4 && DAY4_MEMBER_DATA[q.id]){
+    const md=DAY4_MEMBER_DATA[q.id];
+    rev={display:md.displayName, email:md.email, username:md.username, memberId:md.memberId, location:md.location};
+  } else {
+    rev=REVIEWERS[q.id%REVIEWERS.length];
+  }
   currentReviewerEmail=rev.email;
   const qNum=currentQIdx+1,total=activeQBank.length;
 
@@ -4768,27 +5542,70 @@ function loadQuestion(){
   document.getElementById('btn-prev').disabled=currentQIdx===0;
 
   // Reviewer info
+  // Day 4: property name row + contextual member type
+  const _d4MemberType = (selectedDay===4) ? (
+    (q.id>=4001&&q.id<=4003) ? '<span style="color:#c0392b;font-weight:700;">Suspected Boosting</span>' :
+    (q.id>=4004&&q.id<=4006) ? '<span style="color:#c0392b;font-weight:700;">Suspected Vandalism</span>' :
+    (q.id>=4007&&q.id<=4009) ? '<span style="color:#c0392b;font-weight:700;">Suspected Incentives</span>' :
+    (q.id>=4010&&q.id<=4012) ? '<span style="color:#8b6914;font-weight:700;">Duplicate Submission</span>' :
+    '<span style="color:#15803d;font-weight:700;">Genuine Member</span>'
+  ) : '<span style="color:#8b6914;font-weight:700;">Owner of same geo property</span>';
   document.getElementById('reviewer-data').innerHTML=`
     <div class="info-row"><span class="info-lbl">Display:</span><span class="info-val">${mask(rev.display,4)}</span></div>
     <div class="info-row"><span class="info-lbl">Email:</span><span class="info-val masked">${maskEmail(rev.email)}</span></div>
     <div class="info-row"><span class="info-lbl">Username:</span><span class="info-val">${mask(rev.username,3)}</span></div>
-    <div class="info-row"><span class="info-lbl">Member ID:</span><span class="info-val masked">${maskId(rev.memberId)}</span></div>
+    <div class="info-row"><span class="info-lbl">Member ID:</span><span class="info-val masked">${selectedDay===4?`<a href="#" onclick="openMemberTool(${q.id});return false;" style="color:#0d4d93;text-decoration:underline;font-weight:700;cursor:pointer;">${maskId(rev.memberId)}</a>`:maskId(rev.memberId)}</span></div>
     <div class="info-row"><span class="info-lbl">Location:</span><span class="info-val">${mask(rev.location,3)}</span></div>
-    <div class="info-row"><span class="info-lbl">Member type:</span><span class="info-val" style="color:#8b6914;font-weight:700;">Owner of same geo property</span></div>
+    ${selectedDay===4?`<div class="info-row"><span class="info-lbl">Property:</span><span class="info-val" style="font-weight:700;color:#173d58;">${q.prop}</span></div>`:''}
+    <div class="info-row"><span class="info-lbl">Member type:</span><span class="info-val">${_d4MemberType}</span></div>
     <div class="info-row" style="grid-column:1 / -1;"><span class="info-lbl">Password:</span><span class="info-val">••••••••</span></div>
   `;
 
-  const acctAge=(Math.random()*8+1).toFixed(1);
-  const totalRevs=Math.floor(Math.random()*150+5);
-  const pub=Math.floor(totalRevs*.75);
-  const isBanned=q.id%13===0;
-  document.getElementById('body-karma').innerHTML=`
-    <div class="karma-row"><span class="karma-lbl">Account Age</span><span class="karma-val">${acctAge} yrs</span></div>
+  // Day 4: karma varies by question type
+  let acctAge, totalRevs, isBanned, karmaHtml;
+  if(selectedDay===4 && q.id>=4001 && q.id<=4009){
+    // Boosting / Vandalism / Incentives — 0-day account, 1 review
+    acctAge='0 days'; totalRevs=1; isBanned=false;
+    karmaHtml=`
+    <div class="karma-row"><span class="karma-lbl">Account Age</span><span class="karma-val" style="color:#c0392b;font-weight:800;">0 days</span></div>
+    <div class="karma-row"><span class="karma-lbl">Ban Status</span><span class="karma-val"><span class="clean-badge">Active</span></span></div>
+    <div class="karma-row"><span class="karma-lbl">Reviews Total</span><span class="karma-val">1</span></div>
+    <div class="karma-row"><span class="karma-lbl">Published</span><span class="karma-val">0</span></div>
+    <div class="karma-row"><span class="karma-lbl">Suspicious</span><span class="karma-val" style="color:#c0392b;font-weight:700;">1</span></div>`;
+  } else if(selectedDay===4 && q.id>=4010 && q.id<=4012){
+    // Duplicate — normal account, moderate history
+    acctAge=(Math.random()*5+2).toFixed(1)+' yrs'; totalRevs=Math.floor(Math.random()*40+10); isBanned=false;
+    const pub2=Math.floor(totalRevs*.8);
+    karmaHtml=`
+    <div class="karma-row"><span class="karma-lbl">Account Age</span><span class="karma-val">${acctAge}</span></div>
+    <div class="karma-row"><span class="karma-lbl">Ban Status</span><span class="karma-val"><span class="clean-badge">Active</span></span></div>
+    <div class="karma-row"><span class="karma-lbl">Reviews Total</span><span class="karma-val">${totalRevs}</span></div>
+    <div class="karma-row"><span class="karma-lbl">Published</span><span class="karma-val">${pub2}</span></div>
+    <div class="karma-row"><span class="karma-lbl">Suspicious</span><span class="karma-val">0</span></div>`;
+  } else if(selectedDay===4 && q.id>=4013 && q.id<=4015){
+    // Publish — very old established account
+    const oldYrs=[14,11,13];
+    const yrIdx=q.id-4013;
+    acctAge=oldYrs[yrIdx]+' years'; totalRevs=Math.floor(Math.random()*180+120); isBanned=false;
+    const pub3=Math.floor(totalRevs*.95);
+    karmaHtml=`
+    <div class="karma-row"><span class="karma-lbl">Account Age</span><span class="karma-val" style="color:#15803d;font-weight:800;">${acctAge}</span></div>
+    <div class="karma-row"><span class="karma-lbl">Ban Status</span><span class="karma-val"><span class="clean-badge">Active</span></span></div>
+    <div class="karma-row"><span class="karma-lbl">Reviews Total</span><span class="karma-val">${totalRevs}</span></div>
+    <div class="karma-row"><span class="karma-lbl">Published</span><span class="karma-val">${pub3}</span></div>
+    <div class="karma-row"><span class="karma-lbl">Suspicious</span><span class="karma-val">0</span></div>`;
+  } else {
+    // All other days — random as before
+    acctAge=(Math.random()*8+1).toFixed(1)+' yrs'; totalRevs=Math.floor(Math.random()*150+5); isBanned=q.id%13===0;
+    const pub4=Math.floor(totalRevs*.75);
+    karmaHtml=`
+    <div class="karma-row"><span class="karma-lbl">Account Age</span><span class="karma-val">${acctAge}</span></div>
     <div class="karma-row"><span class="karma-lbl">Ban Status</span><span class="karma-val">${isBanned?'<span class="ban-badge">Banned</span>':'<span class="clean-badge">Active</span>'}</span></div>
     <div class="karma-row"><span class="karma-lbl">Reviews Total</span><span class="karma-val">${totalRevs}</span></div>
-    <div class="karma-row"><span class="karma-lbl">Published</span><span class="karma-val">${pub}</span></div>
-    <div class="karma-row"><span class="karma-lbl">Suspicious</span><span class="karma-val">${Math.floor(totalRevs*.1)}</span></div>
-  `;
+    <div class="karma-row"><span class="karma-lbl">Published</span><span class="karma-val">${pub4}</span></div>
+    <div class="karma-row"><span class="karma-lbl">Suspicious</span><span class="karma-val">${Math.floor(totalRevs*.1)}</span></div>`;
+  }
+  document.getElementById('body-karma').innerHTML=karmaHtml;
 
   const ips=['19×.×.×.'+Math.floor(Math.random()*255),'10.×.×.'+Math.floor(Math.random()*255),'172.×.'+Math.floor(Math.random()*30)+'.×'];
   document.getElementById('device-data').innerHTML=`
@@ -4833,6 +5650,19 @@ function loadQuestion(){
 
   document.getElementById('review-title-text').textContent=q.title;
   document.getElementById('review-body-text').textContent=q.body;
+  // Day 4: render Same Reviews Dashboard in left panel (below Dupe Check) + middle panel
+  const _srdLeft=document.getElementById('srd-container-left');
+  const _srdActive=selectedDay===4&&DAY4_SRD[q.id];
+  if(_srdLeft){
+    if(_srdActive){
+      _srdLeft.style.display='block';
+      _srdLeft.innerHTML=buildSRD(q.id,'left');
+    } else {
+      _srdLeft.style.display='none';
+      _srdLeft.innerHTML='';
+    }
+  }
+
   document.getElementById('mod-comment').value='';
   const _assignSel=document.getElementById('assign-team-select');
   if(_assignSel)_assignSel.value='';
