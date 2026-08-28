@@ -3409,15 +3409,15 @@ const DUP_POPUP_DATA = {
   '1070771002': {
     qId: 4010,
     email: 'meadowhouse.regular10@gmail.com',
-    property: 'Meadow House Inn',
+    property: 'Greenstar Villas',
     city: 'Oxford, England, UK',
     reviewId: '1070771002',
-    submitted: 'Jul 23, 2026 at 10:44 am',
+    submitted: 'June 24, 2023 at 10:44 am',
     rating: 5,
     status: 'PUBLISHED',
     queue: 'Resolved',
     title: 'Perfect weekend escape — highly recommend this hidden gem',
-    body: 'We had the most perfect weekend escape at Meadow House Inn. The rooms were cosy and beautifully decorated. Breakfast was freshly cooked each morning with local produce. The grounds were peaceful and the staff couldn\'t have been more helpful. We walked to the village pub in the evening which was charming. Definitely coming back next year. A true hidden gem!',
+    body: 'We walked to the village pub in the evening which was charming.',
   },
 
   /* Q4011 The Copper Spoon — Review 1 (earlier, published first) */
@@ -3439,15 +3439,15 @@ const DUP_POPUP_DATA = {
   '1070881102': {
     qId: 4011,
     email: 'copperspoondiner11@outlook.com',
-    property: 'The Copper Spoon',
+    property: 'The Silver Cup',
     city: 'Edinburgh, Scotland, UK',
     reviewId: '1070881102',
-    submitted: 'Jul 24, 2026 at 08:05 pm',
+    submitted: 'June 10, 2020 at 08:05 pm',
     rating: 5,
     status: 'PUBLISHED',
     queue: 'Resolved',
     title: 'Unforgettable dining experience in the heart of the city',
-    body: 'Dinner at The Copper Spoon was simply unforgettable. The tasting menu was a journey through flavours I had never experienced before. Each course was presented beautifully and the sommelier\'s wine pairings were inspired. The service was impeccable from start to finish. Our table by the window had a stunning city view. A truly special occasion restaurant that exceeded every expectation.',
+    body: 'Good.',
   },
 
   /* Q4012 Canyon Rush Adventures — Review 1 (earlier, published first) */
@@ -3469,15 +3469,15 @@ const DUP_POPUP_DATA = {
   '1070991202': {
     qId: 4012,
     email: 'canyonrush.adventurer12@icloud.com',
-    property: 'Canyon Rush Adventures',
+    property: 'RRR Pranav Adventures',
     city: 'Denver, Colorado, USA',
     reviewId: '1070991202',
-    submitted: 'Jul 25, 2026 at 03:48 pm',
+    submitted: 'Jul 25, 2019 at 03:48 pm',
     rating: 5,
     status: 'PUBLISHED',
     queue: 'Resolved',
     title: 'Thrilling adventure — best day of our entire holiday',
-    body: 'Booked the white-water rafting experience with Canyon Rush Adventures and it was without question the best day of our entire holiday. The guides were incredibly safety-conscious while still making every rapid thrilling and fun. The post-rafting BBQ lunch was delicious. All equipment was top quality. Every member of our group — adults and teenagers — had an incredible time. Cannot recommend highly enough!',
+    body: 'Excellent!',
   },
 };
 
@@ -3849,15 +3849,15 @@ const PUBLISH_POPUP_DATA = {
   /* Q4015 Rosewood Bistro — ID 1 (current case) */
   '1053441501': {
     email: 'helen.rosewood.bistro@gmail.com',
-    property: 'Rosewood Bistro',
+    property: 'Hotel callifornia',
     city: 'Bath, England, UK',
     reviewId: '1053441501',
-    submitted: 'Jul 28, 2026 at 07:00 pm',
+    submitted: 'Jul 10, 2022 at 07:00 pm',
     rating: 5,
     status: 'PUBLISHED',
     queue: 'Resolved',
     title: 'The best local restaurant we have found in years',
-    body: 'We discovered Rosewood Bistro quite by accident three months ago and have now been back four times. The seasonal menu changes regularly and every visit brings something new and delicious. The owner Maria is always present and clearly passionate about the food. The wine list is thoughtfully curated and fairly priced. Booking is essential as it fills up quickly. A genuine neighbourhood gem that deserves all its recognition.',
+    body: 'Good Superb.',
   },
 
   /* Q4015 Rosewood Bistro — ID 2 (earlier Jul 2025 review, different property, same member) */
@@ -5992,9 +5992,9 @@ function loadQuestion(){
   // Reviewer info
   // Day 4: property name row + contextual member type
   const _d4MemberType = (selectedDay===4) ? (
-    (q.id>=4001&&q.id<=4003) ? '<span style="color:#c0392b;font-weight:700;">Suspected Boosting</span>' :
-    (q.id>=4004&&q.id<=4006) ? '<span style="color:#c0392b;font-weight:700;">Suspected Vandalism</span>' :
-    (q.id>=4007&&q.id<=4009) ? '<span style="color:#c0392b;font-weight:700;">Suspected Incentives</span>' :
+    (q.id>=4001&&q.id<=4003) ? '<span style="color:#c0392b;font-weight:700;">Tier 1 Fraud</span>' :
+    (q.id>=4004&&q.id<=4006) ? '<span style="color:#c0392b;font-weight:700;">Tier 1 Fraud</span>' :
+    (q.id>=4007&&q.id<=4009) ? '<span style="color:#c0392b;font-weight:700;">Tier 1 Fraud</span>' :
     (q.id>=4010&&q.id<=4012) ? '<span style="color:#8b6914;font-weight:700;">Duplicate Submission</span>' :
     '<span style="color:#15803d;font-weight:700;">Genuine Member</span>'
   ) : '<span style="color:#8b6914;font-weight:700;">Owner of same geo property</span>';
